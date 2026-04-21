@@ -55,8 +55,6 @@ export default function Home() {
           <motion.a
             key={card.label}
             href={card.href}
-            target="_blank"
-            rel="noopener noreferrer"
             whileHover={{ y: -4, scale: 1.012 }}
             transition={{ type: "spring", stiffness: 280, damping: 22 }}
             className="group rounded-[var(--radius-lg)] border border-border bg-card p-5 transition-colors hover:border-foreground/25 hover:bg-accent md:p-6"
