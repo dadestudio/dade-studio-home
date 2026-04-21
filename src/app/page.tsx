@@ -7,29 +7,21 @@ const navCards = [
     label: "Blog",
     href: "https://blog.dade.studio",
     description: "Build logs, experiments, and straight-from-the-workbench notes.",
-    accentClass:
-      "border-accent-blog/35 bg-accent-blog/6 hover:border-accent-blog/60 hover:bg-accent-blog/14",
   },
   {
     label: "Merch",
     href: "https://merch.dade.studio",
     description: "Wearable chaos, printable jokes, and limited-run internet souvenirs.",
-    accentClass:
-      "border-accent-merch/35 bg-accent-merch/6 hover:border-accent-merch/60 hover:bg-accent-merch/14",
   },
   {
     label: "MaaS",
     href: "https://maas.dade.studio",
     description: "Memory as a Service, tuned for builders who hate context loss.",
-    accentClass:
-      "border-accent-maas/40 bg-accent-maas/10 hover:border-accent-maas/70 hover:bg-accent-maas/18",
   },
   {
     label: "Retro",
     href: "https://retro.dade.studio",
     description: "Pixels, presets, and old-school web energy with fresh batteries.",
-    accentClass:
-      "border-accent-retro/35 bg-accent-retro/6 hover:border-accent-retro/60 hover:bg-accent-retro/14",
   },
 ];
 
@@ -39,25 +31,25 @@ export default function Home() {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10 px-6 py-10 text-ink md:px-10 md:py-14"
+      className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10 px-6 py-10 text-foreground md:px-10 md:py-14"
     >
       <header className="flex items-center gap-3">
-        <span className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-soft)] bg-ink/6 text-lg">
+        <span className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-sm)] bg-muted text-lg">
           🏠
         </span>
-        <span className="font-display text-2xl tracking-tight md:text-3xl">Dade.Studio</span>
+        <span className="font-mono text-2xl tracking-tight md:text-3xl">Dade.Studio</span>
       </header>
 
       <section className="max-w-3xl space-y-5">
         {/* TODO: editorial review */}
-        <p className="font-display text-4xl leading-tight tracking-tight md:text-6xl">
+        <p className="text-4xl leading-tight tracking-tight md:text-6xl">
           I make weird internet things that actually ship.
         </p>
-        <div className="rounded-[var(--radius-card)] border border-accent-maas/35 bg-accent-maas/10 p-5 md:p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-ink/75">
+        <div className="rounded-[var(--radius-lg)] border border-border bg-muted p-5 md:p-6">
+          <p className="text-muted-foreground text-xs font-semibold uppercase tracking-[0.12em]">
             Right now I&apos;m...
           </p>
-          <p className="mt-2 text-base leading-relaxed text-ink/90 md:text-lg">
+          <p className="text-muted-foreground mt-2 text-base leading-relaxed md:text-lg">
             polishing MaaS, rebuilding bits of Neocities-era charm, and wiring this homepage so
             every project has a proper front door.
           </p>
@@ -73,27 +65,27 @@ export default function Home() {
             rel="noopener noreferrer"
             whileHover={{ y: -4, scale: 1.012 }}
             transition={{ type: "spring", stiffness: 280, damping: 22 }}
-            className={`group rounded-[var(--radius-card)] border p-5 transition-colors md:p-6 ${card.accentClass}`}
+            className="group rounded-[var(--radius-lg)] border border-border bg-card p-5 transition-colors hover:border-foreground/25 hover:bg-accent md:p-6"
           >
-            <div className="mb-5 h-20 rounded-[var(--radius-soft)] border border-dashed border-ink/18 bg-background/70" />
-            <h2 className="font-display text-2xl tracking-tight">{card.label}</h2>
-            <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted md:text-base">
+            <div className="mb-5 h-20 rounded-[var(--radius-md)] border border-dashed border-border bg-background/70" />
+            <h2 className="text-card-foreground text-2xl tracking-tight">{card.label}</h2>
+            <p className="text-muted-foreground mt-2 max-w-sm text-sm leading-relaxed md:text-base">
               {card.description}
             </p>
           </motion.a>
         ))}
       </section>
 
-      <footer className="mt-2 flex flex-col gap-2 border-t border-ink/12 pt-5 text-sm text-muted md:flex-row md:items-center md:justify-between">
+      <footer className="text-muted-foreground mt-2 flex flex-col gap-2 border-t border-border pt-5 text-sm md:flex-row md:items-center md:justify-between">
         <p>© {new Date().getFullYear()} Dade.Studio</p>
         <div className="flex gap-4">
-          <a href="#" className="hover:text-ink transition-colors">
+          <a href="#" className="hover:text-foreground transition-colors">
             X
           </a>
-          <a href="#" className="hover:text-ink transition-colors">
+          <a href="#" className="hover:text-foreground transition-colors">
             YouTube
           </a>
-          <a href="#" className="hover:text-ink transition-colors">
+          <a href="#" className="hover:text-foreground transition-colors">
             GitHub
           </a>
         </div>
