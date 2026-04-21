@@ -1,65 +1,103 @@
-import Image from "next/image";
+"use client";
+
+import { motion } from "framer-motion";
+
+const navCards = [
+  {
+    label: "Blog",
+    href: "https://blog.dade.studio",
+    description: "Build logs, experiments, and straight-from-the-workbench notes.",
+    accentClass:
+      "border-accent-blog/35 bg-accent-blog/6 hover:border-accent-blog/60 hover:bg-accent-blog/14",
+  },
+  {
+    label: "Merch",
+    href: "https://merch.dade.studio",
+    description: "Wearable chaos, printable jokes, and limited-run internet souvenirs.",
+    accentClass:
+      "border-accent-merch/35 bg-accent-merch/6 hover:border-accent-merch/60 hover:bg-accent-merch/14",
+  },
+  {
+    label: "MaaS",
+    href: "https://maas.dade.studio",
+    description: "Memory as a Service, tuned for builders who hate context loss.",
+    accentClass:
+      "border-accent-maas/40 bg-accent-maas/10 hover:border-accent-maas/70 hover:bg-accent-maas/18",
+  },
+  {
+    label: "Retro",
+    href: "https://retro.dade.studio",
+    description: "Pixels, presets, and old-school web energy with fresh batteries.",
+    accentClass:
+      "border-accent-retro/35 bg-accent-retro/6 hover:border-accent-retro/60 hover:bg-accent-retro/14",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <motion.main
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35, ease: "easeOut" }}
+      className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10 px-6 py-10 text-ink md:px-10 md:py-14"
+    >
+      <header className="flex items-center gap-3">
+        <span className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-soft)] bg-ink/6 text-lg">
+          🏠
+        </span>
+        <span className="font-display text-2xl tracking-tight md:text-3xl">Dade.Studio</span>
+      </header>
+
+      <section className="max-w-3xl space-y-5">
+        {/* TODO: editorial review */}
+        <p className="font-display text-4xl leading-tight tracking-tight md:text-6xl">
+          I make weird internet things that actually ship.
+        </p>
+        <div className="rounded-[var(--radius-card)] border border-accent-maas/35 bg-accent-maas/10 p-5 md:p-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-ink/75">
+            Right now I&apos;m...
+          </p>
+          <p className="mt-2 text-base leading-relaxed text-ink/90 md:text-lg">
+            polishing MaaS, rebuilding bits of Neocities-era charm, and wiring this homepage so
+            every project has a proper front door.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+      </section>
+
+      <section className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
+        {navCards.map((card) => (
+          <motion.a
+            key={card.label}
+            href={card.href}
             target="_blank"
             rel="noopener noreferrer"
+            whileHover={{ y: -4, scale: 1.012 }}
+            transition={{ type: "spring", stiffness: 280, damping: 22 }}
+            className={`group rounded-[var(--radius-card)] border p-5 transition-colors md:p-6 ${card.accentClass}`}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
+            <div className="mb-5 h-20 rounded-[var(--radius-soft)] border border-dashed border-ink/18 bg-background/70" />
+            <h2 className="font-display text-2xl tracking-tight">{card.label}</h2>
+            <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted md:text-base">
+              {card.description}
+            </p>
+          </motion.a>
+        ))}
+      </section>
+
+      <footer className="mt-2 flex flex-col gap-2 border-t border-ink/12 pt-5 text-sm text-muted md:flex-row md:items-center md:justify-between">
+        <p>© {new Date().getFullYear()} Dade.Studio</p>
+        <div className="flex gap-4">
+          <a href="#" className="hover:text-ink transition-colors">
+            X
           </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+          <a href="#" className="hover:text-ink transition-colors">
+            YouTube
+          </a>
+          <a href="#" className="hover:text-ink transition-colors">
+            GitHub
           </a>
         </div>
-      </main>
-    </div>
+      </footer>
+    </motion.main>
   );
 }
