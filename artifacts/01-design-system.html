@@ -10,13 +10,23 @@
 <meta property="og:description" content="Complete design token reference for dade.studio, contentcrib.studio, and maas.dade.studio.">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/jetbrainsmono/v18/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yK1jKQDlA7lFhEA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+<link rel="preload" href="/assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/JetBrainsMono[wght].woff2" as="font" type="font/woff2" crossorigin>
 <style>
 @layer base, tokens, components, utilities;
+
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/InterVariable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono[wght].woff2") format("woff2-variations");
+  font-weight: 100 800;
+  font-display: swap;
+}
 
 @layer tokens {
   :root {
@@ -51,7 +61,7 @@
     --warning-bg: oklch(97% 0.025 72);
     --error-bg:   oklch(97% 0.025 27);
     --info-bg:    oklch(97% 0.02 240);
-    --font-sans: InterVariable, Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
     --text-xs:   clamp(0.694rem,  0.67rem  + 0.12vw, 0.75rem);
     --text-sm:   clamp(0.833rem,  0.8rem   + 0.17vw, 0.875rem);
@@ -489,26 +499,10 @@ code {
 </head>
 <body>
 
-<!-- CORRECTED "d" LOGO — sky cyan bg, crimson letterform with vertical stem + circular bowl -->
-<!-- Used via <use> from hidden defs -->
-<svg style="display:none" aria-hidden="true">
-  <defs>
-    <symbol id="logo-d" viewBox="0 0 48 48">
-      <!-- Cyan rounded square background -->
-      <rect width="48" height="48" rx="12" fill="#5BBCD4"/>
-      <!-- Crimson "d" letterform: vertical stem on right + circular bowl lower-left -->
-      <!-- Stem: tall vertical bar on right side -->
-      <rect x="29" y="8" width="6" height="32" rx="3" fill="#F0243E"/>
-      <!-- Bowl: open circle (C-shape) on left, meeting stem at mid-right -->
-      <path d="M29 16 C29 16, 13 16, 13 28 C13 36, 20 40, 29 40" stroke="#F0243E" stroke-width="6" fill="none" stroke-linecap="round"/>
-    </symbol>
-  </defs>
-</svg>
-
 <!-- HEADER -->
 <header class="ds-header" role="banner">
   <a href="#main" class="logo-lockup" aria-label="Dade Studio Design System home">
-    <svg width="36" height="36" aria-hidden="true"><use href="#logo-d"/></svg>
+    <img src="/assets/brand/logo-d.png" alt="Dade Studio" width="40" height="40" />
     <span>dade.studio <span>/ design system</span></span>
   </a>
   <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark mode" id="theme-btn" aria-pressed="false">
@@ -554,6 +548,10 @@ code {
       <a href="#section-patterns">Section Patterns</a>
       <a href="#iconography">Iconography</a>
       <a href="#lighthouse">Lighthouse</a>
+    </div>
+    <div class="sidenav-group">
+      <div class="sidenav-label">Handoff</div>
+      <a href="#cursor-handoff">Cursor Handoff Backlog</a>
     </div>
   </nav>
 
@@ -897,8 +895,7 @@ code {
       <nav class="nav-demo" aria-label="Primary nav demo">
         <div class="nav-inner">
           <a href="#" aria-label="Dade Studio home" style="display:flex;align-items:center;gap:var(--s3)">
-            <!-- CORRECTED logo in nav -->
-            <svg width="34" height="34" aria-hidden="true"><use href="#logo-d"/></svg>
+            <img src="/assets/brand/logo-d.png" alt="Dade Studio" width="40" height="40" />
             <span style="font-weight:700;font-size:var(--text-sm);letter-spacing:-0.02em">dade.studio</span>
           </a>
           <ul class="nav-links" role="list">
@@ -1196,6 +1193,73 @@ code {
           <div>
             <div class="check-title">No-JS baseline - core content works without JavaScript</div>
             <div class="check-desc">Navigation, all copy, all images, and primary CTAs render and are clickable with JS disabled. JS is progressive enhancement only: dark mode toggle, mobile nav open/close, any animations. Never gate content behind a JS condition. Forms submit to a real endpoint without JS intercept.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ CURSOR HANDOFF BACKLOG ============ -->
+    <section class="ds-section" id="cursor-handoff" aria-labelledby="handoff-title">
+      <div class="section-tag">16 / Handoff</div>
+      <h2 class="section-title" id="handoff-title">Cursor Handoff Backlog</h2>
+      <p class="section-desc">Operator checklist for any future AI agent picking up the Dade Studio design system. Read this before touching tokens, logo assets, or font loading. Every item here is a hard constraint - not a preference.</p>
+
+      <div class="checklist">
+
+        <div class="check-item">
+          <div class="check-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <div class="check-title">Token source of truth: this artifact, <code>@layer tokens</code> block</div>
+            <div class="check-desc">All design tokens live in <code>artifacts/01-design-system.html</code>, inside the inline <code>&lt;style&gt;</code> element in <code>&lt;head&gt;</code>, under <code>@layer tokens { :root { ... } }</code> (light defaults) and <code>[data-theme="dark"] { ... }</code> (dark overrides). When porting to the production site, extract this block verbatim into <code>app/globals.css</code> or equivalent. Do not rewrite the OKLCH values - they were hand-tuned for AA contrast.</div>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <div class="check-title">Logo asset: <code>/assets/brand/logo-d.png</code> - never regenerate</div>
+            <div class="check-desc">The canonical logo is a 1,425x1,425 PNG at <code>/assets/brand/logo-d.png</code>. There is no SVG variant and none should be created. Do not trace, redraw, or "optimize" this mark. Every logo appearance in the system uses <code>&lt;img src="/assets/brand/logo-d.png" alt="Dade Studio" width="40" height="40" /&gt;</code>. If a size other than 40px is needed, adjust <code>width</code>/<code>height</code> attributes but keep the source file unchanged.</div>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <div class="check-title">Font assets: self-hosted variable WOFF2, no third-party CDN</div>
+            <div class="check-desc">Fonts are served from the same origin: <code>/assets/fonts/InterVariable.woff2</code> and <code>/assets/fonts/JetBrainsMono[wght].woff2</code>. The <code>@font-face</code> declarations sit outside <code>@layer tokens</code> (so they win the cascade without layer weight) and use <code>format("woff2-variations")</code> with the full weight range (<code>100 900</code> for Inter, <code>100 800</code> for JetBrains Mono) and <code>font-display: swap</code>. Never add a Google Fonts <code>&lt;link&gt;</code>, <code>@import</code>, or any third-party CDN preload. Self-hosting is mandatory.</div>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <div class="check-title">CSS custom property naming: one scheme, no aliases</div>
+            <div class="check-desc">All custom properties follow these namespaces: <code>--color-*</code> or semantic surface/text names (<code>--bg-base</code>, <code>--text-primary</code>), <code>--brand-*</code> for brand primitives (<code>--brand-crimson</code>, <code>--brand-cyan</code>, <code>--brand-yellow</code>, <code>--brand-purple</code>), <code>--space-*</code> or <code>--s1</code>..<code>--s32</code> for spacing, <code>--radius-*</code> or <code>--r-sm</code>..<code>--r-full</code> for radius, <code>--text-*</code> for type scale, <code>--dur-*</code> / <code>--ease-*</code> for motion, <code>--w-*</code> for container widths. Do not introduce parallel schemes (no <code>--colorPrimary</code>, no <code>$brand-red</code>, no <code>theme.colors.crimson</code>). If a token is missing, add it to the existing scheme.</div>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <div class="check-title">Product naming: Memory as a Service (MaaS)</div>
+            <div class="check-desc">The AI product hosted at <code>maas.dade.studio</code> is <strong>Memory as a Service</strong>, short-form <strong>MaaS</strong>. It is persistent AI memory that spans tools (Claude, Cursor, Open WebUI, LM Studio) - not a model router, not a multi-model API, not an LLM fleet. The acronym never expands to a model-routing phrase; if any artifact or prose drifts that way, rewrite it to the memory framing.</div>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <div class="check-title">Accessibility baseline: already verified, do not regress</div>
+            <div class="check-desc">All token pairings are WCAG AA verified. Crimson (<code>#F0243E</code>) at 4.3:1 passes for large text and UI components only - never apply it to body copy on white. Focus rings are 2.5px crimson with 3px offset across both themes. The logo image has <code>alt="Dade Studio"</code>, not empty and not decorative. Do not weaken any of these.</div>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <div class="check-title">Known deviations: see Artifact 5 appendix</div>
+            <div class="check-desc">See Artifact 5 (Brand Handoff Brief) Known deviations to fix before port appendix for the full deviation log. That appendix is the single place where drift between this design system and the live site is tracked; reconcile against it before porting any section into production.</div>
           </div>
         </div>
 
