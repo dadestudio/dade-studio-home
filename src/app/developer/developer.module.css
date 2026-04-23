@@ -1,0 +1,305 @@
+@font-face {
+  font-family: "DeveloperInter";
+  src: url("/assets/fonts/InterVariable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DeveloperMono";
+  src: url("/assets/fonts/JetBrainsMono%5Bwght%5D.woff2") format("woff2-variations");
+  font-weight: 100 800;
+  font-display: swap;
+}
+
+.page {
+  font-family: "DeveloperInter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--color-ds-text-primary);
+  background: var(--color-ds-bg-base);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  max-width: 1536px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid var(--color-ds-border-subtle);
+  padding: 2rem 1.25rem;
+  background: var(--color-ds-bg-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.logoWrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-ds-border-subtle);
+  text-decoration: none;
+  color: inherit;
+}
+
+.logoTitle {
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: -0.02em;
+}
+
+.logoMeta {
+  font-family: "DeveloperMono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.625rem;
+  color: var(--color-ds-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.navLabel {
+  font-family: "DeveloperMono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-ds-text-secondary);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.navLink {
+  padding: 0.4rem 0.5rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  color: var(--color-ds-text-secondary);
+  font-size: 0.78rem;
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.navLink:hover {
+  color: var(--color-ds-text-primary);
+  background: var(--color-ds-bg-subtle);
+}
+
+.themeWrap {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-ds-border-subtle);
+}
+
+.themeButton {
+  width: 100%;
+  min-height: 2.75rem;
+  border: 1px solid var(--color-ds-border-default);
+  border-radius: 999px;
+  background: var(--color-ds-bg-subtle);
+  color: var(--color-ds-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.themeButton:hover {
+  color: var(--color-ds-text-primary);
+  background: var(--color-ds-bg-muted);
+}
+
+.main {
+  padding: 3rem 2.5rem 8rem;
+  min-width: 0;
+}
+
+.header {
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--color-ds-border-subtle);
+  margin-bottom: 3rem;
+}
+
+.eyebrow {
+  font-family: "DeveloperMono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-brand-crimson);
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  font-size: clamp(2.25rem, 1.7rem + 2.75vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  margin-bottom: 1.25rem;
+}
+
+.description {
+  font-size: clamp(1.125rem, 1.07rem + 0.27vw, 1.25rem);
+  color: var(--color-ds-text-secondary);
+  line-height: 1.65;
+  max-width: 60ch;
+  margin-bottom: 1.5rem;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.metaPill {
+  border: 1px solid var(--color-ds-border-subtle);
+  border-radius: 999px;
+  background: var(--color-ds-bg-subtle);
+  color: var(--color-ds-text-secondary);
+  font-family: "DeveloperMono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.625rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+}
+
+.section {
+  padding-top: 4rem;
+  border-top: 1px solid var(--color-ds-border-subtle);
+  margin-top: 4rem;
+}
+
+.sectionMarker {
+  font-family: "DeveloperMono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-ds-text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.sectionHeading {
+  font-size: clamp(1.875rem, 1.5rem + 1.875vw, 2.625rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.prose {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-ds-text-secondary);
+  max-width: 72ch;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.75rem;
+}
+
+.card {
+  border: 1px solid var(--color-ds-border-subtle);
+  background: var(--color-ds-bg-surface);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+}
+
+.card h3 {
+  margin: 0 0 0.4rem;
+  font-size: 0.95rem;
+}
+
+.card p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--color-ds-text-secondary);
+}
+
+.ruleList {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--color-ds-text-secondary);
+  display: grid;
+  gap: 0.4rem;
+}
+
+.ruleList li {
+  line-height: 1.7;
+}
+
+.calloutBrand,
+.calloutInfo {
+  border-left: 4px solid;
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  margin-top: 1rem;
+}
+
+.calloutBrand {
+  border-color: var(--color-brand-crimson);
+  background: var(--color-ds-accent-crimson-bg);
+}
+
+.calloutInfo {
+  border-color: var(--color-brand-cyan);
+  background: var(--color-ds-accent-cyan-bg);
+}
+
+.calloutTitle {
+  margin: 0 0 0.3rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.calloutBody {
+  margin: 0;
+  color: var(--color-ds-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.page :focus-visible {
+  outline: 2.5px solid var(--color-brand-crimson);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+:global(html.dark) .page,
+:global([data-theme="dark"]) .page {
+  color: var(--color-ds-text-primary);
+  background: var(--color-ds-bg-base);
+}
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--color-ds-border-subtle);
+  }
+
+  .main {
+    padding: 2rem 1.5rem 6rem;
+  }
+}
