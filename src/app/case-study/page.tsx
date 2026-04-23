@@ -1,299 +1,640 @@
+"use client";
+
+import { useTheme } from "next-themes";
 import Link from "next/link";
-import styles from "./case-study.module.css";
+import { useEffect, useRef, useState } from "react";
+import s from "./case-study.module.css";
 
-const toc = [
-  { id: "challenge", number: "01", label: "The challenge" },
-  { id: "process", number: "02", label: "Process" },
-  { id: "identity", number: "03", label: "Identity system" },
-  { id: "type", number: "04", label: "Typography" },
-  { id: "applications", number: "05", label: "Applications" },
-  { id: "outcomes", number: "06", label: "Outcomes" },
-  { id: "deviations", number: "07", label: "Known deviations" },
-];
+function ThemeToggleBtn() {
+  const { setTheme, resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+  return (
+    <button
+      className={s.themeBtn}
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      aria-label="Toggle dark mode"
+      aria-pressed={isDark}
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+        {isDark ? (
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        ) : (
+          <>
+            <circle cx="12" cy="12" r="5" />
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+          </>
+        )}
+      </svg>
+      <span>{isDark ? "Dark" : "Light"}</span>
+    </button>
+  );
+}
 
-const timeline = [
-  {
-    week: "Week 1",
-    title: "Strategy and positioning",
-    body: "Brand audit, competitive review, and a focused workshop to define what the identity needed to communicate and what it needed to avoid.",
-    badges: ["Brand brief", "Competitive audit", "Reference set"],
-  },
-  {
-    week: "Week 2",
-    title: "Logo exploration",
-    body: "Three distinct conceptual directions were tested, narrowed, and iterated based on what communicated best without explanation.",
-    badges: ["3 logo directions", "Presentation deck"],
-  },
-  {
-    week: "Week 3",
-    title: "System build",
-    body: "Final mark refinement plus color, type, layout principles, usage rules, and documentation built in parallel.",
-    badges: ["Final logo", "Color system", "Type system", "Usage rules"],
-  },
-  {
-    week: "Week 4",
-    title: "Applications and handoff",
-    body: "Application mocks, export package, and practical handoff files so the in-house designer could keep building inside the system.",
-    badges: ["Brand guide", "Source files", "Asset kit", "Application mocks"],
-  },
+const TOC = [
+  { id: "challenge", num: "01", label: "The challenge" },
+  { id: "process", num: "02", label: "Process" },
+  { id: "identity", num: "03", label: "Identity system" },
+  { id: "type", num: "04", label: "Typography" },
+  { id: "applications", num: "05", label: "Applications" },
+  { id: "outcomes", num: "06", label: "Outcomes" },
+  { id: "deviations", num: "07", label: "Known deviations" },
 ];
 
 export default function CaseStudyPage() {
-  return (
-    <div className={styles.page}>
-      <a className={styles.skipLink} href="#main">
-        Skip to main content
-      </a>
+  const fillRef = useRef<HTMLDivElement | null>(null);
+  const [activeId, setActiveId] = useState<string>("challenge");
 
-      <header className={styles.nav}>
-        <div className={styles.navInner}>
-          <Link className={styles.logo} href="/" aria-label="Dade Studio home">
-            <img src="/assets/brand/logo-d.png" alt="Dade Studio" width={40} height={40} />
-            <span>dade.studio</span>
+  useEffect(() => {
+    const onScroll = () => {
+      const doc = document.documentElement;
+      const pct = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+      if (fillRef.current) fillRef.current.style.width = Math.min(100, pct).toFixed(1) + "%";
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveId(entry.target.id);
+        });
+      },
+      { rootMargin: "-64px 0px -60% 0px", threshold: 0 }
+    );
+    TOC.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div className={s.csRoot}>
+      <a className={s.skipLink} href="#main">Skip to main content</a>
+
+      <header className={s.siteNav} role="banner">
+        <div className={s.navInner}>
+          <Link href="/" className={s.navLogo} aria-label="Dade Studio home">
+            <img src="/assets/brand/logo-d.png" alt="Dade Studio mark" width={40} height={40} decoding="async" />
+            dade.studio
           </Link>
-          <Link className={styles.backLink} href="/work">
+
+          <a href="/work" className={s.navBack} aria-label="Back to all work">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7" /></svg>
             All work
-          </Link>
+          </a>
+
+          <div className={s.navRight}>
+            <ThemeToggleBtn />
+            <a href="mailto:hello@dade.studio" className={`${s.btn} ${s.btnPrimary}`}>Start a project</a>
+          </div>
         </div>
       </header>
 
+      <div className={s.progressBar} aria-hidden="true">
+        <div className={s.progressFill} ref={fillRef} />
+      </div>
+
       <main id="main">
-        <section className={styles.hero} aria-labelledby="hero-title">
-          <div className={styles.heroBg} aria-hidden="true" />
-          <div className={styles.heroGrid} aria-hidden="true" />
-          <div className={styles.heroGhost} aria-hidden="true">
-            CS
-          </div>
+        <section className={s.csHero} aria-labelledby="cs-title">
+          <div className={s.csHeroBg} aria-hidden="true" />
+          <div className={s.csHeroGrid} aria-hidden="true" />
+          <div className={s.csHeroGhost} aria-hidden="true">WF</div>
 
-          <p className={styles.ribbon}>Template / Speculative work - not a real client engagement.</p>
+          <p className={s.csHeroRibbon} role="note">Template / Speculative work - not a real client engagement.</p>
 
-          <div className={styles.heroInner}>
-            <Link href="/work" className={styles.crumb}>
+          <div className={s.csHeroInner}>
+            <a href="/work" className={s.csBackCrumb}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7" /></svg>
               Work
-            </Link>
+            </a>
 
-            <div className={styles.heroTags}>
-              <span className={`${styles.badge} ${styles.badgeCrimson}`}>Brand identity</span>
-              <span className={`${styles.badge} ${styles.badgeWhite}`}>2026 template</span>
-              <span className={`${styles.badge} ${styles.badgeWhite}`}>4 weeks</span>
+            <div className={s.csHeroTags}>
+              <span className={`${s.badge} ${s.badgeCrimson}`}>Brand Identity</span>
+              <span className={`${s.badge} ${s.badgeWhite}`}>2024</span>
+              <span className={`${s.badge} ${s.badgeWhite}`}>4 weeks</span>
             </div>
 
-            <h1 id="hero-title" className={styles.heroTitle}>
-              Case Study Template
+            <h1 className={`${s.csHeroTitle} ${s.fadeUp}`} id="cs-title">
+              Wavefront Recordings
             </h1>
-            <p className={styles.heroBody}>
-              A complete identity system for an independent electronic label - from positioning and mark
-              design through practical assets built for real-world use.
+
+            <p className={`${s.csHeroDesc} ${s.fadeUp} ${s.delay1}`}>
+              A full brand identity system for an indie electronic label - from positioning strategy to production-ready assets. Built to hold up at any size, on any surface, for years.
             </p>
           </div>
         </section>
 
-        <div className={styles.layout}>
-          <article className={styles.article}>
-            <section className={styles.metaSection} aria-label="Case study contents and project details">
-              <div className={styles.toc}>
-                <div className={styles.tocHeader}>Contents</div>
-                <ul className={styles.tocList}>
-                  {toc.map((item) => (
-                    <li key={item.id}>
-                      <a href={`#${item.id}`}>
-                        <span>{item.number}</span>
-                        {item.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+        <div className={s.csLayout}>
+          <article className={s.csArticle}>
+            <div className={s.csInlineMeta} aria-label="Project details">
+              <div className={s.csInlineMetaCell}>
+                <span className={s.csInlineMetaLabel}>Client</span>
+                <span className={s.csInlineMetaValue}>Wavefront Recordings</span>
+                <span className={s.csInlineMetaSub}>Brooklyn, NY</span>
+              </div>
+              <div className={s.csInlineMetaCell}>
+                <span className={s.csInlineMetaLabel}>Timeline</span>
+                <span className={s.csInlineMetaValue}>4 weeks</span>
+                <span className={s.csInlineMetaSub}>Feb - Mar 2024</span>
+              </div>
+              <div className={s.csInlineMetaCell}>
+                <span className={s.csInlineMetaLabel}>Deliverables</span>
+                <span className={s.csInlineMetaValue}>Logo system</span>
+                <span className={s.csInlineMetaSub}>Color, type, usage guide, asset kit</span>
+              </div>
+              <div className={s.csInlineMetaCell}>
+                <span className={s.csInlineMetaLabel}>Tools</span>
+                <span className={s.csInlineMetaValue}>Figma, Illustrator</span>
+                <span className={s.csInlineMetaSub}>Notion for documentation</span>
+              </div>
+            </div>
+
+            {/* CHALLENGE */}
+            <section className={s.csSection} id="challenge" aria-labelledby="challenge-title">
+              <div className={s.csSectionEyebrow}>01 / The challenge</div>
+              <h2 className={s.csSectionTitle} id="challenge-title">A label without a visual language</h2>
+
+              <p className={s.prose}>
+                Wavefront had been releasing music for two years on a handshake identity - a wordmark their
+                founder designed in Canva, a color palette borrowed from a reference they&apos;d seen elsewhere,
+                and no documentation. When the label started getting press and needed to show up on streaming
+                platforms, press kits, merchandise, and social simultaneously, nothing held together.
+              </p>
+
+              <p className={s.prose}>
+                The brief was direct: build something that reads as independent and credible, not polished
+                and corporate. Electronic music culture is fluent in design - fans and press will notice if
+                the visual identity doesn&apos;t match the music.
+              </p>
+
+              <div className={`${s.csCallout} ${s.csCalloutBrand}`}>
+                <svg className={s.csCalloutIcon} viewBox="0 0 24 24" fill="none" stroke="var(--brand-crimson)" strokeWidth="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 8v4m0 4h.01" /></svg>
+                <div>
+                  <div className={s.csCalloutTitle} style={{ color: "var(--brand-crimson)" }}>The core constraint</div>
+                  <div className={s.csCalloutBody}>The brand needed to work in black-and-white for vinyl pressings and press use, in full color for digital and merchandise, and as a single mark for social profile thumbnails - all without compromise at any scale.</div>
+                </div>
               </div>
 
-              <div className={styles.metaGrid}>
-                <div className={styles.metaCell}>
-                  <span>Client</span>
-                  <strong>Independent music label</strong>
-                  <small>Template location</small>
-                </div>
-                <div className={styles.metaCell}>
-                  <span>Timeline</span>
-                  <strong>4 weeks</strong>
-                  <small>Defined scope</small>
-                </div>
-                <div className={styles.metaCell}>
-                  <span>Deliverables</span>
-                  <strong>Identity system</strong>
-                  <small>Mark, color, type, guide</small>
-                </div>
-                <div className={styles.metaCell}>
-                  <span>Tools</span>
-                  <strong>Figma, Illustrator</strong>
-                  <small>Notion documentation</small>
-                </div>
-              </div>
-            </section>
-
-            <section className={styles.section} id="challenge" aria-labelledby="challenge-title">
-              <p className={styles.eyebrow}>01 / The challenge</p>
-              <h2 id="challenge-title">A label without a visual language</h2>
-              <p>
-                The team had momentum but no consistent identity system. Every release reused different
-                colors, typography, and mark treatments. As visibility grew, that inconsistency became a
-                product problem, not just a design problem.
-              </p>
-              <p>
-                The goal was clear - create something independent and credible without drifting into
-                generic corporate styling. The system had to scale from social thumbnails to physical
-                print without losing character.
+              <p className={s.prose}>
+                The constraint that actually made the project: the label&apos;s aesthetic sits at the
+                intersection of Detroit techno, ambient, and experimental club music. The identity needed to
+                carry that cultural weight without being on-the-nose about genre signifiers. No waveforms. No
+                speaker cones. No things that say &quot;music&quot; the way clip art says music.
               </p>
             </section>
 
-            <section className={styles.section} id="process" aria-labelledby="process-title">
-              <p className={styles.eyebrow}>02 / Process</p>
-              <h2 id="process-title">Four weeks, no surprises</h2>
-              <div className={styles.timeline}>
-                {timeline.map((step, index) => (
-                  <div className={styles.timelineItem} key={step.week}>
-                    <div className={styles.timelineDot}>{String(index + 1).padStart(2, "0")}</div>
-                    <div className={styles.timelineContent}>
-                      <p className={styles.timelineWeek}>{step.week}</p>
-                      <h3>{step.title}</h3>
-                      <p>{step.body}</p>
-                      <div className={styles.timelineBadges}>
-                        {step.badges.map((badge) => (
-                          <span key={badge}>{badge}</span>
-                        ))}
-                      </div>
+            {/* PROCESS */}
+            <section className={s.csSection} id="process" aria-labelledby="process-title">
+              <div className={s.csSectionEyebrow}>02 / Process</div>
+              <h2 className={s.csSectionTitle} id="process-title">Four weeks, no surprises</h2>
+
+              <p className={s.prose}>
+                The project ran in four tight weeks. No exploratory phase that quietly extends into a fifth
+                week. The scope was defined in the brief document before any money moved.
+              </p>
+
+              <div className={s.processTimeline} aria-label="Project timeline">
+                <div className={s.timelineItem}>
+                  <div className={s.timelineDot} style={{ background: "var(--brand-crimson)" }}>01</div>
+                  <div>
+                    <div className={s.timelineWeek}>Week 1</div>
+                    <h3 className={s.timelineTitle}>Strategy + positioning</h3>
+                    <p className={s.timelineDesc}>Brand audit of the existing assets, competitive review of five comparable labels, and a positioning workshop with the founder. The output was a one-page brand brief: the three words the identity had to communicate, the one thing it had to avoid, and the specific cultural references to pressure-test against.</p>
+                    <div className={s.timelineDeliverables}>
+                      <span className={`${s.badge} ${s.badgeNeutral}`}>Brand brief</span>
+                      <span className={`${s.badge} ${s.badgeNeutral}`}>Competitive audit</span>
+                      <span className={`${s.badge} ${s.badgeNeutral}`}>Reference set</span>
                     </div>
                   </div>
-                ))}
-              </div>
-            </section>
+                </div>
 
-            <section className={styles.section} id="identity" aria-labelledby="identity-title">
-              <p className={styles.eyebrow}>03 / Identity system</p>
-              <h2 id="identity-title">A mark and palette built for range</h2>
-              <p>
-                The selected mark implies motion and signal without relying on literal visual cliches. It
-                works as a full lockup, a compact symbol, and a small digital avatar while staying
-                recognizable.
-              </p>
-              <div className={styles.paletteGrid}>
-                <div>
-                  <div className={`${styles.swatch} ${styles.swatchBase}`} />
-                  <p>Primary surface</p>
+                <div className={s.timelineItem}>
+                  <div className={s.timelineDot} style={{ background: "var(--brand-purple)" }}>02</div>
+                  <div>
+                    <div className={s.timelineWeek}>Week 2</div>
+                    <h3 className={s.timelineTitle}>Logo exploration</h3>
+                    <p className={s.timelineDesc}>Three directions, each built from a different conceptual root. Not variations on a theme - genuine alternatives. The directions were presented cold, without narration, to see what landed without explanation. One was eliminated immediately. One needed iteration. One was right.</p>
+                    <div className={s.timelineDeliverables}>
+                      <span className={`${s.badge} ${s.badgeNeutral}`}>3 logo directions</span>
+                      <span className={`${s.badge} ${s.badgeNeutral}`}>Presentation deck</span>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <div className={`${styles.swatch} ${styles.swatchCrimson}`} />
-                  <p>Signal accent</p>
-                </div>
-                <div>
-                  <div className={`${styles.swatch} ${styles.swatchLight}`} />
-                  <p>Text support</p>
-                </div>
-                <div>
-                  <div className={`${styles.swatch} ${styles.swatchNeutral}`} />
-                  <p>Secondary UI</p>
-                </div>
-              </div>
-            </section>
 
-            <section className={styles.section} id="type" aria-labelledby="type-title">
-              <p className={styles.eyebrow}>04 / Typography</p>
-              <h2 id="type-title">Type decisions for clarity and texture</h2>
-              <p>
-                The system uses a modern sans for high-impact messaging and a mono companion for metadata,
-                catalog context, and technical labels. This keeps long-form copy readable while preserving
-                the right visual tone for release details.
-              </p>
-              <div className={styles.callout}>
-                <h3>Type decision rationale</h3>
-                <p>
-                  Mono elements provide practical structure at small sizes and meaningful visual identity
-                  at large sizes. This pairing improves scanability across social cards, press materials,
-                  and product surfaces.
-                </p>
-              </div>
-            </section>
+                <div className={s.timelineItem}>
+                  <div className={s.timelineDot} style={{ background: "var(--brand-cyan)" }}>03</div>
+                  <div>
+                    <div className={s.timelineWeek}>Week 3</div>
+                    <h3 className={s.timelineTitle}>System build</h3>
+                    <p className={s.timelineDesc}>Logo refinement plus full system build: color palette, type selection, spacing principles, usage rules, and the asset kit structure. Everything documented in Notion as it was built, not retrospectively.</p>
+                    <div className={s.timelineDeliverables}>
+                      <span className={`${s.badge} ${s.badgeNeutral}`}>Final logo</span>
+                      <span className={`${s.badge} ${s.badgeNeutral}`}>Color system</span>
+                      <span className={`${s.badge} ${s.badgeNeutral}`}>Type system</span>
+                      <span className={`${s.badge} ${s.badgeNeutral}`}>Usage rules</span>
+                    </div>
+                  </div>
+                </div>
 
-            <section className={styles.section} id="applications" aria-labelledby="applications-title">
-              <p className={styles.eyebrow}>05 / Applications</p>
-              <h2 id="applications-title">Pressure tested across touchpoints</h2>
-              <p>
-                The system was validated against streaming profiles, release artwork, press kits, and
-                merch concepts. Testing across these contexts revealed practical constraints early, which
-                made final handoff easier and more durable.
-              </p>
-              <div className={styles.applicationGrid}>
-                <div>
-                  <strong>Streaming profile</strong>
-                  <small>Platform avatars and headers</small>
-                </div>
-                <div>
-                  <strong>Release cover</strong>
-                  <small>Digital and print variants</small>
-                </div>
-                <div>
-                  <strong>Press kit</strong>
-                  <small>Editorial-ready assets</small>
-                </div>
-                <div>
-                  <strong>Merch assets</strong>
-                  <small>Apparel and event collateral</small>
+                <div className={s.timelineItem}>
+                  <div className={s.timelineDot} style={{ background: "var(--brand-yellow)" }}>04</div>
+                  <div>
+                    <div className={s.timelineWeek}>Week 4</div>
+                    <h3 className={s.timelineTitle}>Applications + handoff</h3>
+                    <p className={s.timelineDesc}>Brand guide document, application mockups across key touchpoints, production files in every required format. The founder received working Figma files, not locked PDFs - so their designer could continue building inside the system.</p>
+                    <div className={s.timelineDeliverables}>
+                      <span className={`${s.badge} ${s.badgeNeutral}`}>Brand guide PDF</span>
+                      <span className={`${s.badge} ${s.badgeNeutral}`}>Figma source</span>
+                      <span className={`${s.badge} ${s.badgeNeutral}`}>Asset kit</span>
+                      <span className={`${s.badge} ${s.badgeNeutral}`}>Application mockups</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </section>
 
-            <section className={styles.section} id="outcomes" aria-labelledby="outcomes-title">
-              <p className={styles.eyebrow}>06 / Outcomes</p>
-              <h2 id="outcomes-title">What happened after launch</h2>
-              <p>
-                The template narrative keeps outcomes genericized. Delivery is on brief, system coherence
-                is stable, and follow-up clarification load remains low because the documentation is
-                explicit and practical.
+            {/* IDENTITY */}
+            <section className={s.csSection} id="identity" aria-labelledby="identity-title">
+              <div className={s.csSectionEyebrow}>03 / Identity system</div>
+              <h2 className={s.csSectionTitle} id="identity-title">The mark and the palette</h2>
+
+              <p className={s.prose}>
+                The logo landed on a geometric interpretation of frequency - not a literal waveform, but a
+                grid of intersecting horizontal bands that implies movement and transmission without spelling
+                it out. It works as a wordmark, a standalone symbol, and at 32x32px as a favicon.
               </p>
-              <div className={styles.outcomeGrid}>
-                <div>
-                  <strong>On brief</strong>
-                  <small>Delivery quality</small>
+
+              <div className={s.csImg} style={{ margin: "var(--s8) 0" }} role="img" aria-label="Wavefront Recordings logo on dark background">
+                <div className={s.csImgInner} style={{ background: "oklch(12% 0.025 300)", height: 260, position: "relative", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", gap: 3, flexDirection: "column" }} aria-hidden="true">
+                    <div style={{ display: "flex", gap: 3, alignItems: "center" }}>
+                      <div style={{ width: 120, height: 3, background: "#F0243E", borderRadius: 2 }} />
+                      <div style={{ width: 20, height: 3, background: "#F0243E", borderRadius: 2, opacity: 0.4 }} />
+                    </div>
+                    <div style={{ display: "flex", gap: 3, alignItems: "center" }}>
+                      <div style={{ width: 60, height: 3, background: "#F0243E", borderRadius: 2, opacity: 0.6 }} />
+                      <div style={{ width: 80, height: 3, background: "#F0243E", borderRadius: 2 }} />
+                      <div style={{ width: 40, height: 3, background: "#F0243E", borderRadius: 2, opacity: 0.3 }} />
+                    </div>
+                    <div style={{ display: "flex", gap: 3, alignItems: "center" }}>
+                      <div style={{ width: 40, height: 3, background: "#F0243E", borderRadius: 2, opacity: 0.3 }} />
+                      <div style={{ width: 100, height: 3, background: "#F0243E", borderRadius: 2 }} />
+                      <div style={{ width: 40, height: 3, background: "#F0243E", borderRadius: 2, opacity: 0.5 }} />
+                    </div>
+                    <div style={{ display: "flex", gap: 3, alignItems: "center", marginTop: 16 }}>
+                      <div style={{ fontSize: "clamp(1.2rem,3vw,2rem)", fontWeight: 900, letterSpacing: "0.18em", color: "white", textTransform: "uppercase" }}>WAVEFRONT</div>
+                    </div>
+                    <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.3em", color: "oklch(55% 0.01 240)", textTransform: "uppercase" }}>RECORDINGS</div>
+                  </div>
                 </div>
-                <div>
-                  <strong>Stable</strong>
-                  <small>System continuity</small>
+                <div className={s.csImgCaption}>Primary wordmark - dark background application</div>
+              </div>
+
+              <p className={s.prose}>
+                The palette was built around a core tension: the warmth of analog recording against the
+                precision of electronic production. A near-black with warm undertones as the primary surface,
+                a warm off-white for text, and a single alert color - a deep amber - for the cases where the
+                brand needs to signal something.
+              </p>
+
+              <div className={s.brandPalette} role="list" aria-label="Wavefront brand palette">
+                <div className={s.paletteSwatch} role="listitem">
+                  <div className={s.paletteColor} style={{ background: "oklch(12% 0.025 300)" }} />
+                  <div className={s.paletteInfo}>
+                    <div className={s.paletteName}>Deep night</div>
+                    <div className={s.paletteHex}>#0D0A14</div>
+                    <div className={s.paletteRole}>Primary surface</div>
+                  </div>
                 </div>
-                <div>
-                  <strong>Flexible</strong>
-                  <small>Application range</small>
+                <div className={s.paletteSwatch} role="listitem">
+                  <div className={s.paletteColor} style={{ background: "#F0243E" }} />
+                  <div className={s.paletteInfo}>
+                    <div className={s.paletteName}>Signal red</div>
+                    <div className={s.paletteHex}>#F0243E</div>
+                    <div className={s.paletteRole}>Accent / alert</div>
+                  </div>
                 </div>
+                <div className={s.paletteSwatch} role="listitem">
+                  <div className={s.paletteColor} style={{ background: "oklch(92% 0.008 60)" }} />
+                  <div className={s.paletteInfo}>
+                    <div className={s.paletteName}>Warm white</div>
+                    <div className={s.paletteHex}>#F5F2EB</div>
+                    <div className={s.paletteRole}>Primary text</div>
+                  </div>
+                </div>
+                <div className={s.paletteSwatch} role="listitem">
+                  <div className={s.paletteColor} style={{ background: "oklch(42% 0.02 260)" }} />
+                  <div className={s.paletteInfo}>
+                    <div className={s.paletteName}>Studio gray</div>
+                    <div className={s.paletteHex}>#4A4A56</div>
+                    <div className={s.paletteRole}>Secondary text</div>
+                  </div>
+                </div>
+                <div className={s.paletteSwatch} role="listitem">
+                  <div className={s.paletteColor} style={{ background: "oklch(72% 0.14 60)" }} />
+                  <div className={s.paletteInfo}>
+                    <div className={s.paletteName}>Amber</div>
+                    <div className={s.paletteHex}>#D4913A</div>
+                    <div className={s.paletteRole}>Warm accent</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className={s.pullQuote} aria-label="Client testimonial">
+                <p className={s.pullQuoteText}>The palette was the thing I didn&apos;t know I needed. I&apos;d been picking colors project by project. Having a system that tells you which amber to use - and why - changed how the whole label presents itself.</p>
+                <div className={s.pullQuoteAttr}>Jordan M. - Founder, Wavefront Recordings</div>
+              </div>
+            </section>
+
+            {/* TYPE */}
+            <section className={s.csSection} id="type" aria-labelledby="type-title">
+              <div className={s.csSectionEyebrow}>04 / Typography</div>
+              <h2 className={s.csSectionTitle} id="type-title">The type system</h2>
+
+              <p className={s.prose}>
+                The brief called for a type system that read as contemporary and technically precise - not
+                retro, not futuristic in a sci-fi way, just correct. Two typefaces: a grotesque for display
+                and UI, a mono for metadata, catalog numbers, and technical information.
+              </p>
+
+              <div className={s.brandTypeSpecimen} role="img" aria-label="Wavefront brand typography specimen">
+                <div className={s.btsHeader}>
+                  <span>Display / Neue Haas Grotesk</span>
+                  <span>wght 900 &bull; ls -0.04em</span>
+                </div>
+                <div className={s.btsBody}>
+                  <div className={s.btsDisplay}>TRANSMISSION<br />NO. 001</div>
+                  <div className={s.btsSub}>Electronic music for the present tense. Releases monthly from Brooklyn.</div>
+                  <div className={s.btsMono}>CAT# WFR-2024-001 &bull; FORMAT: DIGITAL + 12&quot; VINYL &bull; BPM: 128</div>
+                </div>
+              </div>
+
+              <div className={s.csImg2up} role="list" aria-label="Type in application examples">
+                <div role="listitem">
+                  <div className={s.csImg} style={{ height: 200, background: "oklch(12% 0.025 300)" }}>
+                    <div className={s.csImgInner} style={{ height: "100%", flexDirection: "column", gap: 8, padding: "var(--s6)" }}>
+                      <div style={{ fontSize: "var(--text-3xl)", fontWeight: 900, letterSpacing: "-0.03em", color: "white", lineHeight: 1 }}>WFR-2024</div>
+                      <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "#F0243E", letterSpacing: "0.2em", textTransform: "uppercase" }}>New release</div>
+                    </div>
+                  </div>
+                  <div className={s.csImgCaption}>Social card - dark</div>
+                </div>
+                <div role="listitem">
+                  <div className={s.csImg} style={{ height: 200, background: "oklch(92% 0.008 60)" }}>
+                    <div className={s.csImgInner} style={{ height: "100%", flexDirection: "column", gap: 8, padding: "var(--s6)" }}>
+                      <div style={{ fontSize: "var(--text-3xl)", fontWeight: 900, letterSpacing: "-0.03em", color: "oklch(12% 0.025 300)", lineHeight: 1 }}>WAVEFRONT</div>
+                      <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "oklch(42% 0.02 260)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Recordings</div>
+                    </div>
+                  </div>
+                  <div className={s.csImgCaption}>Press kit - light</div>
+                </div>
+              </div>
+
+              <div className={`${s.csCallout} ${s.csCalloutInfo}`}>
+                <svg className={s.csCalloutIcon} viewBox="0 0 24 24" fill="none" stroke="var(--brand-cyan)" strokeWidth="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></svg>
                 <div>
-                  <strong>Low</strong>
-                  <small>Post-handoff friction</small>
+                  <div className={s.csCalloutTitle} style={{ color: "var(--brand-cyan)" }}>Type decision rationale</div>
+                  <div className={s.csCalloutBody}>The mono typeface does double duty: it carries catalog numbers and technical metadata at small sizes while also functioning as a design element in its own right at large sizes. Electronic music culture already reads mono as a meaningful signal - it references both equipment displays and early computer interfaces that shaped the aesthetic.</div>
                 </div>
               </div>
             </section>
 
-            <section className={styles.section} id="deviations" aria-labelledby="deviations-title">
-              <p className={styles.eyebrow}>07 / Known deviations</p>
-              <h2 id="deviations-title">Port checklist for production routes</h2>
-              <p>
-                Keep naming and positioning locked. Memory as a Service appears consistently, pricing stays
-                at $199, $399, and $799 with beta 20 percent off, and the canonical logo path remains
-                `/assets/brand/logo-d.png`.
+            {/* APPLICATIONS */}
+            <section className={s.csSection} id="applications" aria-labelledby="applications-title">
+              <div className={s.csSectionEyebrow}>05 / Applications</div>
+              <h2 className={s.csSectionTitle} id="applications-title">The system in the wild</h2>
+
+              <p className={s.prose}>
+                The identity was pressure-tested across the touchpoints that matter most for an independent
+                label: streaming platform profiles, press kits, merchandise, vinyl sleeves, and social. Each
+                context revealed something the system needed to handle that wasn&apos;t in the original
+                brief.
               </p>
+
+              <div className={s.appGrid} role="list" aria-label="Brand applications">
+                <div className={s.appCard} role="listitem">
+                  <div className={s.appThumb} style={{ background: "oklch(12% 0.025 300)" }}>
+                    <div className={s.appThumbBg} aria-hidden="true" />
+                    <div style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
+                      <div style={{ width: 64, height: 64, borderRadius: 12, background: "#F0243E", margin: "0 auto var(--s2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5rem", fontWeight: 900, letterSpacing: "-0.03em" }}>WF</div>
+                      <div style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "oklch(60% 0.01 240)", letterSpacing: "0.1em" }}>STREAMING PROFILE</div>
+                    </div>
+                  </div>
+                  <div className={s.appLabel}>
+                    <div className={s.appName}>Streaming profile</div>
+                    <div className={s.appType}>Spotify / Apple Music</div>
+                  </div>
+                </div>
+
+                <div className={s.appCard} role="listitem">
+                  <div className={s.appThumb} style={{ background: "linear-gradient(135deg,oklch(12% 0.025 300),oklch(22% 0.04 290))" }}>
+                    <div className={s.appThumbBg} aria-hidden="true" />
+                    <div style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+                      <div style={{ fontSize: "var(--text-2xl)", fontWeight: 900, letterSpacing: "0.05em", color: "white", textTransform: "uppercase" }}>WAVE<br />FRONT</div>
+                      <div style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "#F0243E", letterSpacing: "0.2em", marginTop: 8 }}>REC.</div>
+                    </div>
+                  </div>
+                  <div className={s.appLabel}>
+                    <div className={s.appName}>Vinyl sleeve</div>
+                    <div className={s.appType}>12&quot; gatefold</div>
+                  </div>
+                </div>
+
+                <div className={s.appCard} role="listitem">
+                  <div className={s.appThumb} style={{ background: "oklch(92% 0.008 60)" }}>
+                    <div className={s.appThumbBg} style={{ backgroundImage: "linear-gradient(oklch(0% 0 0 / 0.04) 1px,transparent 1px),linear-gradient(90deg,oklch(0% 0 0 / 0.04) 1px,transparent 1px)" }} aria-hidden="true" />
+                    <div style={{ position: "relative", zIndex: 1, textAlign: "center", padding: "var(--s4)" }}>
+                      <div style={{ fontSize: 10, fontFamily: "var(--font-mono)", color: "oklch(42% 0.02 260)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 8 }}>PRESS KIT 2024</div>
+                      <div style={{ fontSize: "var(--text-xl)", fontWeight: 900, letterSpacing: "-0.02em", color: "oklch(12% 0.025 300)" }}>WAVEFRONT</div>
+                      <div style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "#F0243E", letterSpacing: "0.2em", textTransform: "uppercase" }}>RECORDINGS</div>
+                    </div>
+                  </div>
+                  <div className={s.appLabel}>
+                    <div className={s.appName}>Press kit cover</div>
+                    <div className={s.appType}>PDF / digital</div>
+                  </div>
+                </div>
+
+                <div className={s.appCard} role="listitem">
+                  <div className={s.appThumb} style={{ background: "oklch(18% 0.03 290)" }}>
+                    <div className={s.appThumbBg} aria-hidden="true" />
+                    <div style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+                      <div style={{ width: 80, height: 80, borderRadius: "50%", background: "oklch(12% 0.025 300)", border: "2px solid #F0243E", margin: "0 auto var(--s2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <div style={{ fontWeight: 900, letterSpacing: "-0.02em", color: "white", fontSize: "1.1rem" }}>WF</div>
+                      </div>
+                      <div style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "oklch(60% 0.01 240)", letterSpacing: "0.15em" }}>MERCH TEE</div>
+                    </div>
+                  </div>
+                  <div className={s.appLabel}>
+                    <div className={s.appName}>Merchandise</div>
+                    <div className={s.appType}>Apparel + accessories</div>
+                  </div>
+                </div>
+
+                <div className={s.appCard} role="listitem">
+                  <div className={s.appThumb} style={{ background: "oklch(12% 0.025 300)" }}>
+                    <div className={s.appThumbBg} aria-hidden="true" />
+                    <div style={{ position: "relative", zIndex: 1, width: "100%", padding: "var(--s4)" }}>
+                      <div style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "#F0243E", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 8 }}>New Release</div>
+                      <div style={{ fontSize: "var(--text-lg)", fontWeight: 900, color: "white", letterSpacing: "-0.02em", lineHeight: 1.1 }}>Transmission<br />No. 001</div>
+                      <div style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "oklch(55% 0.01 240)", marginTop: 8 }}>@wavefrontrec</div>
+                    </div>
+                  </div>
+                  <div className={s.appLabel}>
+                    <div className={s.appName}>Social asset</div>
+                    <div className={s.appType}>Instagram / X</div>
+                  </div>
+                </div>
+
+                <div className={s.appCard} role="listitem">
+                  <div className={s.appThumb} style={{ background: "linear-gradient(135deg,#F0243E,oklch(38% 0.129 295.1))" }}>
+                    <div className={s.appThumbBg} aria-hidden="true" />
+                    <div style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+                      <div style={{ fontSize: "var(--text-3xl)", fontWeight: 900, color: "white", letterSpacing: "-0.03em" }}>WF</div>
+                      <div style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: "oklch(90% 0 0 / 0.7)", letterSpacing: "0.15em", textTransform: "uppercase", marginTop: 4 }}>Lanyard</div>
+                    </div>
+                  </div>
+                  <div className={s.appLabel}>
+                    <div className={s.appName}>Event badge</div>
+                    <div className={s.appType}>Lanyard / wristband</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className={s.pullQuote} aria-label="Process note" style={{ borderColor: "var(--brand-purple)", background: "var(--accent-purple-bg)" }}>
+                <p className={s.pullQuoteText} style={{ fontSize: "var(--text-xl)" }}>The vinyl sleeve was not in scope. It came up in week four because the system was solid enough that the client wanted to keep going. That&apos;s the version of scope creep that&apos;s actually a good sign.</p>
+                <div className={s.pullQuoteAttr}>Dade - Project notes, March 2024</div>
+              </div>
             </section>
 
-            <section className={styles.cta} aria-label="Start a project">
+            {/* OUTCOMES */}
+            <section className={s.csSection} id="outcomes" aria-labelledby="outcomes-title">
+              <div className={s.csSectionEyebrow}>06 / Outcomes</div>
+              <h2 className={s.csSectionTitle} id="outcomes-title">What happened after launch</h2>
+
+              <p className={s.prose}>
+                The brand launched alongside a new release in the template timeline. In a typical lifecycle, a
+                disciplined system can stay coherent across seasons without forcing a teardown redesign. The
+                documentation was written so an in-house designer could keep building inside the rails without
+                constant studio check-ins.
+              </p>
+
+              <div className={s.outcomeGrid} role="list" aria-label="Project outcomes">
+                <div className={s.outcomeCard} role="listitem">
+                  <div className={s.outcomeNum} style={{ color: "var(--brand-crimson)" }}>On time</div>
+                  <div className={s.outcomeLabel}>Delivery - on brief</div>
+                </div>
+                <div className={s.outcomeCard} role="listitem">
+                  <div className={s.outcomeNum} style={{ color: "var(--brand-cyan)" }}>Stable</div>
+                  <div className={s.outcomeLabel}>No forced refresh</div>
+                </div>
+                <div className={s.outcomeCard} role="listitem">
+                  <div className={s.outcomeNum} style={{ color: "var(--brand-yellow)" }}>Several</div>
+                  <div className={s.outcomeLabel}>Illustrative applications</div>
+                </div>
+                <div className={s.outcomeCard} role="listitem">
+                  <div className={s.outcomeNum} style={{ color: "var(--brand-cyan)" }}>Low</div>
+                  <div className={s.outcomeLabel}>Clarifications after handoff</div>
+                </div>
+              </div>
+
+              <p className={s.prose}>
+                The metric that matters most in this template narrative: follow-up stays light. The
+                documentation is complete enough that a new designer can pick it up and apply it without
+                repeatedly re-deriving the rules. That is the practical test of whether a brand guide works.
+              </p>
+
+              <div className={s.pullQuote}>
+                <p className={s.pullQuoteText}>In this speculative write-up, the studio delivers a full identity system on a tight calendar - logo, color, type, and brand guide. The work is framed as holding up across many applications without needing a disruptive redesign immediately afterward.</p>
+                <div className={s.pullQuoteAttr}>Client stakeholder - template case study</div>
+              </div>
+            </section>
+
+            {/* KNOWN DEVIATIONS */}
+            <section className={s.csSection} id="deviations" aria-labelledby="deviations-title">
+              <div className={s.csSectionEyebrow}>07 / Known deviations</div>
+              <h2 className={s.csSectionTitle} id="deviations-title">Known deviations to fix before port</h2>
+              <p className={s.prose}>
+                This artifact mirrors the shared static stack: self-hosted fonts, PNG logo, canonical tokens,
+                purged personal-VPN stack references, Memory as a Service naming, and no Google Fonts links.
+                Grep the full artifact set for the strings called out in the developer handoff before porting.
+              </p>
+              <div className={`${s.csCallout} ${s.csCalloutBrand}`}>
+                <svg className={s.csCalloutIcon} viewBox="0 0 24 24" fill="none" stroke="var(--brand-crimson)" strokeWidth="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 8v4m0 4h.01" /></svg>
+                <div>
+                  <div className={s.csCalloutTitle} style={{ color: "var(--brand-crimson)" }}>Checklist</div>
+                  <div className={s.csCalloutBody}>Zero hits for the vendor VPN trio, deprecated model-router product copy, inline logo symbol defs, Google Fonts hosts, legacy color-prefixed custom properties, and dash characters. Logo path stays <code className={s.inlineCode}>/assets/brand/logo-d.png</code> (not <code className={s.inlineCode}>public/assets/</code>).</div>
+                </div>
+              </div>
+            </section>
+
+            <div className={s.ctaBlock}>
               <div>
-                <p>Work with Dade Studio</p>
-                <h2>Need this caliber of system work?</h2>
+                <div className={s.ctaLabel}>Work with me</div>
+                <div className={s.ctaTitle}>Got a brand that needs<br />this kind of work?</div>
               </div>
-              <a href="mailto:hello@dade.studio">Start a project</a>
-            </section>
+              <a href="mailto:hello@dade.studio" className={`${s.btn} ${s.btnPrimary} ${s.btnLg}`} style={{ flexShrink: 0 }}>
+                Start a project
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+              </a>
+            </div>
+
+            <nav className={s.nextProject} aria-label="Other case studies">
+              <a href="/work/prism" className={s.nextProjectPrev}>
+                <div className={s.nextDir}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7" /></svg>
+                  Previous
+                </div>
+                <div className={s.nextTitle}>Prism Studio</div>
+                <div className={s.nextSub}>Web design + CMS</div>
+              </a>
+              <a href="/work/maas" className={s.nextProjectNext}>
+                <div className={s.nextDir}>
+                  Next
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                </div>
+                <div className={s.nextTitle}>Memory as a Service</div>
+                <div className={s.nextSub}>Persistent memory layer + product design</div>
+              </a>
+            </nav>
           </article>
 
-          <aside className={styles.sidebar} aria-label="Case study sidebar">
-            <a href="mailto:hello@dade.studio" className={styles.sidebarCta}>
-              Start a project
-            </a>
+          <aside className={s.csSidebar} aria-label="Case study navigation">
+            <nav className={s.toc} aria-label="Table of contents">
+              <div className={s.tocHeader}>Contents</div>
+              <ul className={s.tocList} role="list">
+                {TOC.map(({ id, num, label }) => (
+                  <li key={id}>
+                    <a href={`#${id}`} className={activeId === id ? "active" : undefined} style={activeId === id ? { color: "var(--brand-crimson)", background: "var(--accent-crimson-bg)" } : undefined}>
+                      <span className={s.tocNum}>{num}</span> {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <div className={s.csSidebarCta}>
+              <a href="mailto:hello@dade.studio" className={`${s.btn} ${s.btnPrimary}`}>Start a project</a>
+            </div>
           </aside>
         </div>
       </main>
+
+      <footer className={s.siteFooter} role="contentinfo">
+        <div className={s.footerSimple}>
+          <span>&copy; 2026 Dade.Studio</span>
+          <nav aria-label="Footer navigation" className={s.footerNav}>
+            <a href="/work">Work</a>
+            <a href="/services">Services</a>
+            <a href="/about">About</a>
+            <a href="/bot-privacy">Bot privacy</a>
+            <a href="mailto:hello@dade.studio">Contact</a>
+          </nav>
+        </div>
+      </footer>
     </div>
   );
 }
