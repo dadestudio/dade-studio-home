@@ -169,6 +169,12 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 .badge-purple  { background:var(--accent-purple-bg); color:var(--brand-purple); border-color:color-mix(in srgb,var(--brand-purple) 22%,transparent); }
 .badge-neutral { background:var(--bg-muted); color:var(--text-secondary); border-color:var(--border-default); }
 .badge-white   { background:oklch(100% 0 0 / 0.12); color:#fff; border-color:oklch(100% 0 0 / 0.2); }
+[data-theme="dark"] .badge-cyan    { color:var(--brand-cyan); }
+[data-theme="dark"] .badge-yellow  { color:var(--brand-yellow); }
+[data-theme="dark"] .badge-purple  { color:var(--brand-cyan); }
+[data-theme="dark"] .badge-crimson { color:var(--text-primary); }
+[data-theme="dark"] .cs-callout-brand .cs-callout-title { color:var(--text-primary) !important; }
+[data-theme="dark"] code { background:var(--bg-surface); }
 
 .btn {
   display:inline-flex; align-items:center; justify-content:center; gap:var(--s2);
@@ -376,7 +382,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 }
 .cs-inline-meta-label {
   font-family:var(--font-mono); font-size:10px; font-weight:700;
-  text-transform:uppercase; letter-spacing:0.1em; color:var(--text-tertiary);
+  text-transform:uppercase; letter-spacing:0.1em; color:var(--text-secondary);
 }
 .cs-inline-meta-value { font-size:var(--text-sm); font-weight:600; color:var(--text-primary); }
 .cs-inline-meta-sub { font-size:var(--text-xs); color:var(--text-secondary); }
@@ -406,7 +412,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
   padding:var(--s4) var(--s5);
   border-bottom:1px solid var(--border-subtle);
   font-family:var(--font-mono); font-size:10px; font-weight:700;
-  text-transform:uppercase; letter-spacing:0.12em; color:var(--text-tertiary);
+  text-transform:uppercase; letter-spacing:0.12em; color:var(--text-secondary);
 }
 .toc-list { padding:var(--s3) var(--s4); list-style:none; }
 .toc-list li + li { margin-top:2px; }
@@ -419,7 +425,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 }
 .toc-list a:hover { color:var(--text-primary); background:var(--bg-subtle); }
 .toc-list a.active { color:var(--brand-crimson); background:var(--accent-crimson-bg); }
-.toc-num { font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary); flex-shrink:0; }
+.toc-num { font-family:var(--font-mono); font-size:10px; color:var(--text-secondary); flex-shrink:0; }
 
 /* ============================================================
    ARTICLE CONTENT
@@ -434,7 +440,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 .cs-section-eyebrow {
   font-family:var(--font-mono); font-size:10px; font-weight:700;
   text-transform:uppercase; letter-spacing:0.14em;
-  color:var(--text-tertiary); margin-bottom:var(--s3);
+  color:var(--text-secondary); margin-bottom:var(--s3);
 }
 .cs-section-title {
   font-size:var(--text-3xl); font-weight:800;
@@ -476,7 +482,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 }
 .pull-quote-attr {
   font-family:var(--font-mono); font-size:var(--text-xs);
-  color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em;
+  color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.1em;
 }
 
 /* Image blocks */
@@ -487,11 +493,11 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 }
 .cs-img-inner {
   width:100%; display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-mono); font-size:var(--text-sm); color:var(--text-tertiary);
+  font-family:var(--font-mono); font-size:var(--text-sm); color:var(--text-secondary);
   text-transform:uppercase; letter-spacing:0.08em;
 }
 .cs-img-caption {
-  font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary);
+  font-family:var(--font-mono); font-size:10px; color:var(--text-secondary);
   margin-top:var(--s3); text-align:center;
   text-transform:uppercase; letter-spacing:0.08em;
 }
@@ -538,8 +544,8 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 .palette-color { height:88px; }
 .palette-info { padding:var(--s3) var(--s4); background:var(--bg-surface); }
 .palette-name { font-size:var(--text-xs); font-weight:700; margin-bottom:2px; }
-.palette-hex { font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary); }
-.palette-role { font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary); margin-top:2px; text-transform:uppercase; letter-spacing:0.07em; }
+.palette-hex { font-family:var(--font-mono); font-size:10px; color:var(--text-secondary); }
+.palette-role { font-family:var(--font-mono); font-size:10px; color:var(--text-secondary); margin-top:2px; text-transform:uppercase; letter-spacing:0.07em; }
 
 /* Type specimen for brand */
 .brand-type-specimen {
@@ -549,7 +555,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 .bts-header {
   padding:var(--s4) var(--s6); background:var(--bg-subtle);
   border-bottom:1px solid var(--border-subtle);
-  font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary);
+  font-family:var(--font-mono); font-size:10px; color:var(--text-secondary);
   text-transform:uppercase; letter-spacing:0.1em;
   display:flex; justify-content:space-between; align-items:center;
 }
@@ -561,7 +567,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 .bts-sub {
   font-size:var(--text-lg); color:var(--text-secondary); line-height:1.65; margin-bottom:var(--s4);
 }
-.bts-mono { font-family:var(--font-mono); font-size:var(--text-sm); color:var(--text-tertiary); }
+.bts-mono { font-family:var(--font-mono); font-size:var(--text-sm); color:var(--text-secondary); }
 
 /* Outcome stats */
 .outcome-grid {
@@ -582,7 +588,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 }
 .outcome-label {
   font-family:var(--font-mono); font-size:10px; font-weight:700;
-  text-transform:uppercase; letter-spacing:0.1em; color:var(--text-tertiary);
+  text-transform:uppercase; letter-spacing:0.1em; color:var(--text-secondary);
 }
 
 /* Process timeline */
@@ -608,7 +614,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 .timeline-content {}
 .timeline-week {
   font-family:var(--font-mono); font-size:10px; font-weight:700;
-  text-transform:uppercase; letter-spacing:0.1em; color:var(--text-tertiary);
+  text-transform:uppercase; letter-spacing:0.1em; color:var(--text-secondary);
   margin-bottom:var(--s2);
 }
 .timeline-title { font-size:var(--text-lg); font-weight:700; margin-bottom:var(--s2); }
@@ -645,7 +651,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 }
 .app-label { padding:var(--s4); }
 .app-name { font-size:var(--text-sm); font-weight:700; margin-bottom:2px; }
-.app-type { font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.08em; }
+.app-type { font-family:var(--font-mono); font-size:10px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.08em; }
 
 /* Next project nav */
 .next-project {
@@ -665,7 +671,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 .next-project-prev:hover, .next-project-next:hover { background:var(--bg-subtle); }
 .next-dir {
   font-family:var(--font-mono); font-size:10px; font-weight:700;
-  text-transform:uppercase; letter-spacing:0.1em; color:var(--text-tertiary);
+  text-transform:uppercase; letter-spacing:0.1em; color:var(--text-secondary);
   display:flex; align-items:center; gap:var(--s2);
 }
 .next-title {
@@ -687,7 +693,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
   padding:var(--s8) var(--s6);
   display:flex; align-items:center; justify-content:space-between;
   flex-wrap:wrap; gap:var(--s4);
-  font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary);
+  font-family:var(--font-mono); font-size:10px; color:var(--text-secondary);
 }
 .footer-simple a { color:var(--text-secondary); transition:color var(--dur-fast); }
 .footer-simple a:hover { color:var(--brand-crimson); }
@@ -1015,9 +1021,9 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
         </div>
 
         <div class="cs-callout cs-callout-info">
-          <svg class="cs-callout-icon" viewBox="0 0 24 24" fill="none" stroke="oklch(42% 0.12 212.1)" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <svg class="cs-callout-icon" viewBox="0 0 24 24" fill="none" stroke="var(--brand-cyan)" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
           <div>
-            <div class="cs-callout-title" style="color:oklch(42% 0.12 212.1)">Type decision rationale</div>
+            <div class="cs-callout-title" style="color:var(--brand-cyan)">Type decision rationale</div>
             <div class="cs-callout-body">The mono typeface does double duty: it carries catalog numbers and technical metadata at small sizes while also functioning as a design element in its own right at large sizes. Electronic music culture already reads mono as a meaningful signal - it references both equipment displays and early computer interfaces that shaped the aesthetic.</div>
           </div>
         </div>
@@ -1032,7 +1038,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 
         <div class="app-grid" role="list" aria-label="Brand applications">
 
-          <article class="app-card" role="listitem">
+          <div class="app-card" role="listitem">
             <div class="app-thumb" style="background:oklch(12% 0.025 300)">
               <div class="app-thumb-bg" aria-hidden="true"></div>
               <div style="text-align:center;position:relative;z-index:1">
@@ -1044,9 +1050,9 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
               <div class="app-name">Streaming profile</div>
               <div class="app-type">Spotify / Apple Music</div>
             </div>
-          </article>
+          </div>
 
-          <article class="app-card" role="listitem">
+          <div class="app-card" role="listitem">
             <div class="app-thumb" style="background:linear-gradient(135deg,oklch(12% 0.025 300),oklch(22% 0.04 290))">
               <div class="app-thumb-bg" aria-hidden="true"></div>
               <div style="position:relative;z-index:1;text-align:center">
@@ -1058,9 +1064,9 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
               <div class="app-name">Vinyl sleeve</div>
               <div class="app-type">12" gatefold</div>
             </div>
-          </article>
+          </div>
 
-          <article class="app-card" role="listitem">
+          <div class="app-card" role="listitem">
             <div class="app-thumb" style="background:oklch(92% 0.008 60)">
               <div class="app-thumb-bg" style="background-image:linear-gradient(oklch(0% 0 0 / 0.04) 1px,transparent 1px),linear-gradient(90deg,oklch(0% 0 0 / 0.04) 1px,transparent 1px)" aria-hidden="true"></div>
               <div style="position:relative;z-index:1;text-align:center;padding:var(--s4)">
@@ -1073,9 +1079,9 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
               <div class="app-name">Press kit cover</div>
               <div class="app-type">PDF / digital</div>
             </div>
-          </article>
+          </div>
 
-          <article class="app-card" role="listitem">
+          <div class="app-card" role="listitem">
             <div class="app-thumb" style="background:oklch(18% 0.03 290)">
               <div class="app-thumb-bg" aria-hidden="true"></div>
               <div style="position:relative;z-index:1;text-align:center">
@@ -1089,9 +1095,9 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
               <div class="app-name">Merchandise</div>
               <div class="app-type">Apparel + accessories</div>
             </div>
-          </article>
+          </div>
 
-          <article class="app-card" role="listitem">
+          <div class="app-card" role="listitem">
             <div class="app-thumb" style="background:oklch(12% 0.025 300)">
               <div class="app-thumb-bg" aria-hidden="true"></div>
               <div style="position:relative;z-index:1;width:100%;padding:var(--s4)">
@@ -1104,9 +1110,9 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
               <div class="app-name">Social asset</div>
               <div class="app-type">Instagram / X</div>
             </div>
-          </article>
+          </div>
 
-          <article class="app-card" role="listitem">
+          <div class="app-card" role="listitem">
             <div class="app-thumb" style="background:linear-gradient(135deg,#F0243E,oklch(38% 0.129 295.1))">
               <div class="app-thumb-bg" aria-hidden="true"></div>
               <div style="position:relative;z-index:1;text-align:center">
@@ -1118,7 +1124,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
               <div class="app-name">Event badge</div>
               <div class="app-type">Lanyard / wristband</div>
             </div>
-          </article>
+          </div>
 
         </div>
 
@@ -1149,7 +1155,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
             <div class="outcome-label">Illustrative applications</div>
           </div>
           <div class="outcome-card" role="listitem">
-            <div class="outcome-num" style="color:var(--brand-purple)">Low</div>
+            <div class="outcome-num" style="color:var(--brand-cyan)">Low</div>
             <div class="outcome-label">Clarifications after handoff</div>
           </div>
         </div>
@@ -1179,7 +1185,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
         <!-- CTA -->
         <div style="margin-top:var(--s12);padding:var(--s8);background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--r-2xl);display:flex;align-items:center;justify-content:space-between;gap:var(--s6);flex-wrap:wrap">
           <div>
-            <div style="font-family:var(--font-mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-tertiary);margin-bottom:var(--s2)">Work with me</div>
+            <div style="font-family:var(--font-mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-secondary);margin-bottom:var(--s2)">Work with me</div>
             <div style="font-size:var(--text-2xl);font-weight:800;letter-spacing:-0.025em;line-height:1.1">Got a brand that needs<br>this kind of work?</div>
           </div>
           <a href="mailto:hello@dade.studio" class="btn btn-primary btn-lg" style="flex-shrink:0">

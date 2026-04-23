@@ -167,7 +167,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 
 .sidebar-section-title {
   font-family:var(--font-mono); font-size:10px; font-weight:800;
-  text-transform:uppercase; letter-spacing:0.14em; color:var(--text-tertiary);
+  text-transform:uppercase; letter-spacing:0.14em; color:var(--text-secondary);
   margin-bottom:var(--s2);
 }
 
@@ -182,7 +182,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 .sidebar-links a:hover { color:var(--text-primary); background:var(--bg-subtle); }
 .sidebar-links a.active { color:var(--brand-crimson); background:var(--accent-crimson-bg); font-weight:600; }
 .sidebar-num {
-  font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary);
+  font-family:var(--font-mono); font-size:10px; color:var(--text-secondary);
   flex-shrink:0; min-width:18px;
 }
 
@@ -229,7 +229,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 }
 .doc-meta {
   display:flex; flex-wrap:wrap; gap:var(--s3); align-items:center;
-  font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary);
+  font-family:var(--font-mono); font-size:10px; color:var(--text-secondary);
 }
 .doc-meta-pill {
   background:var(--bg-subtle); border:1px solid var(--border-subtle);
@@ -250,7 +250,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 
 .section-marker {
   font-family:var(--font-mono); font-size:10px; font-weight:700;
-  text-transform:uppercase; letter-spacing:0.14em; color:var(--text-tertiary);
+  text-transform:uppercase; letter-spacing:0.14em; color:var(--text-secondary);
   margin-bottom:var(--s3);
 }
 .section-heading {
@@ -287,11 +287,11 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 }
 .code-filename {
   font-family:var(--font-mono); font-size:10px; font-weight:600;
-  color:oklch(55% 0.015 240); text-transform:uppercase; letter-spacing:0.08em;
+  color:oklch(65% 0.015 240); text-transform:uppercase; letter-spacing:0.08em;
 }
 .code-lang {
   font-family:var(--font-mono); font-size:10px;
-  color:oklch(45% 0.012 240); text-transform:uppercase; letter-spacing:0.1em;
+  color:oklch(65% 0.012 240); text-transform:uppercase; letter-spacing:0.1em;
 }
 .code-block pre {
   padding:var(--s5) var(--s6);
@@ -305,7 +305,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 .t { color:var(--brand-crimson); }          /* var names / keys */
 .v { color:oklch(72% 0.12 295.1); }         /* values - purple */
 .s { color:var(--brand-yellow); }            /* strings */
-.c { color:oklch(48% 0.015 240); font-style:italic; } /* comments */
+.c { color:oklch(62% 0.015 240); font-style:italic; } /* comments */
 .k { color:var(--brand-cyan); }             /* keywords */
 .n { color:oklch(72% 0.12 17.2); }          /* numbers */
 .p { color:oklch(75% 0.015 240); }          /* punctuation */
@@ -320,7 +320,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 table { width:100%; border-collapse:collapse; font-size:var(--text-sm); }
 th {
   background:var(--bg-subtle); font-weight:700; font-size:10px;
-  text-transform:uppercase; letter-spacing:0.07em; color:var(--text-tertiary);
+  text-transform:uppercase; letter-spacing:0.07em; color:var(--text-secondary);
   padding:var(--s3) var(--s5); text-align:left;
   border-bottom:1px solid var(--border-subtle);
 }
@@ -368,6 +368,15 @@ td code, th code {
 .badge-neutral { background:var(--bg-muted); color:var(--text-secondary); border-color:var(--border-default); }
 .badge-ok      { background:var(--success-bg); color:var(--success); border-color:color-mix(in srgb,var(--success) 20%,transparent); }
 .badge-warn    { background:var(--warning-bg); color:var(--warning); border-color:color-mix(in srgb,var(--warning) 25%,transparent); }
+[data-theme="dark"] .badge-cyan    { color:var(--brand-cyan); }
+[data-theme="dark"] .badge-yellow  { color:var(--brand-yellow); }
+[data-theme="dark"] .badge-purple  { color:var(--brand-cyan); }
+[data-theme="dark"] .badge-crimson { color:var(--text-primary); }
+[data-theme="dark"] .callout-info .callout-title  { color:var(--brand-cyan) !important; }
+[data-theme="dark"] .callout-brand .callout-title { color:var(--text-primary) !important; }
+[data-theme="dark"] .dont-header   { color:var(--brand-crimson); }
+[data-theme="dark"] code           { background:var(--bg-surface); }
+[data-theme="dark"] .sidebar-links a.active { color:var(--text-primary); }
 
 /* ============================================================
    TOKEN TABLE COLOUR DOTS
@@ -407,7 +416,7 @@ td code, th code {
 .budget-target { font-family:var(--font-mono); font-size:var(--text-sm); color:var(--brand-crimson); font-weight:700; min-width:80px; }
 .budget-bar-wrap { flex:1; height:8px; background:var(--bg-muted); border-radius:4px; overflow:hidden; }
 .budget-bar { height:100%; border-radius:4px; }
-.budget-note { font-size:var(--text-xs); color:var(--text-tertiary); min-width:180px; font-family:var(--font-mono); }
+.budget-note { font-size:var(--text-xs); color:var(--text-secondary); min-width:180px; font-family:var(--font-mono); }
 
 /* ============================================================
    FILE TREE
@@ -443,7 +452,7 @@ td code, th code {
   padding:var(--s3) var(--s4);
   background:var(--bg-subtle); border-bottom:1px solid var(--border-subtle);
   font-family:var(--font-mono); font-size:10px; font-weight:700;
-  text-transform:uppercase; letter-spacing:0.1em; color:var(--text-tertiary);
+  text-transform:uppercase; letter-spacing:0.1em; color:var(--text-secondary);
 }
 .naming-body { padding:var(--s4); display:flex; flex-direction:column; gap:var(--s2); }
 .naming-row { display:flex; gap:var(--s3); align-items:flex-start; font-size:var(--text-xs); }
@@ -508,7 +517,7 @@ code {
   margin-top:var(--s16);
   display:flex; align-items:center; justify-content:space-between;
   flex-wrap:wrap; gap:var(--s4);
-  font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary);
+  font-family:var(--font-mono); font-size:10px; color:var(--text-secondary);
 }
 .doc-footer a { color:var(--text-secondary); transition:color var(--dur-fast); }
 .doc-footer a:hover { color:var(--brand-crimson); }
@@ -525,7 +534,7 @@ code {
       <img src="/assets/brand/logo-d.png" alt="Dade Studio" width="40" height="40" style="width:30px;height:30px">
       <div>
         <div style="font-weight:700;font-size:var(--text-sm);letter-spacing:-0.02em">dade.studio</div>
-        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.1em">Handoff v1.0</div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.1em">Handoff v1.0</div>
       </div>
     </div>
 
@@ -896,9 +905,9 @@ code {
       </div>
 
       <div class="callout callout-info">
-        <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="oklch(42% 0.12 212.1)" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="var(--brand-cyan)" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
         <div>
-          <div class="callout-title" style="color:oklch(42% 0.12 212.1)">Self-hosted, not CDN</div>
+          <div class="callout-title" style="color:var(--brand-cyan)">Self-hosted, not CDN</div>
           <div class="callout-body">Both variable fonts ship from <code>/assets/fonts/</code> on the same origin as the HTML. Source: Inter Variable from <code>rsms.me/inter/</code>, JetBrains Mono variable from the JetBrains fonts repo. No Google Fonts, no third-party origins, no preconnect handshakes. Same <code>font-display: swap</code> strategy applies.</div>
         </div>
       </div>
