@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="MaaS — Models as a Service. Deploy AI-native tools without the infrastructure headache. Claude, Open WebUI, local LLMs — production-ready from day one.">
+<title>MaaS — Models as a Service / Dade.Studio</title>
+<link rel="canonical" href="https://maas.dade.studio">
+<meta property="og:title" content="MaaS — Models as a Service">
+<meta property="og:description" content="Deploy AI-native tools without the infrastructure headache. Claude, Open WebUI, local LLMs — production-ready from day one.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://maas.dade.studio">
+<meta property="og:image" content="https://maas.dade.studio/og.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://fonts.gstatic.com/s/jetbrainsmono/v18/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yK1jKQDlA7lFhEA.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS — MaaS ships dark-first, light as toggle
+   ============================================================ */
+:root {
+  --brand-crimson: #F0243E;
+  --brand-cyan:    #5BBCD4;
+  --brand-yellow:  #F2D541;
+  --brand-purple:  #5C4B8A;
+
+  /* MaaS product accent — electric purple/cyan gradient feel */
+  --maas-glow-a:  oklch(55% 0.2 295);
+  --maas-glow-b:  oklch(65% 0.15 220);
+  --maas-glow-c:  oklch(52% 0.22 17.2);
+
+  --font-sans: InterVariable, Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --text-xs:   clamp(0.694rem,  0.67rem  + 0.12vw, 0.75rem);
+  --text-sm:   clamp(0.833rem,  0.8rem   + 0.17vw, 0.875rem);
+  --text-base: clamp(1rem,      0.95rem  + 0.25vw, 1.0625rem);
+  --text-lg:   clamp(1.125rem,  1.07rem  + 0.27vw, 1.25rem);
+  --text-xl:   clamp(1.25rem,   1.15rem  + 0.5vw,  1.5rem);
+  --text-2xl:  clamp(1.5rem,    1.3rem   + 1vw,    2rem);
+  --text-3xl:  clamp(1.875rem,  1.5rem   + 1.875vw, 2.625rem);
+  --text-4xl:  clamp(2.25rem,   1.7rem   + 2.75vw, 3.5rem);
+  --text-5xl:  clamp(3rem,      2rem     + 5vw,    5rem);
+  --text-6xl:  clamp(3.75rem,   2.5rem   + 6.25vw, 6.5rem);
+
+  --s1:.25rem; --s2:.5rem; --s3:.75rem; --s4:1rem; --s5:1.25rem;
+  --s6:1.5rem; --s8:2rem; --s10:2.5rem; --s12:3rem; --s16:4rem;
+  --s20:5rem; --s24:6rem; --s32:8rem;
+
+  --r-sm:4px; --r-md:8px; --r-lg:12px; --r-xl:20px; --r-2xl:28px; --r-full:9999px;
+
+  --ease-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast:120ms; --dur-base:200ms; --dur-slow:350ms; --dur-enter:500ms;
+
+  --w-lg:1024px; --w-xl:1280px; --w-2xl:1536px;
+}
+
+/* Dark (default for MaaS) */
+[data-theme="dark"] {
+  --bg-base:    oklch(10% 0.018 265);
+  --bg-surface: oklch(14% 0.022 265);
+  --bg-subtle:  oklch(18% 0.025 265);
+  --bg-muted:   oklch(22% 0.026 265);
+  --text-primary:   oklch(95% 0.008 240);
+  --text-secondary: oklch(68% 0.015 240);
+  --text-tertiary:  oklch(48% 0.015 240);
+  --text-inverse:   oklch(12% 0.02 260);
+  --border-subtle:  oklch(22% 0.024 265);
+  --border-default: oklch(30% 0.028 265);
+  --border-strong:  oklch(42% 0.028 265);
+  --accent-purple-bg: oklch(18% 0.06 295);
+  --accent-cyan-bg:   oklch(18% 0.05 220);
+  --accent-crimson-bg:oklch(18% 0.06 17.2);
+  --accent-yellow-bg: oklch(18% 0.05 97.3);
+  --shadow-sm: 0 1px 2px rgb(0 0 0/.4),0 1px 3px rgb(0 0 0/.3);
+  --shadow-md: 0 4px 6px rgb(0 0 0/.45),0 2px 4px rgb(0 0 0/.35);
+  --shadow-lg: 0 10px 24px rgb(0 0 0/.5),0 4px 10px rgb(0 0 0/.4);
+  --shadow-xl: 0 20px 48px rgb(0 0 0/.6),0 8px 20px rgb(0 0 0/.45);
+}
+
+/* Light override */
+[data-theme="light"] {
+  --bg-base:    oklch(98.5% 0.003 240);
+  --bg-surface: oklch(100% 0 0);
+  --bg-subtle:  oklch(95.8% 0.006 240);
+  --bg-muted:   oklch(92% 0.008 240);
+  --text-primary:   oklch(12% 0.02 260);
+  --text-secondary: oklch(38% 0.025 260);
+  --text-tertiary:  oklch(58% 0.018 260);
+  --text-inverse:   oklch(98% 0.003 240);
+  --border-subtle:  oklch(88% 0.01 240);
+  --border-default: oklch(78% 0.015 240);
+  --border-strong:  oklch(55% 0.02 240);
+  --accent-purple-bg: oklch(97% 0.015 295);
+  --accent-cyan-bg:   oklch(97% 0.015 212);
+  --accent-crimson-bg:oklch(97% 0.02 17.2);
+  --accent-yellow-bg: oklch(98% 0.02 97.3);
+  --shadow-sm: 0 1px 2px rgb(0 0 0/.06),0 1px 3px rgb(0 0 0/.04);
+  --shadow-md: 0 4px 6px rgb(0 0 0/.07),0 2px 4px rgb(0 0 0/.05);
+  --shadow-lg: 0 10px 20px rgb(0 0 0/.1),0 4px 8px rgb(0 0 0/.06);
+  --shadow-xl: 0 20px 40px rgb(0 0 0/.12),0 8px 16px rgb(0 0 0/.07);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+
+@media (prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto; }
+  *,*::before,*::after {
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+  }
+}
+
+body {
+  font-family:var(--font-sans);
+  font-size:var(--text-base);
+  line-height:1.6;
+  color:var(--text-primary);
+  background:var(--bg-base);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  font-synthesis:none;
+  overflow-x:hidden;
+  transition:background-color var(--dur-slow) var(--ease-expo), color var(--dur-slow) var(--ease-expo);
+}
+
+img,svg { display:block; max-width:100%; }
+a { color:inherit; text-decoration:none; }
+button { cursor:pointer; border:none; background:none; font:inherit; }
+ul { list-style:none; }
+
+:focus-visible { outline:2.5px solid var(--brand-cyan); outline-offset:3px; border-radius:3px; }
+
+.skip-link {
+  position:absolute; top:-100%; left:var(--s4);
+  background:var(--brand-crimson); color:#fff;
+  padding:var(--s2) var(--s4); border-radius:var(--r-md);
+  font-size:var(--text-sm); font-weight:700; z-index:9999;
+  transition:top var(--dur-fast);
+}
+.skip-link:focus { top:var(--s4); }
+
+/* ============================================================
+   GLOBAL GLOW UTILITY
+   ============================================================ */
+.glow-purple { box-shadow: 0 0 40px color-mix(in srgb, var(--brand-purple) 30%, transparent),
+                            0 0 80px color-mix(in srgb, var(--brand-purple) 15%, transparent); }
+.glow-cyan   { box-shadow: 0 0 40px color-mix(in srgb, var(--brand-cyan) 30%, transparent),
+                            0 0 80px color-mix(in srgb, var(--brand-cyan) 15%, transparent); }
+.glow-crimson{ box-shadow: 0 0 40px color-mix(in srgb, var(--brand-crimson) 25%, transparent),
+                            0 0 80px color-mix(in srgb, var(--brand-crimson) 12%, transparent); }
+
+/* ============================================================
+   BADGES + BUTTONS
+   ============================================================ */
+.badge {
+  display:inline-flex; align-items:center; gap:4px;
+  font-family:var(--font-mono); font-size:10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:0.09em;
+  padding:3px 10px; border-radius:var(--r-full); white-space:nowrap;
+  border:1px solid transparent;
+}
+.badge-purple  { background:var(--accent-purple-bg); color:var(--brand-purple); border-color:color-mix(in srgb,var(--brand-purple) 25%,transparent); }
+.badge-cyan    { background:var(--accent-cyan-bg); color:var(--brand-cyan); border-color:color-mix(in srgb,var(--brand-cyan) 25%,transparent); }
+.badge-crimson { background:var(--accent-crimson-bg); color:var(--brand-crimson); border-color:color-mix(in srgb,var(--brand-crimson) 22%,transparent); }
+.badge-yellow  { background:var(--accent-yellow-bg); color:oklch(62% 0.16 97.3); border-color:color-mix(in srgb,var(--brand-yellow) 35%,transparent); }
+.badge-neutral { background:var(--bg-muted); color:var(--text-secondary); border-color:var(--border-default); }
+.badge-online  { background:oklch(18% 0.05 145); color:oklch(65% 0.16 145); border-color:oklch(65% 0.16 145 / 0.3); }
+
+.btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--s2);
+  font-family:var(--font-sans); font-weight:600; line-height:1;
+  white-space:nowrap; border-radius:var(--r-md);
+  border:2px solid transparent; cursor:pointer; min-height:44px;
+  text-decoration:none;
+  transition:background-color var(--dur-fast) var(--ease-expo),
+              color var(--dur-fast) var(--ease-expo),
+              border-color var(--dur-fast) var(--ease-expo),
+              box-shadow var(--dur-base) var(--ease-expo),
+              transform var(--dur-fast) var(--ease-spring);
+}
+.btn:active { transform:scale(0.985); }
+.btn-primary  { background:var(--brand-crimson); color:#fff; border-color:var(--brand-crimson); padding:var(--s3) var(--s6); font-size:var(--text-sm); }
+.btn-primary:hover  { background:oklch(44% 0.22 17.2); box-shadow:0 0 0 4px color-mix(in srgb,var(--brand-crimson) 20%,transparent); }
+.btn-cyan     { background:var(--brand-cyan); color:oklch(10% 0.018 265); border-color:var(--brand-cyan); padding:var(--s3) var(--s6); font-size:var(--text-sm); }
+.btn-cyan:hover  { background:oklch(68% 0.1 212); box-shadow:0 0 0 4px color-mix(in srgb,var(--brand-cyan) 22%,transparent); }
+.btn-ghost    { background:transparent; color:var(--text-primary); border-color:var(--border-default); padding:var(--s3) var(--s6); font-size:var(--text-sm); }
+.btn-ghost:hover { border-color:var(--border-strong); background:var(--bg-subtle); }
+.btn-lg { padding:var(--s4) var(--s8); font-size:var(--text-base); border-radius:var(--r-lg); }
+.btn-xl { padding:var(--s5) var(--s10); font-size:var(--text-lg); border-radius:var(--r-xl); }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.site-nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  background:color-mix(in srgb, var(--bg-base) 82%, transparent);
+  backdrop-filter:blur(20px) saturate(1.6);
+  border-bottom:1px solid var(--border-subtle);
+  transition:all var(--dur-slow) var(--ease-expo);
+}
+.nav-inner {
+  max-width:var(--w-2xl); margin:0 auto;
+  padding:0 var(--s6);
+  display:flex; align-items:center; justify-content:space-between;
+  height:64px; gap:var(--s4);
+}
+.nav-logo {
+  display:flex; align-items:center; gap:var(--s3);
+  font-weight:700; font-size:var(--text-sm); letter-spacing:-0.025em;
+  flex-shrink:0;
+}
+.nav-logo-sub {
+  font-family:var(--font-mono); font-size:10px; font-weight:600;
+  text-transform:uppercase; letter-spacing:0.1em;
+  color:var(--brand-cyan); margin-left:var(--s1);
+}
+.nav-links { display:flex; align-items:center; gap:2px; }
+.nav-links a {
+  display:flex; align-items:center; padding:var(--s2) var(--s4); min-height:44px;
+  font-size:var(--text-sm); font-weight:500; color:var(--text-secondary);
+  border-radius:var(--r-md);
+  transition:color var(--dur-fast), background var(--dur-fast);
+}
+.nav-links a:hover { color:var(--text-primary); background:var(--bg-subtle); }
+.nav-right { display:flex; align-items:center; gap:var(--s3); }
+.theme-btn {
+  display:flex; align-items:center; gap:var(--s2);
+  padding:var(--s2) var(--s3); min-height:44px;
+  background:var(--bg-subtle); border:1px solid var(--border-default);
+  border-radius:var(--r-full);
+  font-size:var(--text-xs); font-weight:600; color:var(--text-secondary);
+  transition:all var(--dur-fast) var(--ease-expo);
+}
+.theme-btn:hover { background:var(--bg-muted); color:var(--text-primary); }
+
+@media (max-width:767px) { .nav-links { display:none; } }
+
+/* ============================================================
+   HERO — MaaS
+   ============================================================ */
+.hero {
+  padding-top:64px;
+  min-height:100svh;
+  display:flex; flex-direction:column; justify-content:center;
+  position:relative; overflow:hidden;
+}
+
+/* Multi-layer ambient glow field */
+.hero-field {
+  position:absolute; inset:0; pointer-events:none;
+  background:var(--bg-base);
+}
+.hero-field::before {
+  content:'';
+  position:absolute; top:-20%; left:-10%; width:70%; height:80%;
+  background:radial-gradient(ellipse at center,
+    color-mix(in srgb, var(--brand-purple) 18%, transparent) 0%,
+    transparent 65%);
+}
+.hero-field::after {
+  content:'';
+  position:absolute; bottom:-15%; right:-5%; width:60%; height:75%;
+  background:radial-gradient(ellipse at center,
+    color-mix(in srgb, var(--brand-cyan) 12%, transparent) 0%,
+    transparent 65%);
+}
+.hero-field-mid {
+  position:absolute; top:30%; left:40%; width:50%; height:60%;
+  background:radial-gradient(ellipse at center,
+    color-mix(in srgb, var(--brand-crimson) 8%, transparent) 0%,
+    transparent 65%);
+  pointer-events:none;
+}
+
+/* Grid lines */
+.hero-grid {
+  position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size:64px 64px;
+  opacity:0.4;
+  mask-image:radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+
+.hero-inner {
+  position:relative; z-index:1;
+  max-width:var(--w-2xl); margin:0 auto;
+  padding:var(--s20) var(--s6) var(--s16);
+  display:grid;
+  grid-template-columns:1fr 420px;
+  gap:var(--s12); align-items:center;
+}
+@media (max-width:1023px) {
+  .hero-inner { grid-template-columns:1fr; }
+  .hero-terminal { display:none; }
+}
+
+.hero-status {
+  display:inline-flex; align-items:center; gap:var(--s2);
+  font-family:var(--font-mono); font-size:var(--text-xs); font-weight:600;
+  text-transform:uppercase; letter-spacing:0.12em;
+  margin-bottom:var(--s6);
+}
+.status-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:oklch(65% 0.16 145);
+  animation:pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%,100% { box-shadow:0 0 0 0 oklch(65% 0.16 145 / 0.6); }
+  50%      { box-shadow:0 0 0 6px oklch(65% 0.16 145 / 0); }
+}
+@media (prefers-reduced-motion:reduce) { .status-dot { animation:none; } }
+
+.hero-headline {
+  font-size:var(--text-6xl);
+  font-weight:900; letter-spacing:-0.04em; line-height:0.95;
+  margin-bottom:var(--s6);
+}
+.hero-headline .word-maas {
+  display:inline-block;
+  background:linear-gradient(135deg, var(--brand-cyan), var(--brand-purple));
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.hero-headline .word-plain { color:var(--text-primary); display:block; }
+
+.hero-sub {
+  font-size:var(--text-xl); color:var(--text-secondary);
+  line-height:1.65; max-width:48ch; margin-bottom:var(--s8);
+}
+
+.hero-actions {
+  display:flex; flex-wrap:wrap; gap:var(--s4); margin-bottom:var(--s10);
+}
+
+.hero-social-proof {
+  display:flex; align-items:center; gap:var(--s4); flex-wrap:wrap;
+}
+.proof-avatars {
+  display:flex;
+}
+.proof-avatar {
+  width:32px; height:32px; border-radius:var(--r-full);
+  border:2px solid var(--bg-base);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:800; color:#fff;
+  margin-left:-8px; flex-shrink:0;
+}
+.proof-avatars .proof-avatar:first-child { margin-left:0; }
+.proof-text {
+  font-size:var(--text-xs); color:var(--text-secondary); line-height:1.5;
+}
+.proof-text strong { color:var(--text-primary); }
+
+/* Terminal / dashboard widget */
+.hero-terminal {
+  background:var(--bg-surface);
+  border:1px solid var(--border-subtle);
+  border-radius:var(--r-2xl); overflow:hidden;
+  box-shadow:var(--shadow-xl);
+  animation:float 6s ease-in-out infinite;
+}
+@keyframes float {
+  0%,100% { transform:translateY(0); }
+  50%      { transform:translateY(-8px); }
+}
+@media (prefers-reduced-motion:reduce) { .hero-terminal { animation:none; } }
+
+.terminal-bar {
+  padding:var(--s3) var(--s4);
+  background:var(--bg-muted);
+  border-bottom:1px solid var(--border-subtle);
+  display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
+}
+.terminal-dots { display:flex; gap:6px; }
+.t-dot { width:11px; height:11px; border-radius:50%; }
+.terminal-title {
+  font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary);
+  text-transform:uppercase; letter-spacing:0.1em;
+}
+.terminal-status { display:flex; align-items:center; gap:6px; }
+.t-online { width:7px; height:7px; border-radius:50%; background:oklch(65% 0.16 145); }
+.t-online-label { font-family:var(--font-mono); font-size:10px; color:oklch(65% 0.16 145); text-transform:uppercase; letter-spacing:0.08em; }
+
+.terminal-body {
+  padding:var(--s5);
+  font-family:var(--font-mono);
+  font-size:clamp(0.65rem, 0.6rem + 0.25vw, 0.75rem);
+  line-height:1.85;
+  color:var(--text-secondary);
+}
+.t-line { display:flex; gap:var(--s2); align-items:flex-start; }
+.t-prompt { color:var(--brand-cyan); flex-shrink:0; user-select:none; }
+.t-cmd { color:var(--text-primary); }
+.t-out { color:var(--text-tertiary); padding-left:var(--s4); }
+.t-success { color:oklch(65% 0.16 145); }
+.t-highlight { color:var(--brand-yellow); }
+.t-cursor {
+  display:inline-block; width:8px; height:1.1em;
+  background:var(--brand-cyan); vertical-align:text-bottom;
+  animation:blink 1.2s step-end infinite;
+}
+@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+@media (prefers-reduced-motion:reduce) { .t-cursor { animation:none; } }
+
+/* Dashboard mini-cards inside terminal */
+.terminal-cards {
+  display:grid; grid-template-columns:1fr 1fr; gap:var(--s2);
+  padding:var(--s4) var(--s5); border-top:1px solid var(--border-subtle);
+}
+.t-card {
+  background:var(--bg-subtle); border:1px solid var(--border-subtle);
+  border-radius:var(--r-lg); padding:var(--s3) var(--s4);
+}
+.t-card-label { font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:4px; }
+.t-card-value { font-size:var(--text-lg); font-weight:800; letter-spacing:-0.02em; line-height:1; }
+
+/* ============================================================
+   LOGOS / SOCIAL PROOF STRIP
+   ============================================================ */
+.proof-strip {
+  border-top:1px solid var(--border-subtle);
+  border-bottom:1px solid var(--border-subtle);
+  padding:var(--s5) var(--s6);
+  background:var(--bg-surface);
+}
+.proof-strip-inner {
+  max-width:var(--w-2xl); margin:0 auto;
+  display:flex; align-items:center; gap:var(--s10); flex-wrap:wrap;
+}
+.proof-strip-label {
+  font-family:var(--font-mono); font-size:10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:0.12em; color:var(--text-tertiary);
+  white-space:nowrap;
+}
+.proof-strip-logos {
+  display:flex; align-items:center; gap:var(--s8); flex-wrap:wrap; flex:1;
+}
+.proof-logo {
+  font-family:var(--font-mono); font-size:var(--text-xs); font-weight:700;
+  color:var(--text-tertiary); letter-spacing:0.06em;
+  display:flex; align-items:center; gap:var(--s2);
+  transition:color var(--dur-fast);
+}
+.proof-logo:hover { color:var(--text-secondary); }
+.proof-logo svg { opacity:0.5; }
+
+/* ============================================================
+   SECTION COMMON
+   ============================================================ */
+.section {
+  padding:var(--s24) var(--s6);
+  max-width:var(--w-2xl); margin:0 auto;
+}
+.section-eyebrow {
+  font-family:var(--font-mono); font-size:10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:0.14em;
+  color:var(--text-tertiary); margin-bottom:var(--s3);
+}
+.section-title {
+  font-size:var(--text-4xl); font-weight:800;
+  letter-spacing:-0.03em; line-height:1.05;
+  margin-bottom:var(--s5);
+}
+.section-title em { font-style:normal; color:var(--brand-cyan); }
+.section-body { font-size:var(--text-lg); color:var(--text-secondary); line-height:1.65; max-width:52ch; }
+
+/* ============================================================
+   FEATURE BENTO GRID
+   ============================================================ */
+.bento {
+  display:grid;
+  grid-template-columns:repeat(12, 1fr);
+  grid-auto-rows:auto;
+  gap:var(--s3);
+  margin-top:var(--s12);
+}
+
+.bento-cell {
+  background:var(--bg-surface);
+  border:1px solid var(--border-subtle);
+  border-radius:var(--r-2xl); padding:var(--s6);
+  overflow:hidden; position:relative;
+  transition:border-color var(--dur-base) var(--ease-expo),
+              box-shadow var(--dur-base) var(--ease-expo);
+}
+.bento-cell:hover { border-color:var(--border-strong); }
+
+/* Bento spans */
+.b-span-8  { grid-column:span 8; }
+.b-span-4  { grid-column:span 4; }
+.b-span-6  { grid-column:span 6; }
+.b-span-5  { grid-column:span 5; }
+.b-span-7  { grid-column:span 7; }
+.b-span-12 { grid-column:span 12; }
+
+@media (max-width:1023px) {
+  .b-span-8,.b-span-4,.b-span-6,.b-span-5,.b-span-7 { grid-column:span 12; }
+}
+@media (min-width:640px) and (max-width:1023px) {
+  .b-span-8,.b-span-4,.b-span-6 { grid-column:span 6; }
+}
+
+.bento-eyebrow {
+  font-family:var(--font-mono); font-size:10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:0.12em;
+  color:var(--text-tertiary); margin-bottom:var(--s3);
+}
+.bento-title {
+  font-size:var(--text-2xl); font-weight:800;
+  letter-spacing:-0.025em; line-height:1.1; margin-bottom:var(--s3);
+}
+.bento-desc {
+  font-size:var(--text-sm); color:var(--text-secondary); line-height:1.7;
+}
+.bento-bg-glow {
+  position:absolute; border-radius:50%; pointer-events:none;
+  filter:blur(40px); opacity:0.15;
+}
+
+/* Feature: model list */
+.model-list {
+  display:flex; flex-direction:column; gap:var(--s2); margin-top:var(--s4);
+}
+.model-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:var(--s3) var(--s4);
+  background:var(--bg-subtle); border:1px solid var(--border-subtle);
+  border-radius:var(--r-lg);
+}
+.model-name { font-family:var(--font-mono); font-size:var(--text-xs); font-weight:700; }
+.model-tag  { font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary); }
+
+/* Feature: latency meter */
+.latency-bars {
+  display:flex; flex-direction:column; gap:var(--s3); margin-top:var(--s4);
+}
+.lat-row { display:flex; flex-direction:column; gap:var(--s1); }
+.lat-header { display:flex; justify-content:space-between; align-items:center; }
+.lat-name { font-family:var(--font-mono); font-size:10px; color:var(--text-secondary); }
+.lat-val  { font-family:var(--font-mono); font-size:10px; font-weight:700; }
+.lat-track {
+  height:6px; background:var(--bg-muted); border-radius:3px; overflow:hidden;
+}
+.lat-fill { height:100%; border-radius:3px; }
+
+/* Feature: code snippet */
+.code-snippet {
+  background:var(--bg-muted); border:1px solid var(--border-subtle);
+  border-radius:var(--r-lg); padding:var(--s4) var(--s5);
+  font-family:var(--font-mono); font-size:clamp(0.65rem,0.6rem+0.2vw,0.75rem);
+  line-height:1.8; overflow-x:auto; margin-top:var(--s4);
+}
+.c-comment { color:var(--text-tertiary); }
+.c-key     { color:var(--brand-purple); }
+.c-str     { color:var(--brand-yellow); }
+.c-fn      { color:var(--brand-cyan); }
+.c-num     { color:oklch(72% 0.12 17.2); }
+
+/* Feature: security badges */
+.sec-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:var(--s2); margin-top:var(--s4);
+}
+.sec-item {
+  display:flex; align-items:center; gap:var(--s3);
+  padding:var(--s3) var(--s4);
+  background:var(--bg-subtle); border:1px solid var(--border-subtle); border-radius:var(--r-lg);
+}
+.sec-icon { flex-shrink:0; }
+.sec-name { font-size:var(--text-xs); font-weight:700; }
+.sec-sub  { font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary); }
+
+/* ============================================================
+   PRICING
+   ============================================================ */
+.pricing-wrap {
+  margin-top:var(--s12);
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+  gap:var(--s4);
+  align-items:start;
+}
+
+.price-card {
+  background:var(--bg-surface);
+  border:1.5px solid var(--border-subtle);
+  border-radius:var(--r-2xl); padding:var(--s8);
+  position:relative;
+  transition:border-color var(--dur-base), box-shadow var(--dur-base);
+}
+.price-card:hover { border-color:var(--border-strong); box-shadow:var(--shadow-lg); }
+
+.price-card.featured {
+  border-color:var(--brand-cyan);
+  background:color-mix(in srgb, var(--brand-cyan) 4%, var(--bg-surface));
+}
+.price-card.featured:hover { box-shadow:var(--shadow-lg), 0 0 32px color-mix(in srgb,var(--brand-cyan) 15%,transparent); }
+
+.price-badge {
+  position:absolute; top:-13px; left:50%; transform:translateX(-50%);
+  background:linear-gradient(135deg, var(--brand-cyan), var(--brand-purple));
+  color:#fff; font-family:var(--font-mono); font-size:10px; font-weight:800;
+  text-transform:uppercase; letter-spacing:0.1em;
+  padding:4px 14px; border-radius:var(--r-full); white-space:nowrap;
+}
+.price-tier {
+  font-family:var(--font-mono); font-size:10px; font-weight:800;
+  text-transform:uppercase; letter-spacing:0.1em; color:var(--text-tertiary); margin-bottom:var(--s3);
+}
+.price-amount {
+  font-size:var(--text-5xl); font-weight:900;
+  letter-spacing:-0.04em; line-height:1; margin-bottom:var(--s1);
+}
+.price-amount sub { font-size:var(--text-base); font-weight:400; color:var(--text-tertiary); vertical-align:middle; }
+.price-period { font-size:var(--text-xs); color:var(--text-tertiary); margin-bottom:var(--s6); }
+.price-desc { font-size:var(--text-sm); color:var(--text-secondary); line-height:1.65; margin-bottom:var(--s6); }
+
+.price-features { list-style:none; display:flex; flex-direction:column; gap:var(--s3); margin-bottom:var(--s8); }
+.price-features li {
+  display:flex; gap:var(--s3); align-items:flex-start;
+  font-size:var(--text-sm); color:var(--text-secondary); line-height:1.5;
+}
+.price-features li svg { flex-shrink:0; margin-top:2px; }
+.price-features li.included { color:var(--text-primary); }
+.price-features li.excluded { color:var(--text-tertiary); text-decoration:line-through; }
+
+.price-divider {
+  font-family:var(--font-mono); font-size:10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:0.1em; color:var(--text-tertiary);
+  margin:var(--s5) 0 var(--s4); display:flex; align-items:center; gap:var(--s3);
+}
+.price-divider::before,.price-divider::after {
+  content:''; flex:1; height:1px; background:var(--border-subtle);
+}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq-list {
+  display:flex; flex-direction:column; gap:var(--s2);
+  margin-top:var(--s10); max-width:720px;
+}
+.faq-item {
+  background:var(--bg-surface);
+  border:1px solid var(--border-subtle);
+  border-radius:var(--r-xl); overflow:hidden;
+}
+.faq-q {
+  width:100%; padding:var(--s5) var(--s6);
+  display:flex; align-items:center; justify-content:space-between; gap:var(--s4);
+  font-size:var(--text-base); font-weight:700; text-align:left;
+  color:var(--text-primary); cursor:pointer;
+  transition:background var(--dur-fast);
+}
+.faq-q:hover { background:var(--bg-subtle); }
+.faq-icon {
+  flex-shrink:0; transition:transform var(--dur-base) var(--ease-expo);
+  color:var(--text-tertiary);
+}
+.faq-item.open .faq-icon { transform:rotate(45deg); }
+.faq-a {
+  max-height:0; overflow:hidden;
+  transition:max-height var(--dur-slow) var(--ease-expo), padding var(--dur-slow) var(--ease-expo);
+  font-size:var(--text-sm); color:var(--text-secondary); line-height:1.75;
+  padding:0 var(--s6);
+}
+.faq-item.open .faq-a { max-height:400px; padding:0 var(--s6) var(--s5); }
+
+/* ============================================================
+   SOCIAL PROOF / TESTIMONIALS
+   ============================================================ */
+.testimonials {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
+  gap:var(--s4); margin-top:var(--s10);
+}
+.t-card {
+  background:var(--bg-surface);
+  border:1px solid var(--border-subtle);
+  border-radius:var(--r-xl); padding:var(--s6);
+  display:flex; flex-direction:column; gap:var(--s5);
+}
+.t-stars { display:flex; gap:3px; color:var(--brand-yellow); }
+.t-quote { font-size:var(--text-sm); color:var(--text-secondary); line-height:1.75; flex:1; }
+.t-author { display:flex; align-items:center; gap:var(--s3); }
+.t-avatar {
+  width:38px; height:38px; border-radius:var(--r-full);
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:800; color:#fff; flex-shrink:0;
+}
+.t-name { font-size:var(--text-sm); font-weight:700; }
+.t-role { font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.07em; }
+
+/* ============================================================
+   FINAL CTA
+   ============================================================ */
+.cta-section {
+  position:relative; overflow:hidden;
+  background:var(--bg-surface);
+  border-top:1px solid var(--border-subtle);
+  border-bottom:1px solid var(--border-subtle);
+}
+.cta-bg {
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse at 20% 50%, color-mix(in srgb,var(--brand-purple) 20%,transparent), transparent 55%),
+    radial-gradient(ellipse at 80% 50%, color-mix(in srgb,var(--brand-cyan) 15%,transparent), transparent 55%);
+}
+.cta-inner {
+  position:relative; z-index:1;
+  max-width:var(--w-xl); margin:0 auto;
+  padding:var(--s24) var(--s6);
+  text-align:center;
+}
+.cta-pill {
+  display:inline-flex; align-items:center; gap:var(--s2);
+  font-family:var(--font-mono); font-size:10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:0.12em;
+  color:var(--brand-cyan); background:var(--accent-cyan-bg);
+  border:1px solid color-mix(in srgb,var(--brand-cyan) 25%,transparent);
+  padding:var(--s2) var(--s4); border-radius:var(--r-full); margin-bottom:var(--s6);
+}
+.cta-title {
+  font-size:var(--text-5xl); font-weight:900;
+  letter-spacing:-0.04em; line-height:1.0;
+  margin-bottom:var(--s5);
+}
+.cta-title .gradient-text {
+  background:linear-gradient(135deg, var(--brand-cyan), var(--brand-purple));
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.cta-sub { font-size:var(--text-lg); color:var(--text-secondary); max-width:44ch; margin:0 auto var(--s8); line-height:1.65; }
+.cta-actions { display:flex; gap:var(--s4); justify-content:center; flex-wrap:wrap; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer {
+  background:var(--bg-surface);
+  border-top:1px solid var(--border-subtle);
+}
+.footer-inner {
+  max-width:var(--w-2xl); margin:0 auto;
+  padding:var(--s12) var(--s6) var(--s8);
+  display:grid;
+  grid-template-columns:1.6fr repeat(3, 1fr);
+  gap:var(--s10);
+}
+@media (max-width:767px) {
+  .footer-inner { grid-template-columns:1fr 1fr; gap:var(--s8); }
+  .footer-brand { grid-column:1/-1; }
+}
+.footer-logo { display:flex; align-items:center; gap:var(--s3); margin-bottom:var(--s4); }
+.footer-logo-text { font-weight:700; font-size:var(--text-sm); letter-spacing:-0.02em; }
+.footer-logo-product { font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-cyan); }
+.footer-tagline { font-size:var(--text-sm); color:var(--text-secondary); line-height:1.65; max-width:26ch; margin-bottom:var(--s5); }
+.footer-col-title { font-family:var(--font-mono); font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; color:var(--text-primary); margin-bottom:var(--s4); }
+.footer-links { display:flex; flex-direction:column; gap:var(--s3); }
+.footer-links a { font-size:var(--text-sm); color:var(--text-secondary); transition:color var(--dur-fast); }
+.footer-links a:hover { color:var(--brand-cyan); }
+.footer-bottom {
+  max-width:var(--w-2xl); margin:0 auto;
+  padding:var(--s5) var(--s6);
+  border-top:1px solid var(--border-subtle);
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--s3);
+  font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary);
+}
+.footer-bottom a { color:var(--text-secondary); transition:color var(--dur-fast); }
+.footer-bottom a:hover { color:var(--brand-cyan); }
+
+/* Animations */
+@keyframes fade-up {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.fade-up { animation:fade-up var(--dur-enter) var(--ease-expo) both; }
+.delay-1 { animation-delay:80ms; }
+.delay-2 { animation-delay:160ms; }
+.delay-3 { animation-delay:240ms; }
+</style>
+</head>
+
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <symbol id="d-logo" viewBox="0 0 48 48">
+      <rect width="48" height="48" rx="12" fill="#5BBCD4"/>
+      <rect x="29" y="8" width="6" height="32" rx="3" fill="#F0243E"/>
+      <path d="M29 16 C29 16, 13 16, 13 28 C13 36, 20 40, 29 40" stroke="#F0243E" stroke-width="6" fill="none" stroke-linecap="round"/>
+    </symbol>
+    <!-- Check icon -->
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <polyline points="20 6 9 17 4 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- X icon -->
+    <symbol id="icon-x" viewBox="0 0 24 24">
+      <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- NAV -->
+<header class="site-nav" role="banner">
+  <div class="nav-inner">
+    <a href="https://dade.studio" class="nav-logo" aria-label="Dade Studio — MaaS product home">
+      <svg width="32" height="32" aria-hidden="true"><use href="#d-logo"/></svg>
+      dade.studio
+      <span class="nav-logo-sub">/ MaaS</span>
+    </a>
+
+    <nav aria-label="MaaS navigation">
+      <ul class="nav-links" role="list">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="https://dade.studio">Studio</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-right">
+      <button class="theme-btn" onclick="toggleTheme()" id="theme-btn" aria-label="Toggle light mode" aria-pressed="true">
+        <svg id="theme-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <span id="theme-label">Dark</span>
+      </button>
+      <a href="#pricing" class="btn btn-ghost">View pricing</a>
+      <a href="#cta" class="btn btn-cyan">Get access</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-field" aria-hidden="true">
+      <div class="hero-field-mid"></div>
+    </div>
+    <div class="hero-grid" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-status fade-up" aria-label="Current status: systems operational">
+          <div class="status-dot" aria-hidden="true"></div>
+          <span style="color:oklch(65% 0.16 145)">Systems operational</span>
+          <span style="color:var(--text-tertiary)">&bull; 99.9% uptime</span>
+        </div>
+
+        <h1 class="hero-headline fade-up delay-1" id="hero-title">
+          <span class="word-maas">MaaS.</span>
+          <span class="word-plain">AI infra that<br>doesn't fight you.</span>
+        </h1>
+
+        <p class="hero-sub fade-up delay-2">
+          Deploy Claude, local LLMs, and AI-native workflows without becoming a DevOps engineer. Production-ready infrastructure, built by someone who runs it in production.
+        </p>
+
+        <div class="hero-actions fade-up delay-3">
+          <a href="#cta" class="btn btn-cyan btn-xl">
+            Get early access
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#features" class="btn btn-ghost btn-lg">See what's included</a>
+        </div>
+
+        <div class="hero-social-proof fade-up" style="animation-delay:320ms">
+          <div class="proof-avatars" aria-hidden="true">
+            <div class="proof-avatar" style="background:linear-gradient(135deg,var(--brand-crimson),var(--brand-purple))">JM</div>
+            <div class="proof-avatar" style="background:linear-gradient(135deg,var(--brand-cyan),oklch(55% 0.14 180))">SR</div>
+            <div class="proof-avatar" style="background:linear-gradient(135deg,var(--brand-yellow),oklch(78% 0.18 65));color:oklch(20% 0.02 260)">AL</div>
+            <div class="proof-avatar" style="background:var(--bg-muted);border:1px solid var(--border-default);color:var(--text-secondary);font-size:9px">+4</div>
+          </div>
+          <div class="proof-text"><strong>7 studios</strong> running on MaaS infrastructure.<br>Currently in early access.</div>
+        </div>
+      </div>
+
+      <!-- Terminal widget -->
+      <div class="hero-terminal" aria-hidden="true" role="img" aria-label="MaaS terminal showing active model deployments">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <div class="t-dot" style="background:#FF5F57"></div>
+            <div class="t-dot" style="background:#FFBD2E"></div>
+            <div class="t-dot" style="background:#28C840"></div>
+          </div>
+          <span class="terminal-title">maas.dade.studio — dashboard</span>
+          <div class="terminal-status">
+            <div class="t-online"></div>
+            <span class="t-online-label">Live</span>
+          </div>
+        </div>
+
+        <div class="terminal-body">
+          <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd">maas models list</span></div>
+          <div class="t-line"><span class="t-out t-success">claude-opus-4   ● running  12ms avg</span></div>
+          <div class="t-line"><span class="t-out t-success">claude-sonnet-4 ● running   8ms avg</span></div>
+          <div class="t-line"><span class="t-out t-success">llama-3-70b     ● running  34ms avg</span></div>
+          <div class="t-line"><span class="t-out t-success">mistral-7b      ● running  18ms avg</span></div>
+          <div class="t-line" style="margin-top:var(--s2)"><span class="t-prompt">$</span><span class="t-cmd">maas stats --today</span></div>
+          <div class="t-line"><span class="t-out"><span class="t-highlight">requests:</span>  4,821</span></div>
+          <div class="t-line"><span class="t-out"><span class="t-highlight">tokens:</span>    2.4M</span></div>
+          <div class="t-line"><span class="t-out"><span class="t-highlight">cost:</span>      $3.18</span></div>
+          <div class="t-line" style="margin-top:var(--s2)"><span class="t-prompt">$</span><span class="t-cursor"></span></div>
+        </div>
+
+        <div class="terminal-cards">
+          <div class="t-card">
+            <div class="t-card-label">Avg latency</div>
+            <div class="t-card-value" style="color:oklch(65% 0.16 145)">18ms</div>
+          </div>
+          <div class="t-card">
+            <div class="t-card-label">Models active</div>
+            <div class="t-card-value" style="color:var(--brand-cyan)">4</div>
+          </div>
+          <div class="t-card">
+            <div class="t-card-label">Today's cost</div>
+            <div class="t-card-value" style="color:var(--brand-yellow)">$3.18</div>
+          </div>
+          <div class="t-card">
+            <div class="t-card-label">Uptime</div>
+            <div class="t-card-value" style="color:oklch(65% 0.16 145)">99.9%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF STRIP -->
+  <div class="proof-strip" aria-label="Built with and for">
+    <div class="proof-strip-inner">
+      <span class="proof-strip-label">Runs alongside</span>
+      <div class="proof-strip-logos">
+        <span class="proof-logo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Claude API
+        </span>
+        <span class="proof-logo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Open WebUI
+        </span>
+        <span class="proof-logo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          LM Studio
+        </span>
+        <span class="proof-logo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          Docker
+        </span>
+        <span class="proof-logo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Tailscale
+        </span>
+        <span class="proof-logo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Cursor
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FEATURES ===== -->
+  <section class="section" id="features" aria-labelledby="features-title">
+    <div class="section-eyebrow">What you get</div>
+    <h2 class="section-title" id="features-title">Everything the<br><em>stack needs.</em></h2>
+    <p class="section-body">MaaS handles the infrastructure so you stay in the work. Models run locally or via API, monitored, logged, and accessible from anywhere on your network.</p>
+
+    <div class="bento" role="list">
+
+      <!-- Big cell: model routing -->
+      <div class="bento-cell b-span-8" role="listitem">
+        <div class="bento-bg-glow" style="width:300px;height:300px;top:-80px;right:-80px;background:var(--brand-purple)" aria-hidden="true"></div>
+        <div class="bento-eyebrow">Model routing</div>
+        <h3 class="bento-title">Every model.<br>One endpoint.</h3>
+        <p class="bento-desc">Claude Opus, Sonnet, local Llama, Mistral - all behind a single API endpoint. Route by cost, latency, or capability. Fall back automatically when a model is slow or unavailable.</p>
+        <div class="model-list" aria-label="Available models">
+          <div class="model-row">
+            <span class="model-name" style="color:var(--brand-cyan)">claude-opus-4</span>
+            <span class="model-tag">Anthropic API &bull; 12ms avg</span>
+            <span class="badge badge-online">Running</span>
+          </div>
+          <div class="model-row">
+            <span class="model-name" style="color:var(--brand-cyan)">claude-sonnet-4</span>
+            <span class="model-tag">Anthropic API &bull; 8ms avg</span>
+            <span class="badge badge-online">Running</span>
+          </div>
+          <div class="model-row">
+            <span class="model-name" style="color:oklch(65% 0.12 295)">llama-3-70b</span>
+            <span class="model-tag">Local &bull; Docker &bull; 34ms avg</span>
+            <span class="badge badge-online">Running</span>
+          </div>
+          <div class="model-row">
+            <span class="model-name" style="color:oklch(65% 0.12 295)">mistral-7b</span>
+            <span class="model-tag">Local &bull; Docker &bull; 18ms avg</span>
+            <span class="badge badge-online">Running</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Small cell: latency -->
+      <div class="bento-cell b-span-4" role="listitem">
+        <div class="bento-bg-glow" style="width:200px;height:200px;bottom:-60px;left:-60px;background:var(--brand-cyan)" aria-hidden="true"></div>
+        <div class="bento-eyebrow">Performance</div>
+        <h3 class="bento-title">Low latency,<br>always.</h3>
+        <div class="latency-bars" aria-label="Model latency comparison">
+          <div class="lat-row">
+            <div class="lat-header">
+              <span class="lat-name">Claude Sonnet</span>
+              <span class="lat-val" style="color:oklch(65% 0.16 145)">8ms</span>
+            </div>
+            <div class="lat-track"><div class="lat-fill" style="width:12%;background:oklch(65% 0.16 145)"></div></div>
+          </div>
+          <div class="lat-row">
+            <div class="lat-header">
+              <span class="lat-name">Claude Opus</span>
+              <span class="lat-val" style="color:oklch(65% 0.16 145)">12ms</span>
+            </div>
+            <div class="lat-track"><div class="lat-fill" style="width:18%;background:oklch(65% 0.16 145)"></div></div>
+          </div>
+          <div class="lat-row">
+            <div class="lat-header">
+              <span class="lat-name">Mistral 7B (local)</span>
+              <span class="lat-val" style="color:var(--brand-cyan)">18ms</span>
+            </div>
+            <div class="lat-track"><div class="lat-fill" style="width:26%;background:var(--brand-cyan)"></div></div>
+          </div>
+          <div class="lat-row">
+            <div class="lat-header">
+              <span class="lat-name">Llama 70B (local)</span>
+              <span class="lat-val" style="color:var(--brand-yellow)">34ms</span>
+            </div>
+            <div class="lat-track"><div class="lat-fill" style="width:48%;background:var(--brand-yellow)"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Code snippet cell -->
+      <div class="bento-cell b-span-6" role="listitem">
+        <div class="bento-eyebrow">Simple API</div>
+        <h3 class="bento-title">Same interface.<br>Any model.</h3>
+        <p class="bento-desc">OpenAI-compatible endpoint. If your code already calls an LLM API, you're two lines away from MaaS.</p>
+        <div class="code-snippet" aria-label="MaaS API code example">
+<span class="c-comment">// Point to MaaS instead of OpenAI</span>
+<span class="c-key">const</span> client = <span class="c-key">new</span> <span class="c-fn">OpenAI</span>({
+  baseURL: <span class="c-str">"https://maas.dade.studio/v1"</span>,
+  apiKey:  process.env.<span class="c-fn">MAAS_KEY</span>,
+})
+
+<span class="c-key">const</span> res = <span class="c-key">await</span> client.chat.completions.<span class="c-fn">create</span>({
+  model:    <span class="c-str">"claude-sonnet-4"</span>,
+  messages: [{ role: <span class="c-str">"user"</span>, content: prompt }],
+})
+        </div>
+      </div>
+
+      <!-- Network / private cell -->
+      <div class="bento-cell b-span-6" role="listitem">
+        <div class="bento-bg-glow" style="width:220px;height:220px;top:-60px;right:-40px;background:var(--brand-yellow)" aria-hidden="true"></div>
+        <div class="bento-eyebrow">Privacy + network</div>
+        <h3 class="bento-title">Your network.<br>Your data.</h3>
+        <p class="bento-desc">Local models run in Docker on your hardware. Tailscale keeps everything private - no public endpoints, no data leaving your network unless you choose it.</p>
+        <div class="sec-grid" aria-label="Security features">
+          <div class="sec-item">
+            <div class="sec-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(65% 0.16 145)" stroke-width="2.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><div class="sec-name">Tailscale VPN</div><div class="sec-sub">Zero-trust network</div></div>
+          </div>
+          <div class="sec-item">
+            <div class="sec-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--brand-cyan)" stroke-width="2.5" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            <div><div class="sec-name">API key auth</div><div class="sec-sub">Per-client scoping</div></div>
+          </div>
+          <div class="sec-item">
+            <div class="sec-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--brand-yellow)" stroke-width="2.5" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+            <div><div class="sec-name">Local-first</div><div class="sec-sub">Data stays on-device</div></div>
+          </div>
+          <div class="sec-item">
+            <div class="sec-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(65% 0.12 295)" stroke-width="2.5" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div><div class="sec-name">Full logging</div><div class="sec-sub">Every request traced</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wide observability cell -->
+      <div class="bento-cell b-span-12" role="listitem" style="padding:var(--s8)">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:var(--s6)" aria-label="Platform capabilities">
+          <div>
+            <div class="bento-eyebrow">Observability</div>
+            <h3 class="bento-title" style="font-size:var(--text-xl)">Full visibility</h3>
+            <p class="bento-desc">Request logs, token usage, latency percentiles, and cost breakdowns. Know exactly what's running and what it costs before the invoice arrives.</p>
+          </div>
+          <div>
+            <div class="bento-eyebrow">Memory system</div>
+            <h3 class="bento-title" style="font-size:var(--text-xl)">Cross-session context</h3>
+            <p class="bento-desc">MaaS includes the same memory infrastructure that runs this studio's Claude workflows. Persistent context across conversations, per-user or global.</p>
+          </div>
+          <div>
+            <div class="bento-eyebrow">Deployment</div>
+            <h3 class="bento-title" style="font-size:var(--text-xl)">Docker + Compose</h3>
+            <p class="bento-desc">Everything runs in Docker. Compose files for every supported model. One command to add a new model, one command to update. No Kubernetes required.</p>
+          </div>
+          <div>
+            <div class="bento-eyebrow">Support</div>
+            <h3 class="bento-title" style="font-size:var(--text-xl)">Direct founder access</h3>
+            <p class="bento-desc">This is infrastructure I run myself. When something breaks you're not filing a ticket - you're messaging the person who built it. Response time: same day.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== PRICING ===== -->
+  <section class="section" id="pricing" aria-labelledby="pricing-title" style="background:var(--bg-surface);border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle);max-width:100%">
+    <div style="max-width:var(--w-2xl);margin:0 auto">
+      <div class="section-eyebrow">Pricing</div>
+      <h2 class="section-title" id="pricing-title">Straightforward.<br><em>No surprises.</em></h2>
+      <p class="section-body">You pay for what you use. API model costs pass through at cost - MaaS charges for the infrastructure layer on top. Local models run on your hardware so you pay nothing per-token.</p>
+
+      <div class="pricing-wrap">
+
+        <!-- Starter -->
+        <div class="price-card">
+          <div class="price-tier">Starter</div>
+          <div class="price-amount">$49<sub>/mo</sub></div>
+          <div class="price-period">Infrastructure fee, API costs billed separately</div>
+          <div class="price-desc">For solo builders who want Claude + one local model without the DevOps overhead.</div>
+          <div class="price-divider">Includes</div>
+          <ul class="price-features">
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>1 local model deployment</li>
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>Claude API routing</li>
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>Request logging + basic analytics</li>
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>Tailscale network setup guide</li>
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>Docker Compose configs</li>
+            <li class="excluded"><svg width="16" height="16" color="var(--text-tertiary)" aria-hidden="true"><use href="#icon-x"/></svg>Memory / context system</li>
+            <li class="excluded"><svg width="16" height="16" color="var(--text-tertiary)" aria-hidden="true"><use href="#icon-x"/></svg>Multi-client API keys</li>
+          </ul>
+          <a href="#cta" class="btn btn-ghost" style="width:100%;justify-content:center;border-radius:var(--r-lg)">Get started</a>
+        </div>
+
+        <!-- Studio — featured -->
+        <div class="price-card featured">
+          <div class="price-badge">Most popular</div>
+          <div class="price-tier">Studio</div>
+          <div class="price-amount">$149<sub>/mo</sub></div>
+          <div class="price-period">Infrastructure fee, API costs billed separately</div>
+          <div class="price-desc">For studios and small teams running multiple models with memory, multi-client routing, and full observability.</div>
+          <div class="price-divider">Includes everything in Starter, plus</div>
+          <ul class="price-features">
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>Up to 4 local model deployments</li>
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>Memory / cross-session context</li>
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>Multi-client API key management</li>
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>Full request analytics + cost dashboard</li>
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>Automatic model fallback routing</li>
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>Priority support — same-day response</li>
+          </ul>
+          <a href="#cta" class="btn btn-cyan" style="width:100%;justify-content:center;border-radius:var(--r-lg)">Get access</a>
+        </div>
+
+        <!-- Custom -->
+        <div class="price-card">
+          <div class="price-tier">Custom</div>
+          <div class="price-amount" style="font-size:var(--text-3xl)">Let's talk</div>
+          <div class="price-period">Scoped per deployment</div>
+          <div class="price-desc">Enterprise, agency, or unusual infrastructure requirements. Dedicated setup, onboarding, and ongoing support.</div>
+          <div class="price-divider">Includes everything in Studio, plus</div>
+          <ul class="price-features">
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>Unlimited model deployments</li>
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>Custom hardware setup</li>
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>Dedicated onboarding session</li>
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>Custom integrations + tooling</li>
+            <li class="included"><svg width="16" height="16" color="oklch(65% 0.16 145)" aria-hidden="true"><use href="#icon-check"/></svg>SLA + uptime guarantees</li>
+          </ul>
+          <a href="mailto:hello@dade.studio" class="btn btn-ghost" style="width:100%;justify-content:center;border-radius:var(--r-lg)">Contact</a>
+        </div>
+
+      </div>
+
+      <!-- Pricing note -->
+      <div style="margin-top:var(--s6);padding:var(--s5) var(--s6);background:var(--bg-subtle);border:1px solid var(--border-subtle);border-radius:var(--r-xl);display:flex;gap:var(--s4);align-items:flex-start;max-width:640px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--brand-cyan)" stroke-width="2.5" style="flex-shrink:0;margin-top:1px" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <div style="font-size:var(--text-sm);color:var(--text-secondary);line-height:1.65">
+          <strong style="color:var(--text-primary)">API costs are pass-through.</strong> Anthropic API usage (Claude models) is billed at Anthropic's standard rates, passed through without markup. Local models on your hardware cost nothing per token. You see the full breakdown in the dashboard.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="section" aria-labelledby="t-title">
+    <div class="section-eyebrow">Early access feedback</div>
+    <h2 class="section-title" id="t-title">From people<br><em>running it.</em></h2>
+
+    <div class="testimonials">
+      <div class="t-card">
+        <div class="t-stars" aria-label="5 stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="t-quote">I was running three separate Claude integrations, a local Llama instance, and a spreadsheet to track costs. MaaS replaced all of it. The cost dashboard alone saved me time every week.</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background:linear-gradient(135deg,var(--brand-crimson),var(--brand-purple))">JM</div>
+          <div>
+            <div class="t-name">Jordan M.</div>
+            <div class="t-role">Founder, Wavefront Recordings</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-stars" aria-label="5 stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="t-quote">The fallback routing is the thing I didn't know I needed. Claude busy? Routes to Mistral. Latency spike? Routes to the faster model. It just works. Spent zero time debugging model availability since setup.</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background:linear-gradient(135deg,var(--brand-cyan),oklch(55% 0.14 180))">SR</div>
+          <div>
+            <div class="t-name">Sam R.</div>
+            <div class="t-role">Creative Director, Prism Studio</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-stars" aria-label="5 stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="t-quote">Running Llama 70B locally was always something I wanted to do but never got to because of the setup complexity. MaaS had it running in an afternoon. The Compose file just worked.</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background:linear-gradient(135deg,var(--brand-purple),oklch(45% 0.15 280))">TK</div>
+          <div>
+            <div class="t-name">Theo K.</div>
+            <div class="t-role">Indie developer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="section" id="faq" aria-labelledby="faq-title" style="padding-top:0">
+    <div class="section-eyebrow">Common questions</div>
+    <h2 class="section-title" id="faq-title">FAQ</h2>
+
+    <div class="faq-list" role="list">
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          What hardware do I need to run local models?
+          <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">For Mistral 7B and similar models: a modern Mac with 16GB unified memory or any Linux box with a mid-range GPU. For Llama 70B you need either a Mac with 64GB+ or a machine with a high-end GPU (RTX 3090 or better). MaaS includes hardware recommendations for each model. If you're not sure what you have will work, send the specs and I'll tell you before you pay anything.</div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          Does MaaS require cloud infrastructure?
+          <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">No. MaaS runs entirely on your own hardware. The only external dependency is the Anthropic API (for Claude models) and Tailscale (for private networking) - both are optional. Local models, the API endpoint, the dashboard, and the memory system all run on your machines. MaaS is infrastructure software, not a hosted service.</div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          How does pricing work for API model costs?
+          <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">The MaaS monthly fee covers infrastructure - the routing layer, dashboard, memory system, and support. API costs (Claude, etc.) are billed by Anthropic directly to your own API key at their standard rates. MaaS never marks up API costs. Local model usage costs nothing per token - you're using your own hardware. The dashboard shows you the full breakdown of both so there are no surprises.</div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          Can I use MaaS with an existing Open WebUI setup?
+          <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">Yes. MaaS provides an OpenAI-compatible API endpoint. Open WebUI already supports pointing at custom endpoints - you add MaaS as a connection and it appears alongside any existing models. You can run MaaS alongside LM Studio the same way. The Compose configurations include examples for both setups.</div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          What does "early access" mean?
+          <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">MaaS is production-ready for the infrastructure it currently covers - model routing, local deployment, memory, and observability. "Early access" means I'm capping the initial cohort to studios I can personally onboard and support well. New features ship based on what early access users actually need. The tradeoff: you get direct access to the founder, your feedback shapes the roadmap, and pricing is lower than it will be at general availability.</div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          What's the cancellation policy?
+          <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">Cancel any time. There's no minimum term. If you cancel mid-month you keep access until the end of the billing period. Because MaaS runs on your own hardware, nothing breaks when you cancel - your models stay running, you just lose access to updates, the dashboard, and support. Your data never lived anywhere other than your own machines.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== FINAL CTA ===== -->
+  <section class="cta-section" id="cta" aria-labelledby="cta-title">
+    <div class="cta-bg" aria-hidden="true"></div>
+    <div class="cta-inner">
+      <div class="cta-pill" aria-hidden="true">
+        <div class="status-dot" style="width:6px;height:6px"></div>
+        Early access open
+      </div>
+      <h2 class="cta-title" id="cta-title">
+        Your AI infra.<br><span class="gradient-text">Running today.</span>
+      </h2>
+      <p class="cta-sub">Tell me what you're running - models, hardware, current setup. I'll confirm compatibility and onboard you personally. No sales call required.</p>
+
+      <!-- Email form — works without JS -->
+      <form action="https://formspree.io/f/maas" method="POST" style="max-width:480px;margin:0 auto var(--s8);display:flex;gap:var(--s3)" aria-label="Early access request form">
+        <label for="email-cta" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Email address</label>
+        <input
+          type="email" id="email-cta" name="email"
+          placeholder="your@email.com"
+          required
+          style="flex:1;font-family:var(--font-sans);font-size:var(--text-base);color:var(--text-primary);background:var(--bg-surface);border:1.5px solid var(--border-default);border-radius:var(--r-lg);padding:var(--s4) var(--s5);min-height:56px;outline:none;transition:border-color var(--dur-fast),box-shadow var(--dur-fast)"
+          onfocus="this.style.borderColor='var(--brand-cyan)';this.style.boxShadow='0 0 0 3px color-mix(in srgb,var(--brand-cyan) 15%,transparent)'"
+          onblur="this.style.borderColor='var(--border-default)';this.style.boxShadow='none'"
+        >
+        <button type="submit" class="btn btn-cyan btn-lg" style="flex-shrink:0">
+          Request access
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </form>
+
+      <div class="cta-actions">
+        <a href="mailto:hello@dade.studio?subject=MaaS inquiry" class="btn btn-ghost" style="border-color:var(--border-default)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email directly
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <svg width="30" height="30" aria-hidden="true"><use href="#d-logo"/></svg>
+        <div>
+          <div class="footer-logo-text">dade.studio</div>
+          <div class="footer-logo-product">MaaS</div>
+        </div>
+      </div>
+      <p class="footer-tagline">AI infrastructure for studios and solo builders. Built in production, shipped to you.</p>
+      <div style="display:flex;gap:var(--s2)">
+        <span class="badge badge-online">Operational</span>
+        <span class="badge badge-neutral">Early access</span>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Product</div>
+      <nav class="footer-links" aria-label="Product navigation">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#cta">Get access</a>
+      </nav>
+    </div>
+    <div>
+      <div class="footer-col-title">Studio</div>
+      <nav class="footer-links" aria-label="Studio navigation">
+        <a href="https://dade.studio">Dade.Studio</a>
+        <a href="https://dade.studio/work">Work</a>
+        <a href="https://dade.studio/about">About</a>
+        <a href="https://contentcrib.studio">Content Crib</a>
+      </nav>
+    </div>
+    <div>
+      <div class="footer-col-title">Support</div>
+      <nav class="footer-links" aria-label="Support navigation">
+        <a href="mailto:hello@dade.studio">Email support</a>
+        <a href="https://dade.studio/docs/maas">Documentation</a>
+        <a href="https://github.com/dadestudio/maas">GitHub</a>
+        <a href="https://dade.studio/changelog">Changelog</a>
+      </nav>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Dade.Studio &mdash; MaaS is infrastructure software, not a hosted SaaS.</span>
+    <nav aria-label="Legal" style="display:flex;gap:var(--s5)">
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const SUN = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+  const MOON = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+
+  function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    const isDark = t === 'dark';
+    const btn = document.getElementById('theme-btn');
+    const lbl = document.getElementById('theme-label');
+    const ico = document.getElementById('theme-icon');
+    if (btn) {
+      btn.setAttribute('aria-pressed', String(isDark));
+      btn.setAttribute('aria-label', isDark ? 'Toggle light mode' : 'Toggle dark mode');
+    }
+    if (lbl) lbl.textContent = isDark ? 'Dark' : 'Light';
+    if (ico) ico.innerHTML = isDark ? MOON : SUN;
+  }
+
+  // MaaS defaults to dark
+  const saved = localStorage.getItem('ds-theme');
+  const sys = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(saved || (sys ? 'dark' : 'light'));
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!localStorage.getItem('ds-theme')) applyTheme(e.matches ? 'dark' : 'light');
+  });
+
+  window.toggleTheme = function () {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('ds-theme', next);
+    applyTheme(next);
+  };
+
+  // FAQ accordion
+  window.toggleFaq = function (btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item.open').forEach(el => {
+      el.classList.remove('open');
+      el.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+    });
+    // Open this one if it was closed
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  };
+
+  // Smooth nav border on scroll
+  const nav = document.querySelector('.site-nav');
+  window.addEventListener('scroll', () => {
+    nav.style.borderBottomColor = window.scrollY > 20
+      ? 'var(--border-default)' : 'var(--border-subtle)';
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>
