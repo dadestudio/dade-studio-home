@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const navCards = [
   {
@@ -69,7 +70,15 @@ export default function Home() {
       </section>
 
       <footer className="text-muted-foreground mt-4 border-t border-border pt-6 text-sm">
-        <p>© 2026 Dade.Studio</p>
+        <div className="flex flex-wrap items-center gap-4">
+          <p>© 2026 Dade.Studio</p>
+          <Link
+            href="/bot-privacy"
+            className="underline underline-offset-4 transition-colors hover:text-foreground"
+          >
+            Bot privacy policy
+          </Link>
+        </div>
       </footer>
     </motion.main>
   );

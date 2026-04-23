@@ -891,6 +891,7 @@ export default function StudioPage() {
             <nav className={styles.footerLinks} aria-label="Footer links">
               <Link href="/work">Work</Link>
               <Link href="/start">Start a project</Link>
+              <Link href="/bot-privacy">Bot privacy policy</Link>
               <a href="https://maas.dade.studio" target="_blank" rel="noopener noreferrer">
                 maas.dade.studio
               </a>
