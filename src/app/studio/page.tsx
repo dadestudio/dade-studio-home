@@ -49,8 +49,6 @@ const plans = [
 ];
 
 export default function StudioPage() {
-  const startProjectHref = "#contact";
-
   return (
     <div className={styles.page}>
       <a className={styles.skipLink} href="#main">
@@ -65,96 +63,50 @@ export default function StudioPage() {
         <nav aria-label="Studio navigation">
           <ul className={styles.navList}>
             <li>
-              <Link href="/case-study">Work</Link>
+              <a href="#offers">Offers</a>
             </li>
             <li>
-              <a href="#services">Services</a>
+              <a href="#pricing">Pricing</a>
             </li>
             <li>
-              <a href="#about">About</a>
-            </li>
-            <li>
-              <Link href="/products">MaaS</Link>
-            </li>
-            <li>
-              <Link href="/developer">Developer</Link>
+              <a href="#contact">Contact</a>
             </li>
           </ul>
         </nav>
-        <a className={styles.primaryButton} href={startProjectHref}>
-          Start a project
-        </a>
       </header>
 
       <main id="main">
         <section className={styles.hero} aria-labelledby="hero-title">
           <div className={styles.heroInner}>
-            <p className={styles.eyebrow}>
-              <span className={styles.eyebrowDot} aria-hidden="true" />
-              Available for new projects
-            </p>
-            <h1 id="hero-title" className={styles.heroTitle}>
-              <span className={styles.heroTitlePrimary}>Build. Ship.</span>
-              <span className={styles.heroTitleSecondary}>Design that earns trust.</span>
-            </h1>
+            <p className={styles.eyebrow}>Available for new projects</p>
+            <h1 id="hero-title">Dade.Studio</h1>
             <p className={styles.heroBody}>
               Managed AI memory, brand systems, and web experiences for creators, founders, and
               small teams. Built by one person. Maintained so it stays alive.
             </p>
             <div className={styles.actions}>
-              <Link className={styles.primaryButton} href="/case-study">
+              <Link className={styles.primaryButton} href="/start">
+                Start a project
+              </Link>
+              <Link className={styles.secondaryButton} href="/work">
                 See the work
               </Link>
-              <a className={styles.secondaryButton} href={startProjectHref}>
-                Start a project
-              </a>
             </div>
-            <dl className={styles.statsRow} aria-label="Studio highlights">
-              <div className={styles.statItem}>
-                <dt className={styles.statValue}>8+</dt>
-                <dd className={styles.statLabel}>Years shipping</dd>
-              </div>
-              <div className={styles.statItem}>
-                <dt className={styles.statValue}>60+</dt>
-                <dd className={styles.statLabel}>Projects delivered</dd>
-              </div>
-              <div className={styles.statItem}>
-                <dt className={styles.statValue}>3</dt>
-                <dd className={styles.statLabel}>Studio brands</dd>
-              </div>
-            </dl>
           </div>
-          <div className={styles.codeCard} id="about" aria-label="Studio stack preview">
-            <div className={styles.codeHeader}>
-              <div className={styles.codeDots} aria-hidden="true">
-                <span />
-                <span />
-                <span />
-              </div>
-              <p className={styles.codeTitle}>studio.config.ts</p>
-            </div>
-            <pre className={styles.codeBlock}>
-              <span className={styles.codeComment}>{"// studio.config.ts"}</span>
-              {"\n"}
-              <span className={styles.codeKeyword}>export const</span> studio = {"{"}
-              {"\n  "}
-              <span className={styles.codeKey}>owner</span>: <span className={styles.codeString}>{'"Dade"'}</span>,
-              {"\n  "}
-              <span className={styles.codeKey}>primary</span>:{" "}
-              <span className={styles.codeString}>{'"Memory as a Service"'}</span>,
-              {"\n  "}
-              <span className={styles.codeKey}>stack</span>:{" "}
-              <span className={styles.codeValue}>{'["Notion", "GitHub", "Cursor", "Supabase"]'}</span>,
-              {"\n  "}
-              <span className={styles.codeKey}>voice</span>:{" "}
-              <span className={styles.codeString}>{'"Calm. Specific. Built to last."'}</span>
-              {"\n"}
-              {"}"}
+          <div className={styles.codeCard} aria-label="Studio stack preview">
+            <p className={styles.codeTitle}>studio.config.ts</p>
+            <pre>
+{`export const studio = {
+  owner: "Dade",
+  primary: "Memory as a Service",
+  stack: ["Notion", "GitHub", "Cursor", "Supabase"],
+  voice: "Calm. Specific. Built to last."
+}`}
             </pre>
           </div>
         </section>
 
-        <section id="services" className={styles.section} aria-labelledby="offers-title">
+        <section id="offers" className={styles.section} aria-labelledby="offers-title">
           <p className={styles.sectionMarker}>What I do</p>
           <h2 id="offers-title">Three ways to work together.</h2>
           <div className={styles.offerGrid}>
