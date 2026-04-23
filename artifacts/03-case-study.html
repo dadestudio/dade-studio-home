@@ -3,23 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Wavefront Recordings — Full brand identity system for an indie electronic label. Strategy, logo, color, typography, and usage documentation by Dade.Studio.">
-<title>Wavefront Recordings — Brand Identity / Dade.Studio</title>
+<meta name="description" content="Wavefront Recordings - Full brand identity system for an indie electronic label. Strategy, logo, color, typography, and usage documentation by Dade.Studio.">
+<title>Wavefront Recordings - Brand Identity / Dade.Studio</title>
 <link rel="canonical" href="https://dade.studio/work/wavefront">
-<meta property="og:title" content="Wavefront Recordings Brand Identity — Dade.Studio">
+<meta property="og:title" content="Wavefront Recordings Brand Identity - Dade.Studio">
 <meta property="og:description" content="A full brand identity system for an indie electronic label. Strategy through final assets in four weeks.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://dade.studio/work/wavefront">
 <meta property="og:image" content="https://dade.studio/work/wavefront/og.png">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/jetbrainsmono/v18/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yK1jKQDlA7lFhEA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+<link rel="preload" href="/assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/JetBrainsMono[wght].woff2" as="font" type="font/woff2" crossorigin>
 
 <style>
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/InterVariable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/assets/fonts/JetBrainsMono[wght].woff2') format('woff2-variations');
+  font-weight: 100 800;
+  font-display: swap;
+}
+
 /* ============================================================
    TOKENS
    ============================================================ */
@@ -47,7 +57,7 @@
   --accent-yellow-bg:  oklch(98% 0.02 97.3);
   --accent-purple-bg:  oklch(97% 0.015 295.1);
 
-  --font-sans: InterVariable, Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
   --text-xs:   clamp(0.694rem,  0.67rem  + 0.12vw, 0.75rem);
@@ -78,7 +88,7 @@
 
   --w-sm:640px; --w-md:768px; --w-lg:1024px; --w-xl:1280px; --w-2xl:1536px;
 
-  /* Case study accent — project-specific, easy to retheme */
+  /* Case study accent - project-specific, easy to retheme */
   --cs-accent:   #F0243E;
   --cs-accent-2: #5C4B8A;
   --cs-bg-hero:  oklch(12% 0.025 300);
@@ -267,6 +277,24 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
   font-family:var(--font-sans);
 }
 
+.cs-hero-ribbon {
+  position:absolute;
+  top:calc(64px + var(--s4));
+  right:var(--s6);
+  z-index:2;
+  max-width:min(340px, 46vw);
+  margin:0;
+  text-align:right;
+  font-family:var(--font-mono);
+  font-size:10px;
+  font-weight:600;
+  line-height:1.45;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:color-mix(in srgb, var(--text-inverse) 58%, transparent);
+  pointer-events:none;
+}
+
 .cs-hero-inner {
   position:relative; z-index:1;
   max-width:var(--w-2xl); margin:0 auto;
@@ -305,31 +333,14 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
   margin-bottom:var(--s10);
 }
 
-.cs-hero-meta {
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(140px, 1fr));
-  gap:var(--s6);
-  padding-top:var(--s8);
-  border-top:1px solid oklch(100% 0 0 / 0.1);
-}
-.cs-meta-item {}
-.cs-meta-label {
-  font-family:var(--font-mono); font-size:10px; font-weight:700;
-  text-transform:uppercase; letter-spacing:0.12em;
-  color:oklch(50% 0.01 240); margin-bottom:var(--s2);
-}
-.cs-meta-value {
-  font-size:var(--text-sm); font-weight:600; color:#fff;
-}
-
 /* ============================================================
-   CONTENT LAYOUT (article + sidebar)
+   CONTENT LAYOUT (reading column + sticky rail)
    ============================================================ */
 .cs-layout {
   max-width:var(--w-2xl); margin:0 auto;
   padding:var(--s16) var(--s6) var(--s32);
   display:grid;
-  grid-template-columns:1fr 280px;
+  grid-template-columns:minmax(0, 7fr) minmax(220px, 3fr);
   gap:var(--s16);
   align-items:start;
 }
@@ -343,6 +354,44 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 
 .cs-sidebar {
   position:sticky; top:calc(64px + var(--s8));
+  display:flex; flex-direction:column; gap:var(--s6);
+  align-self:start;
+}
+
+.cs-inline-meta {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:var(--s4);
+  padding:var(--s5);
+  background:var(--bg-surface);
+  border:1px solid var(--border-subtle);
+  border-radius:var(--r-xl);
+  margin-bottom:var(--s12);
+}
+.cs-inline-meta-cell {
+  display:flex; flex-direction:column; gap:4px;
+  padding:var(--s4);
+  border-radius:var(--r-md);
+  border:1px solid var(--border-subtle);
+  background:var(--bg-subtle);
+}
+.cs-inline-meta-label {
+  font-family:var(--font-mono); font-size:10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:0.1em; color:var(--text-tertiary);
+}
+.cs-inline-meta-value { font-size:var(--text-sm); font-weight:600; color:var(--text-primary); }
+.cs-inline-meta-sub { font-size:var(--text-xs); color:var(--text-secondary); }
+
+.cs-sidebar-cta {
+  padding:var(--s5);
+  background:var(--bg-surface);
+  border:1px solid var(--border-subtle);
+  border-radius:var(--r-xl);
+}
+.cs-sidebar-cta .btn { width:100%; justify-content:center; }
+
+@media (max-width:600px) {
+  .cs-inline-meta { grid-template-columns:1fr; }
 }
 
 /* ============================================================
@@ -352,7 +401,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
   background:var(--bg-surface);
   border:1px solid var(--border-subtle);
   border-radius:var(--r-xl); overflow:hidden;
-  margin-bottom:var(--s6);
+  flex:1; min-height:0;
 }
 .toc-header {
   padding:var(--s4) var(--s5);
@@ -373,21 +422,6 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 .toc-list a.active { color:var(--brand-crimson); background:var(--accent-crimson-bg); }
 .toc-num { font-family:var(--font-mono); font-size:10px; color:var(--text-tertiary); flex-shrink:0; }
 
-.sidebar-meta {
-  background:var(--bg-surface);
-  border:1px solid var(--border-subtle);
-  border-radius:var(--r-xl);
-}
-.sidebar-meta-row {
-  padding:var(--s4) var(--s5);
-  border-bottom:1px solid var(--border-subtle);
-  display:flex; flex-direction:column; gap:4px;
-}
-.sidebar-meta-row:last-child { border-bottom:none; }
-.sidebar-meta-label { font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-tertiary); }
-.sidebar-meta-value { font-size:var(--text-sm); font-weight:600; color:var(--text-primary); }
-.sidebar-meta-sub { font-size:var(--text-xs); color:var(--text-secondary); }
-
 /* ============================================================
    ARTICLE CONTENT
    ============================================================ */
@@ -396,7 +430,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
   border-top:1px solid var(--border-subtle);
   margin-top:var(--s16);
 }
-.cs-section:first-child { border-top:none; margin-top:0; padding-top:0; }
+.cs-article > .cs-section:first-of-type { border-top:none; margin-top:0; padding-top:0; }
 
 .cs-section-eyebrow {
   font-family:var(--font-mono); font-size:10px; font-weight:700;
@@ -675,24 +709,13 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 
 <body>
 
-<!-- SVG defs -->
-<svg style="display:none" aria-hidden="true">
-  <defs>
-    <symbol id="d-logo" viewBox="0 0 48 48">
-      <rect width="48" height="48" rx="12" fill="#5BBCD4"/>
-      <rect x="29" y="8" width="6" height="32" rx="3" fill="#F0243E"/>
-      <path d="M29 16 C29 16, 13 16, 13 28 C13 36, 20 40, 29 40" stroke="#F0243E" stroke-width="6" fill="none" stroke-linecap="round"/>
-    </symbol>
-  </defs>
-</svg>
-
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- NAV -->
 <header class="site-nav" role="banner">
   <div class="nav-inner">
     <a href="/" class="nav-logo" aria-label="Dade Studio home">
-      <svg width="32" height="32" aria-hidden="true"><use href="#d-logo"/></svg>
+      <img src="/assets/brand/logo-d.png" alt="Dade Studio mark" width="40" height="40" decoding="async" />
       dade.studio
     </a>
 
@@ -724,6 +747,8 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
     <div class="cs-hero-grid" aria-hidden="true"></div>
     <div class="cs-hero-ghost" aria-hidden="true">WF</div>
 
+    <p class="cs-hero-ribbon" role="note">Template / Speculative work - not a real client engagement.</p>
+
     <div class="cs-hero-inner">
       <a href="/work" class="cs-back-crumb">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
@@ -743,75 +768,37 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
       <p class="cs-hero-desc fade-up delay-1">
         A full brand identity system for an indie electronic label - from positioning strategy to production-ready assets. Built to hold up at any size, on any surface, for years.
       </p>
-
-      <dl class="cs-hero-meta fade-up delay-2">
-        <div class="cs-meta-item">
-          <dt class="cs-meta-label">Client</dt>
-          <dd class="cs-meta-value">Wavefront Recordings</dd>
-        </div>
-        <div class="cs-meta-item">
-          <dt class="cs-meta-label">Scope</dt>
-          <dd class="cs-meta-value">Full brand identity</dd>
-        </div>
-        <div class="cs-meta-item">
-          <dt class="cs-meta-label">Timeline</dt>
-          <dd class="cs-meta-value">4 weeks</dd>
-        </div>
-        <div class="cs-meta-item">
-          <dt class="cs-meta-label">Year</dt>
-          <dd class="cs-meta-value">2024</dd>
-        </div>
-        <div class="cs-meta-item">
-          <dt class="cs-meta-label">Deliverables</dt>
-          <dd class="cs-meta-value">Logo, color, type, guide</dd>
-        </div>
-      </dl>
     </div>
   </section>
 
   <!-- ===== CONTENT ===== -->
   <div class="cs-layout">
 
-    <!-- SIDEBAR -->
-    <aside class="cs-sidebar" aria-label="Case study navigation">
-      <nav class="toc" aria-label="Table of contents">
-        <div class="toc-header">Contents</div>
-        <ul class="toc-list" role="list">
-          <li><a href="#challenge" id="toc-challenge"><span class="toc-num">01</span> The challenge</a></li>
-          <li><a href="#process" id="toc-process"><span class="toc-num">02</span> Process</a></li>
-          <li><a href="#identity" id="toc-identity"><span class="toc-num">03</span> Identity system</a></li>
-          <li><a href="#type" id="toc-type"><span class="toc-num">04</span> Typography</a></li>
-          <li><a href="#applications" id="toc-applications"><span class="toc-num">05</span> Applications</a></li>
-          <li><a href="#outcomes" id="toc-outcomes"><span class="toc-num">06</span> Outcomes</a></li>
-        </ul>
-      </nav>
-
-      <div class="sidebar-meta" aria-label="Project details">
-        <div class="sidebar-meta-row">
-          <span class="sidebar-meta-label">Client</span>
-          <span class="sidebar-meta-value">Wavefront Recordings</span>
-          <span class="sidebar-meta-sub">Brooklyn, NY</span>
-        </div>
-        <div class="sidebar-meta-row">
-          <span class="sidebar-meta-label">Timeline</span>
-          <span class="sidebar-meta-value">4 weeks</span>
-          <span class="sidebar-meta-sub">Feb - Mar 2024</span>
-        </div>
-        <div class="sidebar-meta-row">
-          <span class="sidebar-meta-label">Deliverables</span>
-          <span class="sidebar-meta-value">Logo system</span>
-          <span class="sidebar-meta-sub">Color, type, usage guide, asset kit</span>
-        </div>
-        <div class="sidebar-meta-row">
-          <span class="sidebar-meta-label">Tools</span>
-          <span class="sidebar-meta-value">Figma, Illustrator</span>
-          <span class="sidebar-meta-sub">Notion for documentation</span>
-        </div>
-      </div>
-    </aside>
-
     <!-- ARTICLE -->
     <article class="cs-article">
+
+      <div class="cs-inline-meta" aria-label="Project details">
+        <div class="cs-inline-meta-cell">
+          <span class="cs-inline-meta-label">Client</span>
+          <span class="cs-inline-meta-value">Wavefront Recordings</span>
+          <span class="cs-inline-meta-sub">Brooklyn, NY</span>
+        </div>
+        <div class="cs-inline-meta-cell">
+          <span class="cs-inline-meta-label">Timeline</span>
+          <span class="cs-inline-meta-value">4 weeks</span>
+          <span class="cs-inline-meta-sub">Feb - Mar 2024</span>
+        </div>
+        <div class="cs-inline-meta-cell">
+          <span class="cs-inline-meta-label">Deliverables</span>
+          <span class="cs-inline-meta-value">Logo system</span>
+          <span class="cs-inline-meta-sub">Color, type, usage guide, asset kit</span>
+        </div>
+        <div class="cs-inline-meta-cell">
+          <span class="cs-inline-meta-label">Tools</span>
+          <span class="cs-inline-meta-value">Figma, Illustrator</span>
+          <span class="cs-inline-meta-sub">Notion for documentation</span>
+        </div>
+      </div>
 
       <!-- ===== CHALLENGE ===== -->
       <section class="cs-section" id="challenge" aria-labelledby="challenge-title">
@@ -934,7 +921,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
               <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.3em;color:oklch(55% 0.01 240);text-transform:uppercase">RECORDINGS</div>
             </div>
           </div>
-          <div class="cs-img-caption">Primary wordmark — dark background application</div>
+          <div class="cs-img-caption">Primary wordmark - dark background application</div>
         </div>
 
         <p class="prose">The palette was built around a core tension: the warmth of analog recording against the precision of electronic production. A near-black with warm undertones as the primary surface, a warm off-white for text, and a single alert color - a deep amber - for the cases where the brand needs to signal something.</p>
@@ -984,7 +971,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 
         <div class="pull-quote" aria-label="Client testimonial">
           <p class="pull-quote-text">The palette was the thing I didn't know I needed. I'd been picking colors project by project. Having a system that tells you which amber to use - and why - changed how the whole label presents itself.</p>
-          <div class="pull-quote-attr">Jordan M. &mdash; Founder, Wavefront Recordings</div>
+          <div class="pull-quote-attr">Jordan M. - Founder, Wavefront Recordings</div>
         </div>
       </section>
 
@@ -1007,14 +994,6 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
           </div>
         </div>
 
-        <div class="cs-callout cs-callout-info">
-          <svg class="cs-callout-icon" viewBox="0 0 24 24" fill="none" stroke="oklch(42% 0.12 212.1)" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-          <div>
-            <div class="cs-callout-title" style="color:oklch(42% 0.12 212.1)">Type decision rationale</div>
-            <div class="cs-callout-body">The mono typeface does double duty: it carries catalog numbers and technical metadata at small sizes while also functioning as a design element in its own right at large sizes. Electronic music culture already reads mono as a meaningful signal - it references both equipment displays and early computer interfaces that shaped the aesthetic.</div>
-          </div>
-        </div>
-
         <div class="cs-img-2up" role="list" aria-label="Type in application examples">
           <div role="listitem">
             <div class="cs-img" style="height:200px;background:oklch(12% 0.025 300)">
@@ -1023,7 +1002,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
                 <div style="font-family:var(--font-mono);font-size:10px;color:#F0243E;letter-spacing:0.2em;text-transform:uppercase">New release</div>
               </div>
             </div>
-            <div class="cs-img-caption">Social card — dark</div>
+            <div class="cs-img-caption">Social card - dark</div>
           </div>
           <div role="listitem">
             <div class="cs-img" style="height:200px;background:oklch(92% 0.008 60)">
@@ -1032,7 +1011,15 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
                 <div style="font-family:var(--font-mono);font-size:10px;color:oklch(42% 0.02 260);letter-spacing:0.2em;text-transform:uppercase">Recordings</div>
               </div>
             </div>
-            <div class="cs-img-caption">Press kit — light</div>
+            <div class="cs-img-caption">Press kit - light</div>
+          </div>
+        </div>
+
+        <div class="cs-callout cs-callout-info">
+          <svg class="cs-callout-icon" viewBox="0 0 24 24" fill="none" stroke="oklch(42% 0.12 212.1)" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <div>
+            <div class="cs-callout-title" style="color:oklch(42% 0.12 212.1)">Type decision rationale</div>
+            <div class="cs-callout-body">The mono typeface does double duty: it carries catalog numbers and technical metadata at small sizes while also functioning as a design element in its own right at large sizes. Electronic music culture already reads mono as a meaningful signal - it references both equipment displays and early computer interfaces that shaped the aesthetic.</div>
           </div>
         </div>
       </section>
@@ -1138,7 +1125,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
 
         <div class="pull-quote" aria-label="Process note" style="border-color:var(--brand-purple);background:var(--accent-purple-bg)">
           <p class="pull-quote-text" style="font-size:var(--text-xl)">The vinyl sleeve was not in scope. It came up in week four because the system was solid enough that the client wanted to keep going. That's the version of scope creep that's actually a good sign.</p>
-          <div class="pull-quote-attr">Dade &mdash; Project notes, March 2024</div>
+          <div class="pull-quote-attr">Dade - Project notes, March 2024</div>
         </div>
       </section>
 
@@ -1147,33 +1134,48 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
         <div class="cs-section-eyebrow">06 / Outcomes</div>
         <h2 class="cs-section-title" id="outcomes-title">What happened after launch</h2>
 
-        <p class="prose">The brand launched in March 2024 alongside a new release. Two years later it hasn't needed a redesign. The documentation was thorough enough that their in-house designer could continue building inside the system without coming back to the studio for guidance.</p>
+        <p class="prose">The brand launched alongside a new release in the template timeline. In a typical lifecycle, a disciplined system can stay coherent across seasons without forcing a teardown redesign. The documentation was written so an in-house designer could keep building inside the rails without constant studio check-ins.</p>
 
         <div class="outcome-grid" role="list" aria-label="Project outcomes">
           <div class="outcome-card" role="listitem">
-            <div class="outcome-num" style="color:var(--brand-crimson)">4wk</div>
-            <div class="outcome-label">Delivery — on brief</div>
+            <div class="outcome-num" style="color:var(--brand-crimson)">On time</div>
+            <div class="outcome-label">Delivery - on brief</div>
           </div>
           <div class="outcome-card" role="listitem">
-            <div class="outcome-num" style="color:var(--brand-cyan)">2yr</div>
-            <div class="outcome-label">No redesign needed</div>
+            <div class="outcome-num" style="color:var(--brand-cyan)">Stable</div>
+            <div class="outcome-label">No forced refresh</div>
           </div>
           <div class="outcome-card" role="listitem">
-            <div class="outcome-num" style="color:var(--brand-yellow)">6+</div>
-            <div class="outcome-label">Applications shipped</div>
+            <div class="outcome-num" style="color:var(--brand-yellow)">Several</div>
+            <div class="outcome-label">Illustrative applications</div>
           </div>
           <div class="outcome-card" role="listitem">
-            <div class="outcome-num" style="color:var(--brand-purple)">0</div>
-            <div class="outcome-label">Return calls for guidance</div>
+            <div class="outcome-num" style="color:var(--brand-purple)">Low</div>
+            <div class="outcome-label">Clarifications after handoff</div>
           </div>
         </div>
 
-        <p class="prose">The metric that matters most: zero return calls for brand guidance. The documentation was complete enough that a new designer could pick it up and apply it without asking what the rules were. That's the actual test of whether a brand guide works.</p>
+        <p class="prose">The metric that matters most in this template narrative: follow-up stays light. The documentation is complete enough that a new designer can pick it up and apply it without repeatedly re-deriving the rules. That is the practical test of whether a brand guide works.</p>
 
         <div class="pull-quote">
-          <p class="pull-quote-text">Dade delivered a complete identity system in four weeks - logo, color, type, brand guide. The work held up across every application we threw at it. Hasn't needed a redesign in two years.</p>
-          <div class="pull-quote-attr">Jordan M. &mdash; Founder, Wavefront Recordings</div>
+          <p class="pull-quote-text">In this speculative write-up, the studio delivers a full identity system on a tight calendar - logo, color, type, and brand guide. The work is framed as holding up across many applications without needing a disruptive redesign immediately afterward.</p>
+          <div class="pull-quote-attr">Client stakeholder - template case study</div>
         </div>
+      </section>
+
+      <!-- ===== KNOWN DEVIATIONS ===== -->
+      <section class="cs-section" id="deviations" aria-labelledby="deviations-title">
+        <div class="cs-section-eyebrow">07 / Known deviations</div>
+        <h2 class="cs-section-title" id="deviations-title">Known deviations to fix before port</h2>
+        <p class="prose">This artifact mirrors the shared static stack: self-hosted fonts, PNG logo, canonical tokens, purged personal-VPN stack references, Memory as a Service naming, and no Google Fonts links. Grep the full artifact set for the strings called out in the developer handoff before porting.</p>
+        <div class="cs-callout cs-callout-brand">
+          <svg class="cs-callout-icon" viewBox="0 0 24 24" fill="none" stroke="var(--brand-crimson)" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+          <div>
+            <div class="cs-callout-title" style="color:var(--brand-crimson)">Checklist</div>
+            <div class="cs-callout-body">Zero hits for the vendor VPN trio, deprecated model-router product copy, inline logo symbol defs, Google Fonts hosts, legacy color-prefixed custom properties, and em dash characters. Logo path stays <code>/assets/brand/logo-d.png</code> (not <code>public/assets/</code>).</div>
+          </div>
+        </div>
+      </section>
 
         <!-- CTA -->
         <div style="margin-top:var(--s12);padding:var(--s8);background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--r-2xl);display:flex;align-items:center;justify-content:space-between;gap:var(--s6);flex-wrap:wrap">
@@ -1202,14 +1204,30 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
               Next
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
-            <div class="next-title">MaaS Platform</div>
-            <div class="next-sub">AI tooling + product design</div>
+            <div class="next-title">Memory as a Service</div>
+            <div class="next-sub">Persistent memory layer + product design</div>
           </a>
         </nav>
 
-      </section>
-
     </article>
+
+    <aside class="cs-sidebar" aria-label="Case study navigation">
+      <nav class="toc" aria-label="Table of contents">
+        <div class="toc-header">Contents</div>
+        <ul class="toc-list" role="list">
+          <li><a href="#challenge" id="toc-challenge"><span class="toc-num">01</span> The challenge</a></li>
+          <li><a href="#process" id="toc-process"><span class="toc-num">02</span> Process</a></li>
+          <li><a href="#identity" id="toc-identity"><span class="toc-num">03</span> Identity system</a></li>
+          <li><a href="#type" id="toc-type"><span class="toc-num">04</span> Typography</a></li>
+          <li><a href="#applications" id="toc-applications"><span class="toc-num">05</span> Applications</a></li>
+          <li><a href="#outcomes" id="toc-outcomes"><span class="toc-num">06</span> Outcomes</a></li>
+          <li><a href="#deviations" id="toc-deviations"><span class="toc-num">07</span> Known deviations</a></li>
+        </ul>
+      </nav>
+      <div class="cs-sidebar-cta">
+        <a href="mailto:hello@dade.studio" class="btn btn-primary">Start a project</a>
+      </div>
+    </aside>
 
   </div>
 
@@ -1269,7 +1287,7 @@ button { cursor:pointer; border:none; background:none; font:inherit; }
   }
 
   // TOC active state
-  const sections = ['challenge','process','identity','type','applications','outcomes'];
+  const sections = ['challenge','process','identity','type','applications','outcomes','deviations'];
   const tocLinks = {};
   sections.forEach(id => { tocLinks[id] = document.getElementById('toc-' + id); });
 
