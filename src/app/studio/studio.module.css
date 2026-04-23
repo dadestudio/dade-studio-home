@@ -1,40 +1,15 @@
-@font-face {
-  font-family: "StudioInter";
-  src: url("/assets/fonts/InterVariable.woff2") format("woff2-variations");
-  font-weight: 100 900;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "StudioMono";
-  src: url("/assets/fonts/JetBrainsMono%5Bwght%5D.woff2") format("woff2-variations");
-  font-weight: 100 800;
-  font-display: swap;
-}
-
 .page {
-  --studio-bg: var(--color-ds-bg-base);
-  --studio-surface: var(--color-ds-bg-surface);
-  --studio-subtle: var(--color-ds-bg-subtle);
-  --studio-text: var(--color-ds-text-primary);
-  --studio-muted: var(--color-ds-text-secondary);
-  --studio-border: var(--color-ds-border-subtle);
-  --studio-border-strong: var(--color-ds-border-default);
-  font-family: "StudioInter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --studio-bg: var(--background);
+  --studio-surface: var(--card);
+  --studio-subtle: var(--muted);
+  --studio-text: var(--foreground);
+  --studio-muted: var(--muted-foreground);
+  --studio-border: var(--border);
+  --studio-border-strong: var(--border);
   color: var(--studio-text);
   background: var(--studio-bg);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   min-height: 100vh;
-}
-
-:global(html.dark) .page,
-:global([data-theme="dark"]) .page {
-  --studio-bg: var(--color-ds-bg-base);
-  --studio-surface: var(--color-ds-bg-surface);
-  --studio-subtle: var(--color-ds-bg-subtle);
-  --studio-text: var(--color-ds-text-primary);
-  --studio-muted: var(--color-ds-text-secondary);
-  --studio-border: var(--color-ds-border-subtle);
-  --studio-border-strong: var(--color-ds-border-default);
 }
 
 .skipLink {
@@ -46,15 +21,15 @@
 .skipLink:focus-visible {
   left: 1rem;
   top: 1rem;
-  background: var(--color-brand-crimson);
-  color: var(--color-ds-text-inverse);
+  background: var(--primary);
+  color: var(--primary-foreground);
   border-radius: var(--radius-ds-md);
   padding: 0.5rem 0.75rem;
   z-index: 40;
 }
 
 .page :focus-visible {
-  outline: 2px solid var(--color-brand-crimson);
+  outline: 2px solid var(--primary);
   outline-offset: 3px;
   border-radius: 3px;
 }
@@ -63,11 +38,12 @@
   max-width: var(--width-ds-xl);
   margin: 0 auto;
   padding: 1rem 1.25rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  border-bottom: 1px solid var(--studio-border);
+  border-bottom: 1px solid var(--studio-border-strong);
 }
 
 .logo {
@@ -81,8 +57,9 @@
 
 .navList {
   list-style: none;
-  display: inline-flex;
-  gap: 0.25rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.15rem;
   padding: 0;
   margin: 0;
 }
@@ -90,8 +67,9 @@
 .navList a {
   text-decoration: none;
   color: var(--studio-muted);
-  font-size: 0.9rem;
-  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.5rem 0.65rem;
   border-radius: var(--radius-ds-md);
 }
 
@@ -103,27 +81,55 @@
 .hero {
   max-width: var(--width-ds-xl);
   margin: 0 auto;
-  padding: 4rem 1.25rem 2rem;
+  padding: 3.5rem 1.25rem 2rem;
   display: grid;
   grid-template-columns: 1.2fr 1fr;
-  gap: 1.5rem;
+  gap: 1.25rem;
   align-items: stretch;
 }
 
-.heroInner h1 {
-  font-size: clamp(2.4rem, 2rem + 2vw, 4rem);
-  line-height: 1;
-  letter-spacing: -0.03em;
-  margin: 0 0 1rem;
-}
-
 .eyebrow {
-  font-family: "StudioMono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid color-mix(in oklab, var(--primary) 28%, var(--studio-border));
+  border-radius: var(--radius-ds-full);
+  padding: 0.28rem 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-size: 0.7rem;
-  color: var(--color-brand-crimson);
-  margin: 0 0 0.75rem;
+  color: var(--primary);
+  margin: 0 0 1rem;
+}
+
+.eyebrowDot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: var(--primary);
+  flex-shrink: 0;
+}
+
+.heroTitle {
+  margin: 0 0 1.2rem;
+  display: grid;
+  line-height: 0.96;
+}
+
+.heroTitlePrimary,
+.heroTitleSecondary {
+  font-size: clamp(3rem, 8vw, 6.25rem);
+  letter-spacing: -0.045em;
+}
+
+.heroTitlePrimary {
+  color: var(--primary);
+}
+
+.heroTitleSecondary {
+  color: var(--foreground);
+  font-size: clamp(2.8rem, 7.2vw, 5.8rem);
 }
 
 .heroBody {
@@ -153,12 +159,13 @@
 }
 
 .primaryButton {
-  background: var(--color-brand-crimson);
-  color: var(--color-ds-text-inverse);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
 }
 
 .secondaryButton {
-  background: var(--studio-surface);
+  background: transparent;
   color: var(--studio-text);
   border-color: var(--studio-border-strong);
 }
@@ -167,26 +174,111 @@
   background: var(--studio-subtle);
 }
 
+.statsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 1.5rem 0 0;
+}
+
+.statItem {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.statValue {
+  margin: 0;
+  font-size: clamp(1.8rem, 3.8vw, 2.8rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.statLabel {
+  margin: 0;
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  font-size: 0.68rem;
+  color: var(--studio-muted);
+}
+
 .codeCard {
-  background: var(--studio-surface);
+  background: color-mix(in oklab, var(--foreground) 16%, var(--card));
   border: 1px solid var(--studio-border);
   border-radius: var(--radius-ds-xl);
-  padding: 1rem;
+  padding: 0.7rem;
   overflow: auto;
 }
 
-.codeTitle {
-  font-family: "StudioMono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.75rem;
-  color: var(--studio-muted);
-  margin: 0 0 0.75rem;
+.codeHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--studio-border) 75%, transparent);
+  padding: 0.1rem 0.3rem 0.55rem;
 }
 
-.codeCard pre {
+.codeDots {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.codeDots span {
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.codeDots span:nth-child(1) {
+  background: var(--primary);
+}
+
+.codeDots span:nth-child(2) {
+  background: var(--muted-foreground);
+}
+
+.codeDots span:nth-child(3) {
+  background: var(--foreground);
+}
+
+.codeTitle {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  color: color-mix(in oklab, var(--foreground) 68%, var(--muted-foreground));
   margin: 0;
-  font-family: "StudioMono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.codeBlock {
+  margin: 0;
+  padding: 0.75rem 0.3rem 0.35rem;
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.8rem;
   line-height: 1.65;
+  color: color-mix(in oklab, var(--foreground) 88%, var(--muted-foreground));
+}
+
+.codeComment {
+  color: var(--muted-foreground);
+}
+
+.codeKeyword {
+  color: var(--primary);
+}
+
+.codeKey {
+  color: color-mix(in oklab, var(--foreground) 94%, var(--muted-foreground));
+}
+
+.codeString {
+  color: color-mix(in oklab, var(--foreground) 60%, var(--muted-foreground));
+}
+
+.codeValue {
+  margin: 0;
+  color: color-mix(in oklab, var(--foreground) 78%, var(--muted-foreground));
 }
 
 .section {
@@ -202,7 +294,7 @@
 }
 
 .sectionMarker {
-  font-family: "StudioMono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-size: 0.7rem;
@@ -245,7 +337,7 @@
 
 .cardMeta {
   margin-top: 0.75rem !important;
-  font-family: "StudioMono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.75rem;
 }
 
@@ -253,7 +345,7 @@
   margin-top: 0.9rem;
   display: inline-flex;
   text-decoration: none;
-  color: var(--color-brand-crimson);
+  color: var(--primary);
   font-weight: 600;
 }
 
@@ -268,11 +360,22 @@
 
 .planBeta {
   margin: 0.25rem 0 0.6rem !important;
-  font-family: "StudioMono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.75rem;
 }
 
 @media (max-width: 900px) {
+  .header {
+    grid-template-columns: 1fr;
+    justify-items: start;
+    gap: 0.75rem;
+  }
+
+  .navList {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
   .hero {
     grid-template-columns: 1fr;
   }
@@ -281,9 +384,7 @@
   .planGrid {
     grid-template-columns: 1fr;
   }
-
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
+  .statsRow {
+    gap: 1rem;
   }
 }
