@@ -7,11 +7,23 @@
 <title>Dade.Studio — Developer Handoff Brief</title>
 <link rel="canonical" href="https://dade.studio/design-system/handoff">
 
-<link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/jetbrainsmono/v18/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yK1jKQDlA7lFhEA.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+<link rel="preload" href="/assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/JetBrainsMono[wght].woff2" as="font" type="font/woff2" crossorigin>
+
+<style>
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/InterVariable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono[wght].woff2") format("woff2-variations");
+  font-weight: 100 800;
+  font-display: swap;
+}
+</style>
 
 <style>
 :root {
@@ -44,7 +56,7 @@
   --error-bg:   oklch(97% 0.025 27);
   --error:      oklch(54% 0.2 27);
 
-  --font-sans: InterVariable, Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
   --text-xs:   clamp(0.694rem,  0.67rem + 0.12vw, 0.75rem);
@@ -505,22 +517,12 @@ code {
 
 <body>
 
-<svg style="display:none" aria-hidden="true">
-  <defs>
-    <symbol id="d-logo" viewBox="0 0 48 48">
-      <rect width="48" height="48" rx="12" fill="#5BBCD4"/>
-      <rect x="29" y="8" width="6" height="32" rx="3" fill="#F0243E"/>
-      <path d="M29 16 C29 16, 13 16, 13 28 C13 36, 20 40, 29 40" stroke="#F0243E" stroke-width="6" fill="none" stroke-linecap="round"/>
-    </symbol>
-  </defs>
-</svg>
-
 <div class="page-wrap">
 
   <!-- SIDEBAR -->
   <aside class="sidebar" aria-label="Document navigation">
     <div class="sidebar-logo">
-      <svg width="30" height="30" aria-hidden="true"><use href="#d-logo"/></svg>
+      <img src="/assets/brand/logo-d.png" alt="Dade Studio" width="40" height="40" style="width:30px;height:30px">
       <div>
         <div style="font-weight:700;font-size:var(--text-sm);letter-spacing:-0.02em">dade.studio</div>
         <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.1em">Handoff v1.0</div>
@@ -541,6 +543,7 @@ code {
         <a href="#naming"><span class="sidebar-num">08</span>Naming Conventions</a>
         <a href="#stack"><span class="sidebar-num">09</span>Stack Ports</a>
         <a href="#rules"><span class="sidebar-num">10</span>Non-Negotiables</a>
+        <a href="#deviations"><span class="sidebar-num">11</span>Known Deviations</a>
       </div>
     </div>
 
@@ -777,7 +780,7 @@ code {
           <div class="component-tags">
             <span class="badge badge-crimson">High drift risk</span>
           </div>
-          <div class="component-desc">Always inline SVG via symbol + use. Never img tag for logo. Cyan (#5BBCD4) rounded-rect background (rx=12), crimson (#F0243E) lowercase "d" with vertical stem right + circular bowl lower-left. aria-hidden on SVG, aria-label on parent link.</div>
+          <div class="component-desc">Always an <code>&lt;img&gt;</code> tag pointing at <code>/assets/brand/logo-d.png</code>. Canonical asset is a 1,425x1,425 PNG — raster is source of truth, no SVG variant exists, never regenerate from prompts. Set explicit <code>width</code>/<code>height</code> attributes and meaningful <code>alt</code> ("Dade Studio"). The parent link carries <code>aria-label</code> if the mark stands alone.</div>
         </div>
 
         <div class="component-card">
@@ -877,46 +880,47 @@ code {
     <section class="doc-section" id="fonts">
       <div class="section-marker">04 / Font Pipeline</div>
       <h2 class="section-heading">Font Loading Strategy</h2>
-      <p class="prose">Two variable fonts. One file each. Zero multiple-weight requests. This is the complete loading strategy — do not deviate from it or CLS will spike.</p>
+      <p class="prose">Two variable fonts, self-hosted from <code>/assets/fonts/</code>. One WOFF2 file each. Zero third-party DNS lookups, zero multiple-weight requests. This is the complete loading strategy — do not deviate from it or CLS will spike.</p>
 
       <div class="code-block">
         <div class="code-block-header"><span class="code-filename">head — font loading</span><span class="code-lang">HTML</span></div>
-        <pre><span class="c">&lt;!-- Step 1: Preconnect to Google Fonts origin --&gt;</span>
-<span class="k">&lt;link</span> rel=<span class="s">"preconnect"</span> href=<span class="s">"https://fonts.googleapis.com"</span><span class="k">&gt;</span>
-<span class="k">&lt;link</span> rel=<span class="s">"preconnect"</span> href=<span class="s">"https://fonts.gstatic.com"</span> crossorigin<span class="k">&gt;</span>
-
-<span class="c">&lt;!-- Step 2: Preload the WOFF2 files before any other request --&gt;</span>
+        <pre><span class="c">&lt;!-- Step 1: Preload the self-hosted WOFF2 files before any other request --&gt;</span>
 <span class="k">&lt;link</span> rel=<span class="s">"preload"</span>
-      href=<span class="s">"https://fonts.gstatic.com/s/inter/v13/UcCO3...EeA.woff2"</span>
+      href=<span class="s">"/assets/fonts/InterVariable.woff2"</span>
       as=<span class="s">"font"</span> type=<span class="s">"font/woff2"</span> crossorigin<span class="k">&gt;</span>
 <span class="k">&lt;link</span> rel=<span class="s">"preload"</span>
-      href=<span class="s">"https://fonts.gstatic.com/s/jetbrainsmono/v18/tDb...hEA.woff2"</span>
+      href=<span class="s">"/assets/fonts/JetBrainsMono[wght].woff2"</span>
       as=<span class="s">"font"</span> type=<span class="s">"font/woff2"</span> crossorigin<span class="k">&gt;</span>
 
-<span class="c">&lt;!-- Step 3: Load the CSS2 variable font stylesheet (non-blocking) --&gt;</span>
-<span class="k">&lt;link</span> href=<span class="s">"https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap"</span> rel=<span class="s">"stylesheet"</span><span class="k">&gt;</span></pre>
+<span class="c">&lt;!-- Step 2: Declare @font-face blocks in the stylesheet (see type.css) --&gt;</span>
+<span class="c">&lt;!-- No external stylesheet link needed. No preconnect needed. --&gt;</span></pre>
       </div>
 
       <div class="callout callout-info">
         <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="oklch(42% 0.12 212.1)" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
         <div>
-          <div class="callout-title" style="color:oklch(42% 0.12 212.1)">Self-hosting for best performance</div>
-          <div class="callout-body">For production, self-host both variable fonts from rsms.me/inter/ and JetBrains fonts repo. This eliminates the Google Fonts DNS lookup and guarantees the preload URLs never break. Store in /public/fonts/ and update the preload hrefs. Same font-display strategy applies.</div>
+          <div class="callout-title" style="color:oklch(42% 0.12 212.1)">Self-hosted, not CDN</div>
+          <div class="callout-body">Both variable fonts ship from <code>/assets/fonts/</code> on the same origin as the HTML. Source: Inter Variable from <code>rsms.me/inter/</code>, JetBrains Mono variable from the JetBrains fonts repo. No Google Fonts, no third-party origins, no preconnect handshakes. Same <code>font-display: swap</code> strategy applies.</div>
         </div>
       </div>
 
-      <h3 class="section-subheading">Size-Adjust for Zero CLS</h3>
-      <p class="prose">Add <code>size-adjust</code>, <code>ascent-override</code>, and <code>descent-override</code> to the fallback @font-face declarations so the fallback font matches Inter's metrics. This eliminates layout shift during the swap period.</p>
+      <h3 class="section-subheading">@font-face + Size-Adjust for Zero CLS</h3>
+      <p class="prose">Declare both variable fonts with <code>format("woff2-variations")</code>. Add <code>size-adjust</code>, <code>ascent-override</code>, and <code>descent-override</code> to a fallback @font-face so the fallback matches Inter's metrics. This eliminates layout shift during the swap period. These declarations live outside <code>@layer tokens</code> (@font-face cannot be cascade-layered).</p>
 
       <div class="code-block">
-        <div class="code-block-header"><span class="code-filename">font-fallback.css</span><span class="code-lang">CSS</span></div>
-        <pre><span class="c">/* Calibrated fallback metrics for Inter Variable */</span>
+        <div class="code-block-header"><span class="code-filename">type.css</span><span class="code-lang">CSS</span></div>
+        <pre><span class="c">/* Self-hosted variable fonts — place outside @layer tokens */</span>
 <span class="k">@font-face</span> <span class="p">{</span>
-  <span class="t">font-family</span><span class="p">:</span> <span class="s">"InterVariable"</span><span class="p">;</span>
-  <span class="t">font-style</span><span class="p">:</span> <span class="v">normal</span><span class="p">;</span>
+  <span class="t">font-family</span><span class="p">:</span> <span class="s">"Inter"</span><span class="p">;</span>
+  <span class="t">src</span><span class="p">:</span> <span class="v">url("/assets/fonts/InterVariable.woff2") format("woff2-variations")</span><span class="p">;</span>
   <span class="t">font-weight</span><span class="p">:</span> <span class="n">100 900</span><span class="p">;</span>
   <span class="t">font-display</span><span class="p">:</span> <span class="v">swap</span><span class="p">;</span>
-  <span class="t">src</span><span class="p">:</span> <span class="v">url('/fonts/InterVariable.woff2') format('woff2')</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">@font-face</span> <span class="p">{</span>
+  <span class="t">font-family</span><span class="p">:</span> <span class="s">"JetBrains Mono"</span><span class="p">;</span>
+  <span class="t">src</span><span class="p">:</span> <span class="v">url("/assets/fonts/JetBrainsMono[wght].woff2") format("woff2-variations")</span><span class="p">;</span>
+  <span class="t">font-weight</span><span class="p">:</span> <span class="n">100 800</span><span class="p">;</span>
+  <span class="t">font-display</span><span class="p">:</span> <span class="v">swap</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c">/* Fallback that matches Inter's metrics — eliminates CLS */</span>
@@ -929,8 +933,8 @@ code {
   <span class="t">size-adjust</span><span class="p">:</span>      <span class="n">107%</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="c">/* Update fallback stack to include calibrated fallback */</span>
-<span class="t">--font-sans</span><span class="p">:</span> <span class="v">InterVariable, InterFallback, ui-sans-serif, system-ui, sans-serif</span><span class="p">;</span></pre>
+<span class="c">/* Primary family stack — Inter leads, calibrated fallback next */</span>
+<span class="t">--font-sans</span><span class="p">:</span> <span class="v">"Inter", InterFallback, ui-sans-serif, system-ui, sans-serif</span><span class="p">;</span></pre>
       </div>
 
       <h3 class="section-subheading">Typography Scale — CSS</h3>
@@ -1193,7 +1197,7 @@ code {
 <span class="ft-indent">│  │  ├─ </span><span class="ft-file">Card</span><span class="ft-ext">.tsx</span>
 <span class="ft-indent">│  │  ├─ </span><span class="ft-file">Callout</span><span class="ft-ext">.tsx</span>
 <span class="ft-indent">│  │  ├─ </span><span class="ft-file">Input</span><span class="ft-ext">.tsx</span>
-<span class="ft-indent">│  │  └─ </span><span class="ft-file">Logo</span><span class="ft-ext">.tsx</span>            <span class="ft-comment">SVG symbol, exported as component</span>
+<span class="ft-indent">│  │  └─ </span><span class="ft-file">Logo</span><span class="ft-ext">.tsx</span>            <span class="ft-comment">&lt;img&gt; wrapper for /assets/brand/logo-d.png</span>
 <span class="ft-indent">│  ├─ </span><span class="ft-dir">sections/</span>
 <span class="ft-indent">│  │  ├─ </span><span class="ft-file">Hero</span><span class="ft-ext">.tsx</span>            <span class="ft-comment">studio homepage hero variant</span>
 <span class="ft-indent">│  │  ├─ </span><span class="ft-file">WorkGrid</span><span class="ft-ext">.tsx</span>
@@ -1209,9 +1213,12 @@ code {
 <span class="ft-indent">│  ├─ </span><span class="ft-file">type</span><span class="ft-ext">.css</span>               <span class="ft-comment">font-face, size scale, heading defaults</span>
 <span class="ft-indent">│  └─ </span><span class="ft-file">motion</span><span class="ft-ext">.css</span>             <span class="ft-comment">animations, reduced-motion override</span>
 <span class="ft-indent">├─ </span><span class="ft-dir">public/</span>
-<span class="ft-indent">│  ├─ </span><span class="ft-dir">fonts/</span>
-<span class="ft-indent">│  │  ├─ </span><span class="ft-file">InterVariable</span><span class="ft-ext">.woff2</span>
-<span class="ft-indent">│  │  └─ </span><span class="ft-file">JetBrainsMono</span><span class="ft-ext">[wght].woff2</span>
+<span class="ft-indent">│  ├─ </span><span class="ft-dir">assets/</span>
+<span class="ft-indent">│  │  ├─ </span><span class="ft-dir">brand/</span>
+<span class="ft-indent">│  │  │  └─ </span><span class="ft-file">logo-d</span><span class="ft-ext">.png</span>        <span class="ft-comment">1,425x1,425 canonical mark — raster source of truth</span>
+<span class="ft-indent">│  │  └─ </span><span class="ft-dir">fonts/</span>
+<span class="ft-indent">│  │     ├─ </span><span class="ft-file">InterVariable</span><span class="ft-ext">.woff2</span>
+<span class="ft-indent">│  │     └─ </span><span class="ft-file">JetBrainsMono</span><span class="ft-ext">[wght].woff2</span>
 <span class="ft-indent">│  └─ </span><span class="ft-dir">images/</span>
 <span class="ft-indent">│     ├─ </span><span class="ft-dir">work/</span>               <span class="ft-comment">case study images — AVIF + WebP pairs</span>
 <span class="ft-indent">│     └─ </span><span class="ft-dir">og/</span>                 <span class="ft-comment">1200x630 Open Graph images per page</span>
@@ -1298,7 +1305,7 @@ code {
 
       <h3 class="section-subheading">Next.js on Vercel (primary)</h3>
       <div class="rule-list">
-        <div class="rule-item"><span class="rule-num">N1</span><div class="rule-text"><strong>Font loading:</strong> Use <code>next/font/google</code> with <code>variable: '--font-inter'</code> and <code>subsets: ['latin']</code>. The variable name maps to the CSS custom property. Do <em>not</em> import the Google Fonts URL manually — next/font handles preloading, WOFF2 self-hosting, and CLS automatically.</div></div>
+        <div class="rule-item"><span class="rule-num">N1</span><div class="rule-text"><strong>Font loading:</strong> Use <code>next/font/local</code> pointing at the WOFF2 files in <code>public/assets/fonts/</code>. Pass <code>variable: '--font-inter'</code> and <code>display: 'swap'</code>. Do <em>not</em> use <code>next/font/google</code> — fonts are self-hosted from our own origin, not fetched from Google Fonts.</div></div>
         <div class="rule-item"><span class="rule-num">N2</span><div class="rule-text"><strong>Images:</strong> Use <code>next/image</code> for all raster images. It handles AVIF/WebP conversion, srcset generation, and lazy loading automatically. Set <code>priority={true}</code> on the LCP image only — this is next/image's equivalent of <code>fetchpriority="high"</code>.</div></div>
         <div class="rule-item"><span class="rule-num">N3</span><div class="rule-text"><strong>Theme script:</strong> In <code>app/layout.tsx</code>, add the theme-reading script as a <code>&lt;script dangerouslySetInnerHTML&gt;</code> with <code>id="theme-script"</code> inside <code>&lt;html&gt;</code>, before <code>&lt;body&gt;</code>. This prevents FOUC on page load.</div></div>
         <div class="rule-item"><span class="rule-num">N4</span><div class="rule-text"><strong>Tokens:</strong> Import <code>styles/tokens.css</code> in the root layout, not in individual components. Tokens are global and should only be loaded once.</div></div>
@@ -1308,7 +1315,7 @@ code {
       <h3 class="section-subheading">Squarespace Custom CSS</h3>
       <div class="rule-list">
         <div class="rule-item"><span class="rule-num">S1</span><div class="rule-text"><strong>Token injection:</strong> All CSS custom properties go in Design > Custom CSS. Put them inside <code>:root {}</code> at the top, before any selectors. Squarespace's own styles load before Custom CSS so tokens applied to <code>:root</code> are available globally.</div></div>
-        <div class="rule-item"><span class="rule-num">S2</span><div class="rule-text"><strong>Font loading:</strong> Add the Google Fonts preconnect and stylesheet links in Settings > Advanced > Code Injection > Header. Variable font URL with display=swap is the same URL as in the HTML files.</div></div>
+        <div class="rule-item"><span class="rule-num">S2</span><div class="rule-text"><strong>Font loading:</strong> Upload <code>InterVariable.woff2</code> and <code>JetBrainsMono[wght].woff2</code> as file assets, then add <code>&lt;link rel="preload"&gt;</code> and matching <code>@font-face</code> blocks in Settings > Advanced > Code Injection > Header. Point the <code>src</code> URLs at the uploaded file paths. No Google Fonts links. Use <code>font-display: swap</code>.</div></div>
         <div class="rule-item"><span class="rule-num">S3</span><div class="rule-text"><strong>Dark mode:</strong> Squarespace doesn't support <code>data-theme</code> natively. Add the theme toggle script in Code Injection > Footer. The <code>data-theme</code> attribute on <code>document.documentElement</code> works the same way.</div></div>
         <div class="rule-item"><span class="rule-num">S4</span><div class="rule-text"><strong>Components:</strong> Most of the system's components can be added via Code Blocks (injected HTML). For repeating components like nav, use Code Injection > Header for critical pieces. Performance will be lower than Next.js — Squarespace injects its own JS and can't be fully optimized.</div></div>
       </div>
@@ -1369,7 +1376,7 @@ code {
 
         <div class="rule-item">
           <span class="rule-num">09</span>
-          <div class="rule-text"><strong>The logo is always inline SVG via symbol + use.</strong> Never an img tag. Never a background-image. The SVG symbol is defined once in hidden defs at the top of body and referenced everywhere with <code>&lt;use href="#d-logo"&gt;</code>. The logo parent link always has <code>aria-label</code>.</div>
+          <div class="rule-text"><strong>The logo is always <code>&lt;img src="/assets/brand/logo-d.png"&gt;</code>.</strong> The canonical asset is a 1,425x1,425 PNG — raster is the source of truth, no SVG variant exists, and the mark must never be regenerated from a prompt. Set explicit <code>width</code>/<code>height</code>, use meaningful <code>alt</code> ("Dade Studio") when the logo stands alone, and put <code>alt=""</code> on the image with <code>aria-label</code> on the parent link only when the link text already names the site. Never a background-image.</div>
         </div>
 
         <div class="rule-item">
@@ -1394,6 +1401,48 @@ code {
         <div>
           <div class="callout-title" style="color:var(--success)">You're ready to build</div>
           <div class="callout-body">This document plus the four reference artifacts contain everything needed to implement the system correctly. When in doubt: check the design system reference page first, look for the component, read the a11y note, then build. If something isn't in the system, add it to the system before shipping it.</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ====================================================
+         11 KNOWN DEVIATIONS
+         ==================================================== -->
+    <section class="doc-section" id="deviations">
+      <div class="section-marker">11 / Known Deviations</div>
+      <h2 class="section-heading">Known deviations to fix before port</h2>
+      <p class="prose">Items in this list have been corrected in this artifact but may still be present in adjacent artifacts, earlier drafts, or cached generations. Fix any remaining instance before porting to production. Nothing below is optional.</p>
+
+      <div class="rule-list">
+
+        <div class="rule-item">
+          <span class="rule-num">D1</span>
+          <div class="rule-text"><strong>MaaS = Memory as a Service.</strong> The Models as a Service framing is deprecated across all artifacts. Copy that described the product as model routing or an LLM fleet has been rewritten to memory framing (persistent AI memory across tools).</div>
+        </div>
+
+        <div class="rule-item">
+          <span class="rule-num">D2</span>
+          <div class="rule-text"><strong>Tailscale removed from all business-facing artifacts.</strong> Personal-use tooling only, not part of the stack narrative.</div>
+        </div>
+
+        <div class="rule-item">
+          <span class="rule-num">D3</span>
+          <div class="rule-text"><strong>Canonical logo is <code>/assets/brand/logo-d.png</code>, a 1,425x1,425 PNG.</strong> No SVG variant exists. Never regenerate from prompts.</div>
+        </div>
+
+        <div class="rule-item">
+          <span class="rule-num">D4</span>
+          <div class="rule-text"><strong>Content Retainer card replaced with a Memory System card on Artifact 2 (studio homepage),</strong> demoting content/brand services behind the MaaS primary offer.</div>
+        </div>
+
+      </div>
+
+      <div class="callout callout-brand" style="margin-top:var(--s8)">
+        <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="var(--brand-crimson)" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+        <div>
+          <div class="callout-title" style="color:var(--brand-crimson)">Before you ship</div>
+          <div class="callout-body">Grep the full artifact set for <code>Tailscale</code>, <code>Models as a Service</code>, <code>&lt;symbol id="logo-d"&gt;</code>, <code>&lt;symbol id="d-logo"&gt;</code>, <code>fonts.googleapis.com</code>, and <code>fonts.gstatic.com</code>. All six counts must be zero before the port is considered clean.</div>
         </div>
       </div>
 
@@ -1442,7 +1491,7 @@ code {
   };
 
   // Sidebar active state on scroll
-  const sectionIds = ['overview','tokens','components','performance','fonts','images','css','files','naming','stack','rules'];
+  const sectionIds = ['overview','tokens','components','performance','fonts','images','css','files','naming','stack','rules','deviations'];
   const links = {};
   sectionIds.forEach(id => {
     links[id] = document.querySelector(`.sidebar-links a[href="#${id}"]`);
