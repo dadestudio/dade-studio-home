@@ -19,7 +19,7 @@
 }
 @font-face {
   font-family: "JetBrains Mono";
-  src: url("/assets/fonts/JetBrainsMono[wght].woff2") format("woff2-variations");
+  src: url("/assets/fonts/JetBrainsMono%5Bwght%5D.woff2") format("woff2-variations");
   font-weight: 100 800;
   font-display: swap;
 }
@@ -631,7 +631,7 @@ code {
 
   <span class="t">--border-subtle</span><span class="p">:</span>  <span class="v">oklch(88% 0.01 240)</span><span class="p">;</span>   <span class="c">/* dividers, card borders */</span>
   <span class="t">--border-default</span><span class="p">:</span> <span class="v">oklch(78% 0.015 240)</span><span class="p">;</span>  <span class="c">/* input borders */</span>
-  <span class="t">--border-strong</span><span class="p">:</span>  <span class="v">oklch(55% 0.02 240)</span><span class="p">;</span>   <span class="c">/* hover border emphasis */</span>
+  <span class="t">--border-default</span><span class="p">:</span>  <span class="v">oklch(55% 0.02 240)</span><span class="p">;</span>   <span class="c">/* hover border emphasis */</span>
 <span class="p">}</span>
 
 <span class="c">/* Dark override */</span>
@@ -645,7 +645,7 @@ code {
   <span class="t">--text-tertiary</span><span class="p">:</span>  <span class="v">oklch(50%  0.015 240)</span><span class="p">;</span>
   <span class="t">--border-subtle</span><span class="p">:</span>  <span class="v">oklch(25%  0.02  260)</span><span class="p">;</span>
   <span class="t">--border-default</span><span class="p">:</span> <span class="v">oklch(32%  0.025 260)</span><span class="p">;</span>
-  <span class="t">--border-strong</span><span class="p">:</span>  <span class="v">oklch(45%  0.025 260)</span><span class="p">;</span>
+  <span class="t">--border-default</span><span class="p">:</span>  <span class="v">oklch(45%  0.025 260)</span><span class="p">;</span>
 <span class="p">}</span></pre>
       </div>
 
@@ -694,11 +694,10 @@ code {
 
 <span class="c">/* Motion */</span>
 <span class="t">--ease-expo</span><span class="p">:</span>   <span class="v">cubic-bezier(0.16, 1, 0.3, 1)</span><span class="p">;</span>    <span class="c">/* default enters */</span>
-<span class="t">--ease-spring</span><span class="p">:</span> <span class="v">cubic-bezier(0.34, 1.56, 0.64, 1)</span><span class="p">;</span> <span class="c">/* playful only */</span>
+<span class="t">--ease-circ</span><span class="p">:</span>   <span class="v">cubic-bezier(0, 0.55, 0.45, 1)</span><span class="p">;</span>    <span class="c">/* smooth positional motion */</span>
 <span class="t">--dur-fast</span><span class="p">:</span>  <span class="n">120ms</span><span class="p">;</span>  <span class="c">/* color/border swaps */</span>
 <span class="t">--dur-base</span><span class="p">:</span>  <span class="n">200ms</span><span class="p">;</span>  <span class="c">/* hover, focus */</span>
 <span class="t">--dur-slow</span><span class="p">:</span>  <span class="n">350ms</span><span class="p">;</span>  <span class="c">/* reveals, theme switch */</span>
-<span class="t">--dur-enter</span><span class="p">:</span> <span class="n">500ms</span><span class="p">;</span>  <span class="c">/* page load animations */</span>
 
 <span class="c">/* Container widths */</span>
 <span class="t">--w-sm</span><span class="p">:</span>  <span class="n">640px</span><span class="p">;</span>   <span class="c">/* prose, narrow */</span>
@@ -918,7 +917,7 @@ code {
 <span class="p">}</span>
 <span class="k">@font-face</span> <span class="p">{</span>
   <span class="t">font-family</span><span class="p">:</span> <span class="s">"JetBrains Mono"</span><span class="p">;</span>
-  <span class="t">src</span><span class="p">:</span> <span class="v">url("/assets/fonts/JetBrainsMono[wght].woff2") format("woff2-variations")</span><span class="p">;</span>
+  <span class="t">src</span><span class="p">:</span> <span class="v">url("/assets/fonts/JetBrainsMono%5Bwght%5D.woff2") format("woff2-variations")</span><span class="p">;</span>
   <span class="t">font-weight</span><span class="p">:</span> <span class="n">100 800</span><span class="p">;</span>
   <span class="t">font-display</span><span class="p">:</span> <span class="v">swap</span><span class="p">;</span>
 <span class="p">}</span>

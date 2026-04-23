@@ -23,7 +23,7 @@
 }
 @font-face {
   font-family: "JetBrains Mono";
-  src: url("/assets/fonts/JetBrainsMono[wght].woff2") format("woff2-variations");
+  src: url("/assets/fonts/JetBrainsMono%5Bwght%5D.woff2") format("woff2-variations");
   font-weight: 100 800;
   font-display: swap;
 }
@@ -45,10 +45,9 @@
     --text-primary:   oklch(12% 0.02 260);
     --text-secondary: oklch(38% 0.025 260);
     --text-tertiary:  oklch(58% 0.018 260);
-    --text-inverse:   oklch(98% 0.003 240);
+    --text-inverse:   oklch(98% 0.003 240); /* High-contrast text on dark or filled surfaces. */
     --border-subtle:  oklch(88% 0.01 240);
     --border-default: oklch(78% 0.015 240);
-    --border-strong:  oklch(55% 0.02 240);
     --accent-crimson-bg: oklch(97% 0.02  17.2);
     --accent-cyan-bg:    oklch(97% 0.015 212.1);
     --accent-yellow-bg:  oklch(98% 0.02  97.3);
@@ -56,7 +55,7 @@
     --success:    oklch(58% 0.16 145);
     --warning:    oklch(62% 0.16 72);
     --error:      oklch(54% 0.2  27);
-    --info:       oklch(60% 0.14 240);
+    --info:       oklch(60% 0.14 240); /* Informational state color for neutral status messaging. */
     --success-bg: oklch(96% 0.03 145);
     --warning-bg: oklch(97% 0.025 72);
     --error-bg:   oklch(97% 0.025 27);
@@ -71,8 +70,8 @@
     --text-2xl:  clamp(1.5rem,    1.3rem   + 1vw,    2rem);
     --text-3xl:  clamp(1.875rem,  1.5rem   + 1.875vw, 2.625rem);
     --text-4xl:  clamp(2.25rem,   1.7rem   + 2.75vw, 3.5rem);
-    --text-5xl:  clamp(3rem,      2rem     + 5vw,    5rem);
-    --text-6xl:  clamp(3.75rem,   2.5rem   + 6.25vw, 6.5rem);
+    --text-5xl:  clamp(3rem,      2rem     + 5vw,    5rem); /* Display heading size for hero-level copy. */
+    --text-6xl:  clamp(3.75rem,   2.5rem   + 6.25vw, 6.5rem); /* Largest showcase headline for top sections. */
     --s1:  0.25rem;  --s2:  0.5rem;   --s3:  0.75rem; --s4:  1rem;
     --s5:  1.25rem;  --s6:  1.5rem;   --s8:  2rem;    --s10: 2.5rem;
     --s12: 3rem;     --s16: 4rem;     --s20: 5rem;    --s24: 6rem;
@@ -86,11 +85,9 @@
     --ease-expo:   cubic-bezier(0.16, 1, 0.3, 1);
     --ease-circ:   cubic-bezier(0, 0.55, 0.45, 1);
     --ease-inout:  cubic-bezier(0.45, 0, 0.55, 1);
-    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     --dur-fast:  120ms;
     --dur-base:  200ms;
     --dur-slow:  350ms;
-    --dur-enter: 500ms;
     --w-sm:  640px; --w-md: 768px;  --w-lg:  1024px;
     --w-xl: 1280px; --w-2xl: 1536px;
   }
@@ -105,7 +102,6 @@
     --text-inverse:   oklch(12%  0.02  260);
     --border-subtle:  oklch(25%  0.02  260);
     --border-default: oklch(32%  0.025 260);
-    --border-strong:  oklch(45%  0.025 260);
     --accent-crimson-bg: oklch(20% 0.05  17.2);
     --accent-cyan-bg:    oklch(20% 0.04  212.1);
     --accent-yellow-bg:  oklch(20% 0.04  97.3);
@@ -263,14 +259,14 @@
   min-height: 44px; text-decoration: none;
   transition: background-color var(--dur-fast) var(--ease-expo), color var(--dur-fast) var(--ease-expo),
     border-color var(--dur-fast) var(--ease-expo), box-shadow var(--dur-base) var(--ease-expo),
-    transform var(--dur-fast) var(--ease-spring);
+    transform var(--dur-fast) var(--ease-expo);
 }
 .btn:active { transform: translateY(1px) scale(0.985); }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
 .btn-primary { background: var(--brand-crimson); color: #fff; border-color: var(--brand-crimson); }
 .btn-primary:hover { background: oklch(44% 0.22 17.2); box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-crimson) 18%, transparent); }
 .btn-secondary { background: var(--bg-surface); color: var(--text-primary); border-color: var(--border-default); }
-.btn-secondary:hover { border-color: var(--border-strong); background: var(--bg-subtle); }
+.btn-secondary:hover { border-color: var(--border-default); background: var(--bg-subtle); }
 .btn-ghost { background: transparent; color: var(--text-primary); }
 .btn-ghost:hover { background: var(--bg-subtle); }
 .btn-cyan   { background: var(--brand-cyan);   color: #fff; border-color: var(--brand-cyan); }
@@ -371,7 +367,7 @@ tbody tr:hover { background: var(--bg-subtle); }
 .motion-card:nth-child(1) .motion-ball { background: var(--brand-crimson); transition-timing-function: var(--ease-expo); }
 .motion-card:nth-child(2) .motion-ball { background: var(--brand-cyan);    transition-timing-function: var(--ease-circ); }
 .motion-card:nth-child(3) .motion-ball { background: var(--brand-yellow);  transition-timing-function: var(--ease-inout); }
-.motion-card:nth-child(4) .motion-ball { background: var(--brand-purple);  transition-timing-function: var(--ease-spring); }
+.motion-card:nth-child(4) .motion-ball { background: var(--brand-purple);  transition-timing-function: var(--ease-inout); }
 .motion-card:hover .motion-ball { transform: translateY(-18px); }
 .motion-name { font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 600; color: var(--text-primary); }
 .motion-sub  { font-family: var(--font-mono); font-size: 10px; color: var(--text-tertiary); margin-top: 2px; }
@@ -728,9 +724,7 @@ code {
             <tr><td><code>--dur-fast</code></td><td>120ms</td><td>Color, opacity, border</td></tr>
             <tr><td><code>--dur-base</code></td><td>200ms</td><td>Hover, focus, small transforms</td></tr>
             <tr><td><code>--dur-slow</code></td><td>350ms</td><td>Card lifts, theme switch, panels</td></tr>
-            <tr><td><code>--dur-enter</code></td><td>500ms</td><td>Page load reveals, hero</td></tr>
             <tr><td><code>--ease-expo</code></td><td>cubic-bezier(0.16,1,0.3,1)</td><td>Default for enters</td></tr>
-            <tr><td><code>--ease-spring</code></td><td>cubic-bezier(0.34,1.56,0.64,1)</td><td>Playful only</td></tr>
           </tbody>
         </table>
       </div>
