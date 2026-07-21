@@ -15,10 +15,10 @@ const navCards = [
     description: "Apparel, prints, and small-run goods from the studio.",
   },
   {
-    label: "MaaS",
-    href: "https://maas.dade.studio",
+    label: "RemainFrame",
+    href: "/remainframe",
     description:
-      "AI memory infrastructure for builders. Purpose-built persistence for AI agents.",
+      "A custom AI secretary for follow-ups, recurring work, and the tasks that keep piling up.",
   },
   {
     label: "Retro",
@@ -46,7 +46,7 @@ export default function Home() {
         </p>
         <div className="rounded-[var(--radius-lg)] border border-border bg-muted p-6 md:p-7">
           <p className="text-muted-foreground text-base leading-relaxed md:text-lg">
-            Currently: building MaaS, rebuilding the studio site, and everything between.
+            Currently: building RemainFrame, rebuilding the studio site, and everything between.
           </p>
         </div>
       </section>
@@ -77,6 +77,12 @@ export default function Home() {
             className="underline underline-offset-4 transition-colors hover:text-foreground"
           >
             Bot privacy policy
+          </Link>
+          <Link
+            href="/remainframe/legal"
+            className="underline underline-offset-4 transition-colors hover:text-foreground"
+          >
+            RemainFrame legal
           </Link>
         </div>
       </footer>

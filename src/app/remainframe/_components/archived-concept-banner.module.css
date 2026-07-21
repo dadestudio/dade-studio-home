@@ -1,0 +1,54 @@
+.banner {
+  position: relative;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem 1.25rem;
+  width: 100%;
+  padding: 0.8rem clamp(1rem, 4vw, 2rem);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  background: #11110f;
+  color: #fffdf7;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.banner p {
+  margin: 0;
+}
+
+.links {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 0.85rem;
+}
+
+.links a {
+  color: #f9c96b;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.links a:hover {
+  color: #fffdf7;
+}
+
+.links a:focus-visible {
+  border-radius: 0.15rem;
+  outline: 2px solid #fffdf7;
+  outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+  .banner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+  }
+}
