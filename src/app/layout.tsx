@@ -1,31 +1,23 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
-const inter = localFont({
-  src: "../../public/assets/fonts/InterVariable-latin.woff2",
+const geistSans = Geist({
   variable: "--font-sans",
-  weight: "100 900",
+  subsets: ["latin"],
   display: "swap",
 });
 
-const jetBrainsMono = localFont({
-  src: "../../public/assets/fonts/JetBrainsMono-latin.woff2",
+const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
-  weight: "100 800",
+  subsets: ["latin"],
   display: "swap",
-  preload: false,
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://dade.studio"),
-  title: {
-    default: "Dade.Studio",
-    template: "%s | Dade.Studio",
-  },
-  description: "An independent design and product studio in Pagosa Springs, Colorado.",
-  alternates: { canonical: "/" },
+  title: "Dade.Studio",
+  description: "Homepage and navigation hub for the Dade.Studio universe.",
 };
 
 export default function RootLayout({
@@ -37,7 +29,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${jetBrainsMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider
