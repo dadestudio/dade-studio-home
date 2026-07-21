@@ -1,0 +1,5 @@
+Contact: mailto:hello@dade.studio
+Canonical: https://dade.studio/.well-known/security.txt
+Policy: https://dade.studio/remainframe/security
+Preferred-Languages: en
+Expires: 2027-01-20T23:59:59Z
