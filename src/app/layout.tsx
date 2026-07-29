@@ -16,8 +16,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dade.Studio",
-  description: "Homepage and navigation hub for the Dade.Studio universe.",
+  metadataBase: new URL("https://dade.studio"),
+  title: {
+    default: "Dade Studio",
+    template: "%s | Dade Studio",
+  },
+  description:
+    "Independent creative and digital services for people and small businesses building something real.",
+  applicationName: "Dade Studio",
 };
 
 export default function RootLayout({
