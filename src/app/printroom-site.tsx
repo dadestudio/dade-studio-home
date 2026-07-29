@@ -195,7 +195,7 @@ export default function PrintroomSite() {
                   alt="Mint green shirt featuring Dade's Rave Owl artwork"
                   width={720}
                   height={960}
-                  sizes="(max-width: 760px) 62vw, 30vw"
+                  sizes="(max-width: 760px) 62vw, (max-width: 1080px) 340px, 30vw"
                   priority
                 />
               </a>
