@@ -20,7 +20,7 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, "..");
 const merchPath = path.join(
   projectRoot,
-  "public/assets/merch/girl-retro-wave-shirt.jpg",
+  "public/assets/merch/rave-owl.jpg",
 );
 const outputPath = path.join(
   projectRoot,
