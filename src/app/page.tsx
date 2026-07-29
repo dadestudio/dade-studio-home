@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import SignalSite from "./concepts/01/signal-site";
+import PrintroomSite from "./printroom-site";
 
 const description =
   "Branding, graphic design, merch and product design, websites, tailored digital tools, coaching, and practical marketing support.";
@@ -36,5 +36,5 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  return <SignalSite />;
+  return <PrintroomSite />;
 }

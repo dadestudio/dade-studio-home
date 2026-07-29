@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./page.module.css";
+import styles from "./printroom.module.css";
 
 const services = [
   {
@@ -111,7 +111,7 @@ const shopPieces = [
   },
 ] as const;
 
-export default function SignalSite() {
+export default function PrintroomSite() {
   return (
     <div className={styles.page}>
       <a className={styles.skipLink} href="#main">
