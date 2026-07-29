@@ -100,9 +100,9 @@ const shopPieces = [
     image: "/assets/merch/sunset-mountains.jpg",
   },
   {
-    name: "Girl Retro Wave",
-    href: "https://merch.dade.studio/products/girl-retro-wave-shirt",
-    image: "/assets/merch/girl-retro-wave-shirt.jpg",
+    name: "Morning Mountains",
+    href: "https://merch.dade.studio/products/morning-mountains",
+    image: "/assets/merch/morning-mountains.jpg",
   },
   {
     name: "Rave Owl",
@@ -185,17 +185,17 @@ export default function PrintroomSite() {
               <span className={styles.heroArtSun} aria-hidden="true" />
               <a
                 className={styles.heroProduct}
-                href="https://merch.dade.studio/products/girl-retro-wave-shirt"
+                href="https://merch.dade.studio/products/rave-owl"
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Shop the Girl Retro Wave shirt"
+                aria-label="Shop the Rave Owl shirt"
               >
                 <Image
-                  src="/assets/merch/girl-retro-wave-shirt.jpg"
-                  alt="Yellow shirt featuring Dade's Girl Retro Wave artwork"
+                  src="/assets/merch/rave-owl.jpg"
+                  alt="Mint green shirt featuring Dade's Rave Owl artwork"
                   width={720}
                   height={960}
-                  sizes="(max-width: 760px) 62vw, 30vw"
+                  sizes="(max-width: 760px) 62vw, (max-width: 1080px) 340px, 30vw"
                   priority
                 />
               </a>
