@@ -77,6 +77,24 @@ const faqs = [
   },
 ] as const;
 
+const shopPieces = [
+  {
+    name: "Sunset Mountains",
+    href: "https://merch.dade.studio/products/sunset-mountains",
+    image: "/assets/merch/sunset-mountains.jpg",
+  },
+  {
+    name: "Girl Retro Wave",
+    href: "https://merch.dade.studio/products/girl-retro-wave-shirt",
+    image: "/assets/merch/girl-retro-wave-shirt.jpg",
+  },
+  {
+    name: "Rave Owl",
+    href: "https://merch.dade.studio/products/rave-owl",
+    image: "/assets/merch/rave-owl.jpg",
+  },
+] as const;
+
 export default function SignalPage() {
   return (
     <div className={styles.page}>
@@ -99,6 +117,7 @@ export default function SignalPage() {
           </Link>
 
           <nav className={styles.navLinks} aria-label="Signal page navigation">
+            <a href="#shop">Shop</a>
             <a href="#work">Work</a>
             <a href="#services">Services</a>
             <a href="#process">Process</a>
@@ -139,10 +158,56 @@ export default function SignalPage() {
                   Start a website
                   <span aria-hidden="true">↘</span>
                 </a>
-                <a className={styles.textLink} href="#work">
-                  See selected work
-                  <span aria-hidden="true">↓</span>
+                <a
+                  className={styles.textLink}
+                  href="https://merch.dade.studio"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Shop the art
+                  <span aria-hidden="true">↗</span>
                 </a>
+              </div>
+
+              <div className={styles.palettePicker} role="group" aria-label="Signal accent palette">
+                <span className={styles.paletteLabel}>Accent</span>
+                <label className={styles.paletteOption}>
+                  <input
+                    className={styles.paletteOxideInput}
+                    type="radio"
+                    name="signal-accent"
+                    defaultChecked
+                  />
+                  <span
+                    className={`${styles.paletteSwatch} ${styles.paletteOxide}`}
+                    aria-hidden="true"
+                  />
+                  <span className={styles.paletteName}>Oxide</span>
+                </label>
+                <label className={styles.paletteOption}>
+                  <input
+                    className={styles.paletteMineralInput}
+                    type="radio"
+                    name="signal-accent"
+                  />
+                  <span
+                    className={`${styles.paletteSwatch} ${styles.paletteMineral}`}
+                    aria-hidden="true"
+                  />
+                  <span className={styles.paletteName}>Mineral</span>
+                </label>
+                <label className={styles.paletteOption}>
+                  <input
+                    className={styles.paletteSandInput}
+                    type="radio"
+                    name="signal-accent"
+                  />
+                  <span
+                    className={`${styles.paletteSwatch} ${styles.paletteSand}`}
+                    aria-hidden="true"
+                  />
+                  <span className={styles.paletteName}>Sand</span>
+                </label>
               </div>
             </div>
 
@@ -196,6 +261,55 @@ export default function SignalPage() {
             <span>Web design</span>
             <span>Front-end</span>
             <span>One clear process</span>
+          </div>
+        </section>
+
+        <section className={styles.shopFeature} id="shop" aria-labelledby="shop-title">
+          <div className={styles.shopShell}>
+            <div className={styles.shopIntro}>
+              <p className={styles.shopEyebrow}>Studio shop / Live now</p>
+              <h2 id="shop-title">The art is already out in the world.</h2>
+              <p>
+                Original artwork, translated into things you can wear and keep. The shop is also
+                a working example of the studio&apos;s merch and product-design work.
+              </p>
+              <a
+                className={styles.shopCta}
+                href="https://merch.dade.studio"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Shop every piece
+                <span aria-hidden="true">↗</span>
+              </a>
+              <small>merch.dade.studio / fulfilled by Fourthwall</small>
+            </div>
+
+            <div className={styles.shopProducts}>
+              {shopPieces.map((piece) => (
+                <a
+                  className={styles.shopProduct}
+                  href={piece.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  key={piece.name}
+                >
+                  <div className={styles.shopProductImage}>
+                    <Image
+                      src={piece.image}
+                      alt={`${piece.name} artwork printed on a shirt`}
+                      width={720}
+                      height={960}
+                      sizes="(max-width: 760px) 76vw, (max-width: 1080px) 30vw, 22vw"
+                    />
+                  </div>
+                  <span className={styles.shopProductMeta}>
+                    <span>{piece.name}</span>
+                    <span aria-hidden="true">↗</span>
+                  </span>
+                </a>
+              ))}
+            </div>
           </div>
         </section>
 

@@ -2,8 +2,9 @@
   --ink: #11120f;
   --paper: #f3f0e7;
   --paper-bright: #fbfaf5;
-  --signal: #dfff37;
-  --crimson: #ed3047;
+  --signal: #d5a38d;
+  --crimson: #be6e59;
+  --focus: #7c3228;
   --rule: rgb(17 18 15 / 32%);
   --muted: #5c5d56;
   --mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
@@ -20,6 +21,18 @@
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+.page:has(.paletteMineralInput:checked) {
+  --signal: #a8b7c0;
+  --crimson: #7894a3;
+  --focus: #365769;
+}
+
+.page:has(.paletteSandInput:checked) {
+  --signal: #d8c49c;
+  --crimson: #b99b63;
+  --focus: #6b5225;
 }
 
 .page *,
@@ -41,7 +54,7 @@
 }
 
 .page :focus-visible {
-  outline: 3px solid var(--crimson);
+  outline: 3px solid var(--focus);
   outline-offset: 4px;
 }
 
@@ -198,7 +211,83 @@
   height: 11px;
   background: var(--crimson);
   border-radius: 50%;
-  box-shadow: 0 0 0 4px rgb(237 48 71 / 18%);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--crimson) 22%, transparent);
+}
+
+.palettePicker {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  min-height: 48px;
+  margin-top: 24px;
+  padding: 6px;
+  color: var(--paper-bright);
+  background: var(--ink);
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+}
+
+.paletteLabel {
+  padding: 0 8px 0 10px;
+  color: rgb(251 250 245 / 62%);
+  text-transform: uppercase;
+}
+
+.paletteOption {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 0 10px 0 7px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.paletteOption:hover,
+.paletteOption:has(input:checked) {
+  color: var(--ink);
+  background: var(--paper-bright);
+}
+
+.paletteOption:has(input:focus-visible) {
+  outline: 3px solid var(--signal);
+  outline-offset: 2px;
+}
+
+.paletteOption input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.paletteSwatch {
+  width: 17px;
+  height: 17px;
+  border: 1px solid rgb(251 250 245 / 45%);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 3px rgb(17 18 15 / 15%);
+}
+
+.paletteOxide {
+  background: #d5a38d;
+}
+
+.paletteMineral {
+  background: #a8b7c0;
+}
+
+.paletteSand {
+  background: #d8c49c;
 }
 
 .heroCopy h1 {
@@ -494,6 +583,134 @@
 .heroLedger span:last-child {
   border-right: 0;
   background: var(--signal);
+}
+
+.shopFeature {
+  width: 100%;
+  padding: clamp(72px, 8vw, 118px) max(24px, calc((100vw - 1392px) / 2));
+  color: var(--paper-bright);
+  background: var(--ink);
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+}
+
+.shopShell {
+  display: grid;
+  grid-template-columns: minmax(280px, 3.5fr) minmax(0, 8.5fr);
+  gap: clamp(44px, 6vw, 96px);
+  align-items: end;
+}
+
+.shopIntro {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.shopEyebrow {
+  color: var(--signal);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 760;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.shopIntro h2 {
+  max-width: 650px;
+  margin-top: 24px !important;
+  font-size: clamp(3.2rem, 5.3vw, 6.5rem);
+  font-weight: 840;
+  letter-spacing: -0.075em;
+  line-height: 0.88;
+}
+
+.shopIntro > p:not(.shopEyebrow) {
+  max-width: 46ch;
+  margin-top: 30px !important;
+  color: rgb(251 250 245 / 72%);
+  font-size: 1rem;
+  line-height: 1.58;
+}
+
+.shopCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 38px;
+  min-height: 52px;
+  margin-top: 32px;
+  padding: 0 17px;
+  color: var(--ink) !important;
+  background: var(--signal);
+  border: 2px solid var(--signal);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 760;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.shopCta:hover {
+  background: var(--crimson);
+  border-color: var(--crimson);
+  transform: translate(-2px, -2px);
+}
+
+.shopIntro small {
+  margin-top: 14px;
+  color: rgb(251 250 245 / 48%);
+  font-family: var(--mono);
+  font-size: 0.61rem;
+  letter-spacing: 0.035em;
+}
+
+.shopProducts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.shopProduct {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ink) !important;
+  background: var(--paper-bright);
+  border: 2px solid var(--paper-bright);
+}
+
+.shopProductImage {
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  background: #ecebea;
+}
+
+.shopProductImage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 220ms ease;
+}
+
+.shopProduct:hover .shopProductImage img {
+  transform: scale(1.025);
+}
+
+.shopProductMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 54px;
+  padding: 10px 12px;
+  border-top: 2px solid var(--ink);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 720;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
 }
 
 .section {
@@ -1229,6 +1446,14 @@
     justify-self: center;
   }
 
+  .shopShell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .shopIntro > p:not(.shopEyebrow) {
+    max-width: 58ch;
+  }
+
   .sectionHeading {
     grid-template-columns: 150px minmax(0, 1fr);
   }
@@ -1350,6 +1575,7 @@
   }
 
   .section,
+  .shopFeature,
   .remainframeBand,
   .aboutSection,
   .contact {
@@ -1460,9 +1686,27 @@
   .contact h2 {
     font-size: clamp(4rem, 18vw, 8rem);
   }
+
+  .shopProducts {
+    grid-auto-columns: minmax(230px, 76vw);
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+
+  .shopProduct {
+    scroll-snap-align: start;
+  }
 }
 
 @media (max-width: 420px) {
+  .navLinks a:nth-child(n + 4) {
+    display: none;
+  }
+
   .navLinks a {
     padding: 0 6px;
     font-size: 0.63rem;
@@ -1545,6 +1789,26 @@
   .footerLine {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .paletteLabel,
+  .paletteName {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .paletteOption {
+    padding: 0 9px;
+  }
+
+  .paletteSwatch {
+    width: 19px;
+    height: 19px;
   }
 }
 

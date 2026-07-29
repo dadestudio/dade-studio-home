@@ -188,7 +188,7 @@
 
 .signal .preview {
   color: #11120f;
-  background: #dfff37;
+  background: #d5a38d;
 }
 
 .signal .previewTiles span:first-child {
@@ -196,7 +196,7 @@
 }
 
 .signal .previewTiles span:nth-child(2) {
-  background: #f0243e;
+  background: #be6e59;
 }
 
 .dark .preview {
