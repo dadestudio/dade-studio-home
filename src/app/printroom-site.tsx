@@ -121,9 +121,16 @@ export default function PrintroomSite() {
       <header className={styles.siteHeader}>
         <div className={styles.navShell}>
           <Link className={styles.brand} href="/" aria-label="Dade Studio home">
-            <span className={styles.brandMonogram} aria-hidden="true">
-              D
-            </span>
+            <Image
+              className={styles.brandMark}
+              src="/assets/brand/logo-d.png"
+              alt=""
+              width={34}
+              height={34}
+              sizes="34px"
+              unoptimized
+              priority
+            />
             <span className={styles.brandText}>Dade.Studio</span>
           </Link>
 

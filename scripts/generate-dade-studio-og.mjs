@@ -24,6 +24,10 @@ const merchPath = path.join(
   projectRoot,
   "public/assets/merch/rave-owl.jpg",
 );
+const logoPath = path.join(
+  projectRoot,
+  "public/assets/brand/logo-d.png",
+);
 const outputPath = path.join(
   projectRoot,
   "public/assets/brand/dade-studio-og.png",
@@ -102,15 +106,31 @@ async function makePhotoCard() {
     .toBuffer();
 }
 
-async function makeInitialTile() {
-  const tile = Buffer.from(
-    svg`<svg width="108" height="108" xmlns="http://www.w3.org/2000/svg">
-      <rect x="4" y="5" width="100" height="99" fill="${palette.espresso}" opacity=".2"/>
-      <rect width="100" height="100" fill="${palette.accent}"/>
-      <text x="50" y="76" text-anchor="middle" fill="${palette.accentText}" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="800" letter-spacing="-5">D</text>
-      <circle cx="84" cy="17" r="6" fill="${palette.secondary}"/>
-    </svg>`,
-  );
+async function makeLogoTile() {
+  const logo = await sharp(logoPath)
+    .resize(100, 100, { fit: "cover" })
+    .png()
+    .toBuffer();
+  const tile = await sharp({
+    create: {
+      width: 108,
+      height: 108,
+      channels: 4,
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+    },
+  })
+    .composite([
+      {
+        input: Buffer.from(
+          svg`<svg width="108" height="108" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="5" width="100" height="99" fill="${palette.espresso}" opacity=".2"/>
+          </svg>`,
+        ),
+      },
+      { input: logo, left: 0, top: 0 },
+    ])
+    .png()
+    .toBuffer();
 
   return sharp(tile)
     .rotate(-3.5, {
@@ -123,15 +143,15 @@ async function makeInitialTile() {
 async function generate() {
   await mkdir(path.dirname(outputPath), { recursive: true });
 
-  const [photoCard, initialTile] = await Promise.all([
+  const [photoCard, logoTile] = await Promise.all([
     makePhotoCard(),
-    makeInitialTile(),
+    makeLogoTile(),
   ]);
 
   await sharp(paperBase())
     .composite([
       { input: photoCard, left: 803, top: 58 },
-      { input: initialTile, left: 612, top: 74 },
+      { input: logoTile, left: 612, top: 74 },
       {
         input: Buffer.from(
           svg`<svg width="150" height="38" xmlns="http://www.w3.org/2000/svg">

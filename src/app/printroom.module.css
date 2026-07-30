@@ -109,18 +109,12 @@
   letter-spacing: -0.025em;
 }
 
-.brandMonogram {
-  display: grid;
-  place-items: center;
+.brandMark {
+  display: block;
   width: 34px;
   height: 34px;
-  color: var(--accent-text);
-  background: var(--accent);
-  border: 1px solid var(--cream);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.45rem;
-  font-weight: 700;
-  line-height: 1;
+  flex: 0 0 auto;
+  object-fit: cover;
 }
 
 .navLinks {
@@ -1308,7 +1302,7 @@
     font-size: 0.63rem;
   }
 
-  .brandMonogram {
+  .brandMark {
     width: 32px;
     height: 32px;
   }
