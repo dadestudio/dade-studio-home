@@ -169,6 +169,36 @@
   display: none;
 }
 
+.navTail {
+  display: inline-flex;
+  align-items: center;
+  justify-self: end;
+  gap: 10px;
+}
+
+.menuButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 10px;
+  color: var(--cream);
+  background: transparent;
+  border: 2px solid var(--cream);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 760;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.menuButton:hover {
+  color: var(--ink);
+  background: var(--cream);
+}
+
 .hero {
   width: min(100%, 1440px);
   min-height: calc(100svh - 68px);
@@ -230,7 +260,9 @@
 
 .heroCopy h1 {
   max-width: 900px;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  hyphens: none;
+  word-break: normal;
   font-size: clamp(4rem, 6vw, 5.4rem);
   font-weight: 850;
   letter-spacing: -0.055em;
@@ -239,13 +271,28 @@
 }
 
 .heroAccent {
-  padding: 0.01em 0.08em 0.07em 0.025em;
+  display: inline-flex;
+  padding: 0;
+  flex-direction: column;
+  align-items: flex-start;
   color: var(--cream);
+  background: transparent;
+  box-shadow: none;
+  line-height: 1.12;
+  vertical-align: top;
+  white-space: normal;
+}
+
+.heroAccent span {
+  display: inline-block;
+  padding: 0.01em 0.08em 0.07em 0.025em;
   background: var(--ink);
   box-shadow: 0.06em 0.05em 0 var(--accent);
-  line-height: 1.12;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
+  white-space: nowrap;
+}
+
+.heroAccent span + span {
+  margin-top: 0.05em;
 }
 
 .heroIntro {
@@ -312,7 +359,7 @@
 
 .heroCapability {
   position: relative;
-  align-self: stretch;
+  align-self: center;
   min-height: 590px;
   padding: clamp(22px, 2.4vw, 34px);
   overflow: hidden;
@@ -428,7 +475,9 @@
 }
 
 .capabilityList strong {
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  hyphens: none;
+  word-break: normal;
   font-size: clamp(1.08rem, 1.5vw, 1.38rem);
   letter-spacing: -0.035em;
 }
@@ -492,14 +541,17 @@
   background: var(--secondary);
 }
 
-.heroLedger span:last-child {
-  border-right: 0;
+.heroLedger span:first-child {
   color: var(--cream);
   background: var(--secondary);
 }
 
-.heroLedger span:last-child::before {
+.heroLedger span:first-child::before {
   background: var(--accent);
+}
+
+.heroLedger span:last-child {
+  border-right: 0;
 }
 
 .remainframeBand {
@@ -513,14 +565,16 @@
 
 .remainframeFeature {
   display: grid;
-  grid-template-columns: minmax(320px, 5fr) minmax(0, 7fr);
-  gap: clamp(34px, 6vw, 92px);
-  align-items: center;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(34px, 4.5vw, 64px);
+  align-items: stretch;
   padding-top: clamp(58px, 7vw, 96px);
 }
 
 .remainframeCopy {
+  display: flex;
   padding: clamp(24px, 3.5vw, 46px);
+  flex-direction: column;
   color: var(--ink);
   background: var(--sage);
   border: 2px solid var(--ink);
@@ -528,7 +582,7 @@
 }
 
 .remainframeLabel {
-  margin-bottom: 30px !important;
+  margin-bottom: 22px !important;
   font-family: var(--mono);
   font-size: 0.68rem !important;
   font-weight: 760 !important;
@@ -537,9 +591,11 @@
 }
 
 .remainframeCopy h2 {
-  margin-bottom: 28px !important;
-  overflow-wrap: anywhere;
-  font-size: clamp(2.9rem, 5vw, 6.2rem);
+  margin-bottom: 22px !important;
+  overflow-wrap: normal;
+  hyphens: none;
+  word-break: normal;
+  font-size: clamp(2.8rem, 4.25vw, 4.8rem);
   font-weight: 840;
   letter-spacing: -0.075em;
   line-height: 0.98;
@@ -559,7 +615,7 @@
   justify-content: space-between;
   gap: 20px;
   min-height: 48px;
-  margin-top: 24px;
+  margin-top: auto;
   padding-top: 14px;
   border-top: 1px solid var(--ink);
   font-family: var(--mono);
@@ -580,7 +636,9 @@
 
 .remainframeImage {
   display: block;
+  height: 100%;
   overflow: hidden;
+  background: var(--ink);
   border: 2px solid var(--ink);
   box-shadow: 13px 13px 0 var(--secondary);
   transition:
@@ -596,7 +654,8 @@
 .remainframeImage img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
 }
 
 .section {
@@ -611,7 +670,7 @@
   grid-template-columns: minmax(130px, 2fr) minmax(0, 6.5fr) minmax(230px, 3.5fr);
   gap: clamp(24px, 4vw, 64px);
   align-items: start;
-  margin-bottom: clamp(62px, 7vw, 100px);
+  margin-bottom: clamp(56px, 5vw, 76px);
 }
 
 .sectionNumber,
@@ -626,7 +685,9 @@
 .sectionHeading h2,
 .faqHeading h2 {
   max-width: 900px;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  hyphens: none;
+  word-break: normal;
   font-size: clamp(3rem, 5.5vw, 6.35rem);
   font-weight: 820;
   letter-spacing: -0.067em;
@@ -635,6 +696,7 @@
 }
 
 .sectionHeading > p:last-child {
+  align-self: end;
   max-width: 39ch;
   color: var(--muted);
   font-size: clamp(1rem, 1.2vw, 1.19rem);
@@ -657,10 +719,6 @@
   border-bottom: 2px solid var(--ink);
 }
 
-.serviceCard:nth-child(3n) {
-  background: color-mix(in srgb, var(--sage) 38%, var(--cream));
-}
-
 .serviceCardFeatured {
   color: var(--cream);
   background: var(--ink);
@@ -679,6 +737,19 @@
   border-top-color: rgb(241 230 211 / 58%);
 }
 
+.serviceCardPriority {
+  background: color-mix(in srgb, var(--sage) 58%, var(--cream));
+}
+
+.serviceCardPriority .cardNumber {
+  color: var(--cream);
+  background: var(--secondary);
+}
+
+.serviceCardPriority .serviceLink {
+  border-top-color: rgb(52 40 34 / 58%);
+}
+
 .cardNumber {
   display: grid;
   place-items: center;
@@ -692,7 +763,9 @@
 
 .serviceCard h3 {
   margin-bottom: 18px !important;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  hyphens: none;
+  word-break: normal;
   font-size: clamp(2.2rem, 3vw, 4rem);
   font-weight: 800;
   letter-spacing: -0.06em;
@@ -724,15 +797,6 @@
 
 .serviceLink:hover {
   border-top-color: currentColor;
-}
-
-.serviceCard:last-child {
-  grid-column: 1 / -1;
-  min-height: 235px;
-}
-
-.serviceCard:last-child p {
-  max-width: 54ch;
 }
 
 .processGrid {
@@ -775,7 +839,9 @@
 
 .processGrid h3 {
   margin-bottom: 16px !important;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  hyphens: none;
+  word-break: normal;
   font-size: clamp(1.45rem, 2.1vw, 2.4rem);
   font-weight: 790;
   letter-spacing: -0.055em;
@@ -800,15 +866,17 @@
 
 .aboutGrid {
   display: grid;
-  grid-template-columns: minmax(0, 7.5fr) minmax(280px, 4.5fr);
-  gap: clamp(42px, 7vw, 110px);
+  grid-template-columns: minmax(0, 1.65fr) minmax(360px, 0.95fr);
+  gap: clamp(48px, 5vw, 72px);
   align-items: end;
   padding-top: clamp(62px, 8vw, 116px);
 }
 
 .aboutGrid h2 {
-  overflow-wrap: anywhere;
-  font-size: clamp(3.8rem, 7.7vw, 8.9rem);
+  overflow-wrap: normal;
+  hyphens: none;
+  word-break: normal;
+  font-size: clamp(3.4rem, 7.2vw, 7rem);
   font-weight: 850;
   letter-spacing: -0.07em;
   line-height: 1;
@@ -816,13 +884,12 @@
 }
 
 .aboutGrid h2 em {
-  display: inline;
+  display: inline-block;
   padding: 0 0.05em 0.04em;
   color: var(--ink);
   background: var(--sage);
   font-style: normal;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
+  white-space: nowrap;
 }
 
 .aboutCopy {
@@ -888,7 +955,9 @@
 .shopIntro h2 {
   max-width: 680px;
   margin-top: 20px !important;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  hyphens: none;
+  word-break: normal;
   font-size: clamp(2.8rem, 4.5vw, 5.2rem);
   font-weight: 840;
   letter-spacing: -0.07em;
@@ -999,19 +1068,21 @@
 
 .faqSection {
   display: grid;
-  grid-template-columns: minmax(280px, 4.5fr) minmax(0, 7.5fr);
-  gap: clamp(48px, 8vw, 130px);
+  grid-template-columns: minmax(520px, 0.9fr) minmax(0, 1.25fr);
+  gap: clamp(56px, 5vw, 72px);
   align-items: start;
+  padding-top: clamp(72px, 7vw, 104px);
+  padding-bottom: clamp(72px, 7vw, 104px);
 }
 
 .faqHeading {
-  position: sticky;
-  top: 108px;
+  position: static;
 }
 
 .faqHeading h2 {
-  margin-top: 34px !important;
-  font-size: clamp(3.2rem, 5.8vw, 6.75rem);
+  max-width: 12ch;
+  margin-top: 28px !important;
+  font-size: clamp(3rem, 5vw, 4.5rem);
 }
 
 .faqList {
@@ -1089,8 +1160,10 @@
 .contact h2 {
   max-width: 1180px;
   margin-top: clamp(42px, 5vw, 72px) !important;
-  overflow-wrap: anywhere;
-  font-size: clamp(4rem, 8.5vw, 9.8rem);
+  overflow-wrap: normal;
+  hyphens: none;
+  word-break: normal;
+  font-size: clamp(4rem, 8vw, 8rem);
   font-weight: 840;
   letter-spacing: -0.07em;
   line-height: 0.96;
@@ -1150,13 +1223,23 @@
   min-height: 44px;
 }
 
+.footerLinks {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
 @media (max-width: 1180px) {
   .navShell {
     grid-template-columns: auto minmax(0, 1fr) auto;
   }
 
-  .navLinks a:nth-child(n + 4) {
+  .navLinks {
     display: none;
+  }
+
+  .menuButton {
+    display: inline-flex;
   }
 
   .heroGrid {
@@ -1165,7 +1248,7 @@
   }
 
   .heroCapability {
-    width: min(88%, 760px);
+    width: min(100%, 760px);
     min-height: 560px;
     justify-self: center;
   }
@@ -1175,18 +1258,20 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .remainframeCopy,
   .aboutCopy {
     max-width: 620px;
   }
 
-  .remainframeCopy {
-    justify-self: start;
+  .remainframeCopy,
+  .remainframeImage {
+    width: min(100%, 760px);
+    max-width: 760px;
+    justify-self: center;
   }
 
   .remainframeImage {
-    width: min(100%, 960px);
-    justify-self: center;
+    height: auto;
+    aspect-ratio: 1200 / 630;
   }
 
   .aboutCopy {
@@ -1207,6 +1292,12 @@
 
   .sectionHeading > p:last-child {
     grid-column: 2;
+    align-self: start;
+  }
+
+  .faqSection {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 52px;
   }
 
   .processGrid {
@@ -1235,20 +1326,6 @@
     overflow: hidden;
     clip-path: inset(50%);
     white-space: nowrap;
-  }
-
-  .navLinks {
-    justify-self: end;
-  }
-
-  .navLinks a:nth-child(n + 3) {
-    display: none;
-  }
-
-  .navLinks a {
-    padding: 0 7px;
-    font-size: 0.75rem;
-    letter-spacing: 0.015em;
   }
 
   .navCta {
@@ -1289,7 +1366,7 @@
 
   .heroCopy h1 {
     max-width: 100%;
-    font-size: clamp(3rem, 15.5vw, 5.2rem);
+    font-size: clamp(2.6rem, 12.5vw, 3.25rem);
     letter-spacing: -0.07em;
     line-height: 1.02;
   }
@@ -1344,6 +1421,11 @@
     padding-left: 18px;
   }
 
+  .section {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
   .remainframeFeature {
     gap: 46px;
     padding-top: 48px;
@@ -1367,11 +1449,12 @@
 
   .sectionHeading > p:last-child {
     grid-column: auto;
+    align-self: start;
   }
 
   .sectionHeading h2,
   .faqHeading h2 {
-    font-size: clamp(3rem, 13.5vw, 5.6rem);
+    font-size: clamp(2.25rem, 10vw, 2.75rem);
     letter-spacing: -0.06em;
   }
 
@@ -1379,9 +1462,7 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .serviceCard,
-  .serviceCard:last-child {
-    grid-column: auto;
+  .serviceCard {
     min-height: 235px;
     padding: 20px;
   }
@@ -1391,7 +1472,7 @@
   }
 
   .serviceCard h3 {
-    font-size: clamp(2.15rem, 10vw, 3.2rem);
+    font-size: clamp(1.85rem, 8vw, 2.35rem);
   }
 
   .processGrid {
@@ -1417,7 +1498,7 @@
   }
 
   .aboutGrid h2 {
-    font-size: clamp(3.15rem, 13.5vw, 5.8rem);
+    font-size: clamp(2.25rem, 10.5vw, 2.85rem);
   }
 
   .aboutCopy {
@@ -1452,17 +1533,20 @@
   }
 
   .contact h2 {
-    font-size: clamp(3.65rem, 16vw, 7.4rem);
+    font-size: clamp(2.35rem, 11vw, 3rem);
+  }
+}
+
+@media (min-width: 761px) and (max-width: 900px) {
+  .heroCopy h1 {
+    font-size: clamp(3.25rem, 7vw, 4rem);
   }
 }
 
 @media (max-width: 420px) {
-  .navLinks a:nth-child(n + 2) {
-    display: none;
-  }
-
-  .navLinks a {
-    padding: 0 6px;
+  .remainframeImage {
+    height: clamp(360px, 125vw, 500px);
+    aspect-ratio: auto;
   }
 
   .brandMark {
@@ -1483,7 +1567,7 @@
   }
 
   .heroCopy h1 {
-    font-size: clamp(2.95rem, 15.8vw, 4.1rem);
+    font-size: clamp(2.6rem, 14vw, 3rem);
   }
 
   .heroActions,
@@ -1524,7 +1608,7 @@
   }
 
   .remainframeCopy h2 {
-    font-size: clamp(2.8rem, 13.5vw, 4rem);
+    font-size: clamp(2.2rem, 10vw, 2.7rem);
   }
 
   .faqList summary {
@@ -1539,6 +1623,133 @@
     align-items: flex-start;
     flex-direction: column;
   }
+
+  .footerLinks {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+.menuDialog {
+  position: fixed;
+  inset: 0 0 auto;
+  width: 100%;
+  max-width: none;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  color: var(--cream);
+  background: transparent;
+  border: 0;
+}
+
+.menuDialog::backdrop {
+  background: rgb(52 40 34 / 66%);
+  backdrop-filter: blur(3px);
+}
+
+.menuPanel {
+  width: 100%;
+  max-height: 100dvh;
+  padding: 16px 18px calc(24px + env(safe-area-inset-bottom));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  color: var(--cream);
+  background: var(--ink);
+  border-bottom: 2px solid var(--cream);
+}
+
+.menuHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgb(241 230 211 / 45%);
+}
+
+.menuHead > span {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.menuHead button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 74px;
+  min-height: 44px;
+  padding: 0 10px;
+  color: var(--cream);
+  background: transparent;
+  border: 2px solid var(--cream);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 760;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.menuHead button:hover {
+  color: var(--ink);
+  background: var(--cream);
+}
+
+.menuNav {
+  display: flex;
+  flex-direction: column;
+}
+
+.menuNav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 58px;
+  border-bottom: 1px solid rgb(241 230 211 / 30%);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-weight: 740;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.menuNav a:hover {
+  color: var(--sage);
+}
+
+.menuCta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 52px;
+  margin-top: 20px;
+  padding: 0 16px;
+  color: var(--accent-text) !important;
+  background: var(--accent);
+  border: 2px solid var(--accent);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 760;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {

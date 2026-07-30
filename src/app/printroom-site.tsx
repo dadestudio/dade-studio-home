@@ -1,63 +1,56 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./printroom.module.css";
+import SiteHeader from "./site-header";
 
 const services = [
   {
     number: "01",
     title: "Web design + builds",
-    body: "Focused websites that make the offer clear, feel intentional, and work on every screen.",
+    body: "Clear, distinctive small-business websites that explain the offer, build trust, and work smoothly across screen sizes.",
     cta: "Plan a website",
     href: "mailto:dade@remainframe.com?subject=Dade%20Studio%20website%20project",
-    featured: true,
+    emphasis: "primary",
   },
   {
     number: "02",
-    title: "Branding",
-    body: "A distinct visual identity people can recognize and you can use with confidence.",
-    cta: "Build a brand",
-    href: "mailto:dade@remainframe.com?subject=Dade%20Studio%20branding%20project",
-    featured: false,
+    title: "Branding + graphic design",
+    body: "A distinct visual identity, campaign graphics, social assets, print pieces, and everyday business materials that work together.",
+    cta: "Make the visuals work",
+    href: "mailto:dade@remainframe.com?subject=Dade%20Studio%20branding%20and%20graphic%20design%20project",
+    emphasis: "standard",
   },
   {
     number: "03",
-    title: "Graphic design",
-    body: "Campaign graphics, social assets, print pieces, and everyday business materials.",
-    cta: "Make a design",
-    href: "mailto:dade@remainframe.com?subject=Dade%20Studio%20graphic%20design%20project",
-    featured: false,
+    title: "Tailored tools + workflows",
+    body: "Custom dashboards, digital tools, and practical workflows shaped around how your business actually gets work done.",
+    cta: "Improve a workflow",
+    href: "mailto:dade@remainframe.com?subject=Dade%20Studio%20tailored%20tool%20or%20workflow",
+    emphasis: "secondary",
   },
   {
     number: "04",
-    title: "Tailored tools + workflows",
-    body: "Useful dashboards, digital tools, and workflows shaped around how your work gets done.",
-    cta: "Improve a workflow",
-    href: "mailto:dade@remainframe.com?subject=Dade%20Studio%20tailored%20tool%20or%20workflow",
-    featured: false,
+    title: "Coaching + teaching",
+    body: "Patient, one-on-one coaching to use your tools with confidence, make clearer decisions, and keep work moving.",
+    cta: "Book practical help",
+    href: "mailto:dade@remainframe.com?subject=Dade%20Studio%20coaching%20or%20teaching",
+    emphasis: "standard",
   },
   {
     number: "05",
-    title: "Coaching + teaching",
-    body: "Patient, one-on-one help using your tools, making decisions, and moving work forward.",
-    cta: "Book practical help",
-    href: "mailto:dade@remainframe.com?subject=Dade%20Studio%20coaching%20or%20teaching",
-    featured: false,
+    title: "Practical marketing support",
+    body: "Clarify your offer, strengthen your website copy, and choose what to communicate next.",
+    cta: "Clarify the message",
+    href: "mailto:dade@remainframe.com?subject=Dade%20Studio%20marketing%20support",
+    emphasis: "standard",
   },
   {
     number: "06",
-    title: "Practical marketing support",
-    body: "Clearer offers, stronger messaging, and grounded ways to reach the right people.",
-    cta: "Clarify the message",
-    href: "mailto:dade@remainframe.com?subject=Dade%20Studio%20marketing%20support",
-    featured: false,
-  },
-  {
-    number: "07",
     title: "Merch + product design",
-    body: "Original art and branded products made to be worth wearing, using, or selling.",
+    body: "Original artwork, merchandise, and product visuals designed to feel considered, useful, and worth putting into the world.",
     cta: "Develop a product",
     href: "mailto:dade@remainframe.com?subject=Dade%20Studio%20merch%20or%20product%20design",
-    featured: false,
+    emphasis: "standard",
   },
 ] as const;
 
@@ -103,24 +96,31 @@ const faqs = [
   {
     question: "Do I need to know exactly what I need?",
     answer:
-      "No. Tell me what feels unclear, broken, slow, or unfinished. I will help identify the most useful first step.",
+      "No. Share the problem, idea, or unfinished piece, and I will help identify the most useful first step.",
+  },
+  {
+    question: "Is the Studio Shop a real store?",
+    answer:
+      "Yes. The products shown here are real and available to order through the Studio Shop. Fourthwall handles checkout and fulfillment.",
   },
 ] as const;
+
+const shopOrigin = "https://shop.dade.studio";
 
 const shopPieces = [
   {
     name: "Rave Owl",
-    href: "https://merch.dade.studio/products/rave-owl",
+    href: `${shopOrigin}/products/rave-owl`,
     image: "/assets/merch/rave-owl.jpg",
   },
   {
     name: "Morning Mountains",
-    href: "https://merch.dade.studio/products/morning-mountains",
+    href: `${shopOrigin}/products/morning-mountains`,
     image: "/assets/merch/morning-mountains.jpg",
   },
   {
     name: "Sunset Mountains",
-    href: "https://merch.dade.studio/products/sunset-mountains",
+    href: `${shopOrigin}/products/sunset-mountains`,
     image: "/assets/merch/sunset-mountains.jpg",
   },
 ] as const;
@@ -138,12 +138,12 @@ const capabilityMenu = [
   },
   {
     number: "03",
-    title: "Tailored digital tools",
+    title: "Tailored tools + workflows",
     detail: "Dashboards / practical workflows",
   },
   {
     number: "04",
-    title: "Coaching + guidance",
+    title: "Coaching + teaching",
     detail: "Patient help / clearer decisions",
   },
 ] as const;
@@ -155,40 +155,12 @@ export default function PrintroomSite() {
         Skip to main content
       </a>
 
-      <header className={styles.siteHeader}>
-        <div className={styles.navShell}>
-          <Link className={styles.brand} href="/" aria-label="Dade Studio home">
-            <Image
-              className={styles.brandMark}
-              src="/assets/brand/logo-d.png"
-              alt=""
-              width={34}
-              height={34}
-              sizes="34px"
-            />
-            <span className={styles.brandText}>Dade.Studio</span>
-          </Link>
-
-          <nav className={styles.navLinks} aria-label="Primary navigation">
-            <a href="#remainframe">RemainFrame</a>
-            <a href="#services">Services</a>
-            <a href="#process">Process</a>
-            <a href="#about">About</a>
-            <a href="#shop">Shop</a>
-          </nav>
-
-          <a className={styles.navCta} href="#contact">
-            <span className={styles.navCtaLabel}>Start a project</span>
-            <span className={styles.navCtaLabelShort}>Project</span>
-            <span aria-hidden="true">↘</span>
-          </a>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main id="main" tabIndex={-1}>
         <section className={styles.hero} aria-labelledby="hero-title">
           <div className={styles.heroMeta}>
-            <span>Independent creative + digital studio</span>
+            <span>Websites / branding / tailored tools</span>
             <span>Design / build / teach</span>
           </div>
 
@@ -200,11 +172,16 @@ export default function PrintroomSite() {
               </p>
               <h1 id="hero-title">
                 Websites that make your business easier to{" "}
-                <span className={styles.heroAccent}>understand and choose.</span>
+                <span className={styles.heroAccent}>
+                  <span>understand</span>
+                  {" "}
+                  <span>and choose.</span>
+                </span>
               </h1>
               <p className={styles.heroIntro}>
-                I design and build clear, distinctive websites for small businesses, then support
-                the branding, graphics, tools, and guidance that help the work hold together.
+                I design and build clear, distinctive websites for small businesses. When the site
+                needs more, I can shape the branding, graphics, and practical digital tools around
+                it.
               </p>
               <div className={styles.heroActions}>
                 <a
@@ -251,7 +228,7 @@ export default function PrintroomSite() {
                 ))}
               </ol>
               <a className={styles.capabilityCta} href="#contact">
-                Bring me the part that is not working
+                Start a website project
                 <span aria-hidden="true">↘</span>
               </a>
             </div>
@@ -260,8 +237,8 @@ export default function PrintroomSite() {
           <div className={styles.heroLedger} aria-label="Studio capabilities">
             <span>Web design + builds</span>
             <span>Branding + graphics</span>
-            <span>Tailored tools</span>
-            <span>Coaching + support</span>
+            <span>Tailored tools + workflows</span>
+            <span>Coaching + teaching</span>
           </div>
         </section>
 
@@ -276,15 +253,16 @@ export default function PrintroomSite() {
           </div>
           <div className={styles.remainframeFeature}>
             <div className={styles.remainframeCopy}>
-              <p className={styles.remainframeLabel}>When the problem keeps coming back</p>
+              <p className={styles.remainframeLabel}>A complementary Dade Studio service</p>
               <h2 id="remainframe-title">Get recurring work off your plate.</h2>
               <p>
-                RemainFrame is my custom AI secretary service for small businesses. We start with
-                one recurring job, fit it into the way you already work, and expand only after it
-                proves useful.
+                Dade Studio helps people understand and choose your business. RemainFrame helps the
+                recurring work behind it keep moving. It is my custom AI secretary service for
+                small businesses, starting with one useful job in the tools and routines you
+                already use.
               </p>
               <a href="https://remainframe.com">
-                See how RemainFrame works
+                Explore RemainFrame
                 <span aria-hidden="true">↗</span>
               </a>
             </div>
@@ -295,7 +273,7 @@ export default function PrintroomSite() {
             >
               <Image
                 src="/assets/remainframe/remainframe-card.png"
-                alt="RemainFrame brand artwork"
+                alt="RemainFrame, a custom AI secretary service for small businesses"
                 width={1200}
                 height={630}
                 sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1080px) calc(100vw - 48px), 57vw"
@@ -309,8 +287,8 @@ export default function PrintroomSite() {
             <p className={styles.sectionNumber}>02 / Services</p>
             <h2 id="services-title">What needs to work better?</h2>
             <p>
-              Start with the part holding you back. I can solve one focused need or connect the
-              pieces into a more complete result.
+              Start with the website. If the work needs more, I can connect the brand, tools, and
+              supporting pieces into one clear result.
             </p>
           </div>
 
@@ -318,7 +296,11 @@ export default function PrintroomSite() {
             {services.map((service) => (
               <article
                 className={`${styles.serviceCard} ${
-                  service.featured ? styles.serviceCardFeatured : ""
+                  service.emphasis === "primary"
+                    ? styles.serviceCardFeatured
+                    : service.emphasis === "secondary"
+                      ? styles.serviceCardPriority
+                      : ""
                 }`}
                 key={service.number}
               >
@@ -361,8 +343,7 @@ export default function PrintroomSite() {
           </div>
           <div className={styles.aboutGrid}>
             <h2 id="about-title">
-              One person from first conversation to{" "}
-              <em>finished work.</em>
+              One person, from first conversation to <em>finished work.</em>
             </h2>
             <div className={styles.aboutCopy}>
               <p>
@@ -385,26 +366,27 @@ export default function PrintroomSite() {
         <section className={styles.shopFeature} id="shop" aria-labelledby="shop-title">
           <div className={styles.shopTopline}>
             <span>05 / Studio shop</span>
-            <span>Live work / fulfilled by Fourthwall</span>
+            <span>Real products / online checkout / fulfilled by Fourthwall</span>
           </div>
           <div className={styles.shopShell}>
             <div className={styles.shopIntro}>
-              <p className={styles.shopEyebrow}>Original art / Out in the world</p>
-              <h2 id="shop-title">Studio ideas, made into real things.</h2>
+              <p className={styles.shopEyebrow}>Open storefront / Original Dade Studio work</p>
+              <h2 id="shop-title">The Studio Shop is open.</h2>
               <p>
-                The shop is where my illustration and product-design work lives. It is one working
-                example of how studio ideas become finished things people can buy and use.
+                Every product shown here is available to order now. Browse original Dade Studio
+                artwork, choose what you want, and check out through Fourthwall, which handles
+                payment and fulfillment.
               </p>
               <a
                 className={styles.shopCta}
-                href="https://merch.dade.studio"
+                href={shopOrigin}
                 target="_blank"
                 rel="noreferrer"
               >
-                Visit the shop
+                Open the live Studio Shop
                 <span aria-hidden="true">↗</span>
               </a>
-              <small>merch.dade.studio</small>
+              <small>shop.dade.studio</small>
             </div>
 
             <div className={styles.shopProducts}>
@@ -458,15 +440,17 @@ export default function PrintroomSite() {
 
       <footer className={styles.contact} id="contact">
         <p className={styles.contactKicker}>
-          Have a website, brand, or workflow that needs to work better?
+          Ready for a clearer website and a better-connected business?
         </p>
-        <h2>Tell me what&apos;s getting in the way.</h2>
-        <p className={styles.contactSupport}>A short note is enough.</p>
+        <h2>Tell me what needs to work better.</h2>
+        <p className={styles.contactSupport}>
+          A short note about your business, the current site, and what feels stuck is enough.
+        </p>
         <a
           className={styles.emailLink}
           href="mailto:dade@remainframe.com?subject=Dade%20Studio%20project%20inquiry"
         >
-          Email Dade about a project
+          Start a website conversation
           <span aria-hidden="true">↗</span>
         </a>
         <a
@@ -476,8 +460,11 @@ export default function PrintroomSite() {
           dade@remainframe.com
         </a>
         <div className={styles.footerLine}>
-          <span>Dade.Studio / Creative + digital services</span>
-          <a href="#main">Back to top ↑</a>
+          <span>Dade.Studio / Web design + creative services</span>
+          <span className={styles.footerLinks}>
+            <Link href="/bot-privacy">Bot privacy</Link>
+            <a href="#main">Back to top ↑</a>
+          </span>
         </div>
       </footer>
     </div>
