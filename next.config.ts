@@ -15,12 +15,12 @@ const nextConfig: NextConfig = {
       ...retiredRoutes.map((source) => ({
         source,
         destination: "/",
-        permanent: false,
+        permanent: true,
       })),
       {
         source: "/concepts/:path*",
         destination: "/",
-        permanent: false,
+        permanent: true,
       },
     ];
   },
