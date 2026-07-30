@@ -9,9 +9,16 @@ type MarkdownBlock =
   | { type: "paragraph"; text: string };
 
 export const metadata: Metadata = {
-  title: "Bot Privacy Policy | Dade.Studio",
+  title: "Bot Privacy Policy",
   description:
     "Privacy policy for the Dade.Studio bot, including data collection, retention, and deletion requests.",
+  alternates: {
+    canonical: "/bot-privacy",
+  },
+  robots: {
+    index: false,
+    follow: true,
+  },
 };
 
 function parseMarkdownBlocks(markdown: string): MarkdownBlock[] {

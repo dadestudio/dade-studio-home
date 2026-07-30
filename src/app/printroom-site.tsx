@@ -105,7 +105,7 @@ const faqs = [
   },
 ] as const;
 
-const shopOrigin = "https://shop.dade.studio";
+const shopOrigin = "https://merch.dade.studio";
 
 const shopPieces = [
   {
@@ -386,7 +386,7 @@ export default function PrintroomSite() {
                 Open the live Studio Shop
                 <span aria-hidden="true">↗</span>
               </a>
-              <small>shop.dade.studio</small>
+              <small>Secure checkout + fulfillment through Fourthwall</small>
             </div>
 
             <div className={styles.shopProducts}>
