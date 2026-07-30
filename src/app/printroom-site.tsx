@@ -273,7 +273,7 @@ export default function PrintroomSite() {
             >
               <Image
                 src="/assets/remainframe/remainframe-card-portrait.jpg"
-                alt="RemainFrame, a custom AI secretary service for small businesses"
+                alt="RemainFrame artwork reading: You stay in control."
                 width={1080}
                 height={1350}
                 sizes="(max-width: 760px) calc(100vw - 46px), (max-width: 1180px) min(760px, calc(100vw - 48px)), 47vw"
