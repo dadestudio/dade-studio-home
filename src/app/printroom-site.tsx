@@ -272,11 +272,11 @@ export default function PrintroomSite() {
               aria-label="Visit RemainFrame"
             >
               <Image
-                src="/assets/remainframe/remainframe-card.png"
+                src="/assets/remainframe/remainframe-card-portrait.jpg"
                 alt="RemainFrame, a custom AI secretary service for small businesses"
-                width={1200}
-                height={630}
-                sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1080px) calc(100vw - 48px), 57vw"
+                width={1080}
+                height={1350}
+                sizes="(max-width: 760px) calc(100vw - 46px), (max-width: 1180px) min(760px, calc(100vw - 48px)), 47vw"
               />
             </a>
           </div>
