@@ -6,11 +6,11 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./printroom.module.css";
 
 const navigation = [
-  { href: "#remainframe", label: "RemainFrame" },
   { href: "#services", label: "Services" },
   { href: "#process", label: "Process" },
   { href: "#about", label: "About" },
   { href: "#shop", label: "Shop" },
+  { href: "#remainframe", label: "RemainFrame" },
 ] as const;
 
 export default function SiteHeader() {
@@ -68,7 +68,7 @@ export default function SiteHeader() {
         <div className={styles.navTail}>
           <a className={styles.navCta} href="#contact">
             <span className={styles.navCtaLabel}>Start a project</span>
-            <span className={styles.navCtaLabelShort}>Project</span>
+            <span className={styles.navCtaLabelShort} aria-hidden="true">Project</span>
             <span aria-hidden="true">↘</span>
           </a>
           <button
@@ -123,7 +123,7 @@ export default function SiteHeader() {
             ))}
           </nav>
           <a className={styles.menuCta} href="#contact" onClick={closeMenu}>
-            Start a website project
+            Start a project
             <span aria-hidden="true">↘</span>
           </a>
         </div>
