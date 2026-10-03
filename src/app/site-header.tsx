@@ -19,25 +19,22 @@ export default function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const dialog = dialogRef.current;
-
-    if (!dialog) {
-      return;
-    }
-
-    if (isOpen && !dialog.open) {
-      dialog.showModal();
-      document.body.style.overflow = "hidden";
-    } else if (!isOpen && dialog.open) {
-      dialog.close();
-    }
-
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isOpen]);
+  }, []);
+
+  const openMenu = () => {
+    const dialog = dialogRef.current;
+    if (!dialog || dialog.open) return;
+    dialog.showModal();
+    document.body.style.overflow = "hidden";
+    setIsOpen(true);
+  };
 
   const closeMenu = () => {
+    dialogRef.current?.close();
+    document.body.style.overflow = "";
     setIsOpen(false);
   };
 
@@ -59,25 +56,25 @@ export default function SiteHeader() {
 
         <nav className={styles.navLinks} aria-label="Primary navigation">
           {navigation.map((item) => (
-            <a href={item.href} key={item.href}>
+            <Link href={item.href} key={item.href}>
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         <div className={styles.navTail}>
-          <a className={styles.navCta} href="#contact">
+          <Link className={styles.navCta} href="#contact">
             <span className={styles.navCtaLabel}>Start a project</span>
             <span className={styles.navCtaLabelShort} aria-hidden="true">Project</span>
             <span aria-hidden="true">↘</span>
-          </a>
+          </Link>
           <button
             className={styles.menuButton}
             type="button"
             aria-haspopup="dialog"
             aria-expanded={isOpen}
             aria-controls="site-menu"
-            onClick={() => setIsOpen(true)}
+            onClick={openMenu}
             ref={menuButtonRef}
           >
             <span className={styles.srOnly}>Open site menu</span>
@@ -95,7 +92,9 @@ export default function SiteHeader() {
           event.preventDefault();
           closeMenu();
         }}
-        onClose={() => {
+        onClose={(event) => {
+          // A queued close event must not undo a menu that was already reopened.
+          if (event.currentTarget.open) return;
           document.body.style.overflow = "";
           setIsOpen(false);
           menuButtonRef.current?.focus();
@@ -116,16 +115,16 @@ export default function SiteHeader() {
           </div>
           <nav className={styles.menuNav} aria-label="Mobile navigation">
             {navigation.map((item) => (
-              <a href={item.href} key={item.href} onClick={closeMenu}>
+              <Link href={item.href} key={item.href} onClick={closeMenu}>
                 <span>{item.label}</span>
                 <span aria-hidden="true">↘</span>
-              </a>
+              </Link>
             ))}
           </nav>
-          <a className={styles.menuCta} href="#contact" onClick={closeMenu}>
+          <Link className={styles.menuCta} href="#contact" onClick={closeMenu}>
             Start a project
             <span aria-hidden="true">↘</span>
-          </a>
+          </Link>
         </div>
       </dialog>
     </header>

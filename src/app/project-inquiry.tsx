@@ -1,6 +1,7 @@
 "use client";
 
-import { type FormEvent, useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { createContext, type FormEvent, type ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { services, studioEmail } from "./studio-content";
 import styles from "./project-inquiry.module.css";
 
@@ -13,10 +14,60 @@ const initialBrief = {
   deadline: "",
 };
 
-export default function ProjectInquiry() {
+type InquiryState = {
+  brief: typeof initialBrief;
+  prepared: boolean;
+  copyStatus: string;
+  setPrepared: (prepared: boolean) => void;
+  setCopyStatus: (status: string) => void;
+  updateBrief: (field: keyof typeof initialBrief, value: string) => void;
+};
+
+const InquiryContext = createContext<InquiryState | null>(null);
+
+function useInquiry() {
+  const inquiry = useContext(InquiryContext);
+  if (!inquiry) throw new Error("Project inquiry requires ProjectInquiryProvider.");
+  return inquiry;
+}
+
+export function ProjectInquiryProvider({ children }: { children: ReactNode }) {
   const [brief, setBrief] = useState(initialBrief);
   const [prepared, setPrepared] = useState(false);
   const [copyStatus, setCopyStatus] = useState("");
+  const updateBrief = (field: keyof typeof initialBrief, value: string) => {
+    setBrief((current) => ({ ...current, [field]: value }));
+    setPrepared(false);
+    setCopyStatus("");
+  };
+
+  return (
+    <InquiryContext.Provider value={{ brief, prepared, copyStatus, setPrepared, setCopyStatus, updateBrief }}>
+      {children}
+    </InquiryContext.Provider>
+  );
+}
+
+export function ServiceInquiryLink({ service, className, children }: {
+  service: (typeof services)[number]["title"];
+  className: string;
+  children: ReactNode;
+}) {
+  const { updateBrief } = useInquiry();
+
+  return (
+    <Link
+      href="#contact"
+      className={className}
+      onNavigate={() => updateBrief("service", service)}
+    >
+      {children}
+    </Link>
+  );
+}
+
+export default function ProjectInquiry() {
+  const { brief, prepared, copyStatus, setPrepared, setCopyStatus, updateBrief } = useInquiry();
   const draftRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
 
@@ -25,12 +76,6 @@ export default function ProjectInquiry() {
       draftRef.current?.focus();
     }
   }, [prepared]);
-
-  const updateBrief = (field: keyof typeof initialBrief, value: string) => {
-    setBrief((current) => ({ ...current, [field]: value }));
-    setPrepared(false);
-    setCopyStatus("");
-  };
 
   const subject = brief.service === "Not sure yet"
     ? "Project inquiry — Dade Studio"

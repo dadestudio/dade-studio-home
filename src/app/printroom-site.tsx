@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./printroom.module.css";
 import SiteHeader from "./site-header";
-import ProjectInquiry from "./project-inquiry";
+import ProjectInquiry, { ServiceInquiryLink } from "./project-inquiry";
 import { faqs, services, studioEmail } from "./studio-content";
 
 const process = [
@@ -69,9 +69,9 @@ const capabilityMenu = [
 export default function PrintroomSite() {
   return (
     <div className={styles.page}>
-      <a className={styles.skipLink} href="#main">
+      <Link className={styles.skipLink} href="#main">
         Skip to main content
-      </a>
+      </Link>
 
       <SiteHeader />
 
@@ -102,17 +102,17 @@ export default function PrintroomSite() {
                 something useful.
               </p>
               <div className={styles.heroActions}>
-                <a
+                <Link
                   className={styles.primaryButton}
                   href="#contact"
                 >
                   Tell me what you need made
                   <span aria-hidden="true">↗</span>
-                </a>
-                <a className={styles.textLink} href="#services">
+                </Link>
+                <Link className={styles.textLink} href="#services">
                   See all services
                   <span aria-hidden="true">↓</span>
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -145,10 +145,10 @@ export default function PrintroomSite() {
                   </li>
                 ))}
               </ol>
-              <a className={styles.capabilityCta} href="#contact">
+              <Link className={styles.capabilityCta} href="#contact">
                 Start a project
                 <span aria-hidden="true">↘</span>
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -185,10 +185,10 @@ export default function PrintroomSite() {
                 <span className={styles.cardNumber}>{service.number}</span>
                 <h3>{service.title}</h3>
                 <p>{service.body}</p>
-                <a className={styles.serviceLink} href="#contact">
+                <ServiceInquiryLink className={styles.serviceLink} service={service.title}>
                   {service.cta}
                   <span aria-hidden="true">↗</span>
-                </a>
+                </ServiceInquiryLink>
               </article>
             ))}
           </div>
@@ -273,10 +273,10 @@ export default function PrintroomSite() {
                 I work best with people and small businesses who want an active collaborator,
                 honest guidance, and something useful they can put into the world.
               </p>
-              <a href="#contact">
+              <Link href="#contact">
                 Start a conversation
                 <span aria-hidden="true">↓</span>
-              </a>
+              </Link>
             </div>
           </div>
         </section>
@@ -375,7 +375,7 @@ export default function PrintroomSite() {
           <span>Dade.Studio / Web design + creative services</span>
           <span className={styles.footerLinks}>
             <Link href="/bot-privacy">Bot privacy</Link>
-            <a href="#main">Back to top ↑</a>
+            <Link href="#main">Back to top ↑</Link>
           </span>
         </div>
       </footer>

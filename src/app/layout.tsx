@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ProjectInquiryProvider } from "./project-inquiry";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -44,7 +45,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          {/* Keep an unsent inquiry in memory while navigating between pages. */}
+          <ProjectInquiryProvider>{children}</ProjectInquiryProvider>
         </ThemeProvider>
       </body>
     </html>
