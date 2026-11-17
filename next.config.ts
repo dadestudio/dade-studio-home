@@ -12,6 +12,13 @@ const nextConfig: NextConfig = {
     ];
 
     return [
+      // Serve one copy of the site: send www.dade.studio to dade.studio.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.dade.studio" }],
+        destination: "https://dade.studio/:path*",
+        permanent: true,
+      },
       ...retiredRoutes.map((source) => ({
         source,
         destination: "/",
